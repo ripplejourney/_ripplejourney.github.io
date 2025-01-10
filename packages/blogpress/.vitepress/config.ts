@@ -2,11 +2,17 @@ import process from 'node:process'
 import { getThemeConfig } from '@sugarat/theme/node'
 import type { Theme } from '@sugarat/theme'
 import { defineConfig } from 'vitepress'
-import { La51Plugin } from 'vitepress-plugin-51la'
+import * as _ from 'radash'
+import config from './config.base'
 
 const baseUrl = process.env.FULL_URL ?? 'https://www.dmsrs.org'
 const relativeUrl = process.env.PUBLIC_URL ?? ''
 const weekly = `${baseUrl}/weekly`
+const titleText = '代码收容所'
+const authorText = 'Calm Ripple'
+const descriptionText = '天道酬勤，恒以致遠（大前端相关技术分享）'
+const copyrightText = `${titleText} 2006 - ${new Date().getFullYear()}`
+
 const RSSWeekly: Theme.RSSOptions = {
   title: '视野修炼 - 技术周刊',
   baseUrl,
@@ -19,22 +25,22 @@ const RSSWeekly: Theme.RSSOptions = {
   },
   image: `${relativeUrl}/assert/weelylogo.png`,
   favicon: `${baseUrl}/favicon.ico`,
-  copyright: 'Copyright (c) 2018-present, 代码收容所',
+  copyright: copyrightText,
   url: `${baseUrl}/weekly.rss`,
   icon: '<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5155" width="200" height="200"><title>收容报告 RSS 订阅</title><path d="M831.8 128l-640 0c-35.3 0-64 28.7-64 64l0 640c0 35.3 28.7 64 64 64l640 0c35.3 0 64-28.7 64-64L895.8 192C895.8 156.7 867.1 128 831.8 128zM707.4 193l0 185.8L673 344.3c-6.4-6.4-14.9-9.5-23.3-9.4-8.4-0.2-16.9 2.9-23.3 9.4L592 378.8 592 193 707.4 193zM831.8 833.1l-640 0L191.8 193 528 193l0 263c0 0.5 0 1.1 0 1.6 0 0.3 0 0.5 0.1 0.7 0 0.3 0 0.5 0.1 0.8 0 0.3 0.1 0.6 0.1 0.9 0 0.2 0 0.4 0.1 0.6 0 0.3 0.1 0.7 0.2 1 0 0.2 0.1 0.3 0.1 0.5 0.1 0.3 0.1 0.7 0.2 1 0 0.2 0.1 0.3 0.1 0.5 0.1 0.3 0.2 0.7 0.3 1 0.1 0.2 0.1 0.4 0.2 0.5 0.1 0.3 0.2 0.6 0.3 0.9 0.1 0.2 0.1 0.4 0.2 0.6 0.1 0.3 0.2 0.5 0.3 0.8 0.1 0.2 0.2 0.5 0.3 0.7 0.1 0.2 0.2 0.5 0.3 0.7 0.1 0.3 0.2 0.5 0.3 0.8 0.1 0.2 0.2 0.4 0.3 0.6 0.1 0.3 0.3 0.6 0.4 0.8 0.1 0.2 0.2 0.3 0.3 0.5 0.2 0.3 0.3 0.6 0.5 0.9 0.1 0.2 0.2 0.3 0.3 0.4 0.2 0.3 0.4 0.6 0.6 0.9 0.1 0.1 0.2 0.3 0.3 0.4 0.2 0.3 0.4 0.6 0.6 0.8 0.1 0.2 0.2 0.3 0.4 0.5 0.2 0.2 0.4 0.5 0.6 0.7 0.2 0.2 0.4 0.4 0.5 0.6 0.2 0.2 0.3 0.4 0.5 0.6 0.7 0.8 1.5 1.5 2.2 2.2 0.2 0.2 0.4 0.3 0.6 0.5 0.2 0.2 0.4 0.4 0.6 0.5 0.2 0.2 0.5 0.4 0.7 0.6 0.2 0.1 0.3 0.3 0.5 0.4 0.3 0.2 0.6 0.4 0.8 0.6 0.1 0.1 0.3 0.2 0.4 0.3 0.3 0.2 0.6 0.4 0.9 0.6 0.1 0.1 0.3 0.2 0.4 0.3 0.3 0.2 0.6 0.3 0.9 0.5 0.2 0.1 0.3 0.2 0.5 0.3 0.3 0.1 0.6 0.3 0.8 0.4 0.2 0.1 0.4 0.2 0.6 0.3 0.3 0.1 0.5 0.2 0.8 0.3 0.2 0.1 0.5 0.2 0.7 0.3 0.2 0.1 0.5 0.2 0.7 0.3 0.3 0.1 0.5 0.2 0.8 0.3 0.2 0.1 0.4 0.1 0.6 0.2 0.3 0.1 0.6 0.2 0.9 0.3 0.2 0.1 0.4 0.1 0.5 0.2 0.3 0.1 0.6 0.2 1 0.3 0.2 0 0.3 0.1 0.5 0.1 0.3 0.1 0.7 0.2 1 0.2 0.2 0 0.4 0.1 0.5 0.1 0.3 0.1 0.7 0.1 1 0.2 0.2 0 0.4 0.1 0.6 0.1 0.3 0 0.6 0.1 0.9 0.1 0.3 0 0.5 0 0.8 0.1 0.2 0 0.5 0 0.7 0.1 0.5 0 1.1 0 1.6 0 0 0 0 0 0 0l0 0c0.5 0 1.1 0 1.6 0 0.3 0 0.5 0 0.7-0.1 0.3 0 0.5 0 0.8-0.1 0.3 0 0.6-0.1 0.9-0.1 0.2 0 0.4 0 0.6-0.1 0.3 0 0.7-0.1 1-0.2 0.2 0 0.4-0.1 0.5-0.1 0.3-0.1 0.7-0.1 1-0.2 0.2 0 0.3-0.1 0.5-0.1 0.3-0.1 0.6-0.2 1-0.3 0.2-0.1 0.4-0.1 0.5-0.2 0.3-0.1 0.6-0.2 0.9-0.3 0.2-0.1 0.4-0.1 0.6-0.2 0.3-0.1 0.5-0.2 0.8-0.3 0.2-0.1 0.5-0.2 0.7-0.3 0.2-0.1 0.5-0.2 0.7-0.3 0.3-0.1 0.5-0.2 0.8-0.4 0.2-0.1 0.4-0.2 0.6-0.3 0.3-0.1 0.6-0.3 0.8-0.4 0.2-0.1 0.3-0.2 0.5-0.3 0.3-0.2 0.6-0.3 0.9-0.5 0.1-0.1 0.3-0.2 0.4-0.3 0.3-0.2 0.6-0.4 0.9-0.6 0.1-0.1 0.3-0.2 0.4-0.3 0.3-0.2 0.6-0.4 0.8-0.6 0.2-0.1 0.3-0.2 0.5-0.4 0.2-0.2 0.5-0.4 0.7-0.6 0.2-0.2 0.4-0.3 0.6-0.5 0.2-0.2 0.4-0.3 0.6-0.5 0.4-0.4 0.8-0.7 1.1-1.1l67.1-67.1 67.1 67.1c0 0 0 0 0 0 0.4 0.4 0.7 0.7 1.1 1.1 0.2 0.2 0.4 0.3 0.6 0.5 0.2 0.2 0.4 0.4 0.6 0.5 0.2 0.2 0.5 0.4 0.7 0.6 0.2 0.1 0.3 0.3 0.5 0.4 0.3 0.2 0.6 0.4 0.8 0.6 0.1 0.1 0.3 0.2 0.4 0.3 0.3 0.2 0.6 0.4 0.9 0.6 0.1 0.1 0.3 0.2 0.4 0.3 0.3 0.2 0.6 0.3 0.9 0.5 0.2 0.1 0.3 0.2 0.5 0.3 0.3 0.1 0.6 0.3 0.8 0.4 0.2 0.1 0.4 0.2 0.6 0.3 0.3 0.1 0.5 0.2 0.8 0.3 0.2 0.1 0.5 0.2 0.7 0.3 0.2 0.1 0.5 0.2 0.7 0.3 0.3 0.1 0.5 0.2 0.8 0.3 0.2 0.1 0.4 0.1 0.6 0.2 0.3 0.1 0.6 0.2 0.9 0.3 0.2 0.1 0.4 0.1 0.5 0.2 0.3 0.1 0.6 0.2 1 0.3 0.2 0 0.3 0.1 0.5 0.1 0.3 0.1 0.7 0.2 1 0.2 0.2 0 0.4 0.1 0.5 0.1 0.3 0.1 0.7 0.1 1 0.2 0.2 0 0.4 0.1 0.6 0.1 0.3 0 0.6 0.1 0.9 0.1 0.3 0 0.5 0 0.8 0.1 0.2 0 0.5 0 0.7 0.1 1.1 0.1 2.1 0.1 3.2 0 0.3 0 0.5 0 0.7-0.1 0.3 0 0.5 0 0.8-0.1 0.3 0 0.6-0.1 0.9-0.1 0.2 0 0.4 0 0.6-0.1 0.3 0 0.7-0.1 1-0.2 0.2 0 0.4-0.1 0.5-0.1 0.3-0.1 0.7-0.1 1-0.2 0.2 0 0.3-0.1 0.5-0.1 0.3-0.1 0.6-0.2 1-0.3 0.2-0.1 0.4-0.1 0.5-0.2 0.3-0.1 0.6-0.2 0.9-0.3 0.2-0.1 0.4-0.1 0.6-0.2 0.3-0.1 0.5-0.2 0.8-0.3 0.2-0.1 0.5-0.2 0.7-0.3 0.2-0.1 0.5-0.2 0.7-0.3 0.3-0.1 0.5-0.2 0.8-0.3 0.2-0.1 0.4-0.2 0.6-0.3 0.3-0.1 0.6-0.3 0.8-0.4 0.2-0.1 0.3-0.2 0.5-0.3 0.3-0.2 0.6-0.3 0.9-0.5 0.1-0.1 0.3-0.2 0.4-0.3 0.3-0.2 0.6-0.4 0.9-0.6 0.1-0.1 0.3-0.2 0.4-0.3 0.3-0.2 0.6-0.4 0.8-0.6 0.2-0.1 0.3-0.2 0.5-0.4 0.2-0.2 0.5-0.4 0.7-0.6 0.2-0.2 0.4-0.3 0.6-0.5 0.2-0.2 0.4-0.3 0.6-0.5 0.8-0.7 1.5-1.5 2.2-2.2 0.2-0.2 0.3-0.4 0.5-0.6 0.2-0.2 0.4-0.4 0.5-0.6 0.2-0.2 0.4-0.5 0.6-0.7 0.1-0.2 0.2-0.3 0.4-0.5 0.2-0.3 0.4-0.6 0.6-0.8 0.1-0.1 0.2-0.3 0.3-0.4 0.2-0.3 0.4-0.6 0.6-0.9 0.1-0.1 0.2-0.3 0.3-0.4 0.2-0.3 0.3-0.6 0.5-0.9 0.1-0.2 0.2-0.3 0.3-0.5 0.1-0.3 0.3-0.6 0.4-0.8 0.1-0.2 0.2-0.4 0.3-0.6 0.1-0.3 0.2-0.5 0.4-0.8 0.1-0.2 0.2-0.5 0.3-0.7 0.1-0.2 0.2-0.5 0.3-0.7 0.1-0.3 0.2-0.5 0.3-0.8 0.1-0.2 0.1-0.4 0.2-0.6 0.1-0.3 0.2-0.6 0.3-0.9 0.1-0.2 0.1-0.4 0.2-0.5 0.1-0.3 0.2-0.6 0.3-1 0-0.2 0.1-0.3 0.1-0.5 0.1-0.3 0.2-0.7 0.2-1 0-0.2 0.1-0.4 0.1-0.5 0.1-0.3 0.1-0.7 0.2-1 0-0.2 0.1-0.4 0.1-0.6 0-0.3 0.1-0.6 0.1-0.9 0-0.3 0-0.5 0.1-0.8 0-0.2 0-0.5 0.1-0.7 0-0.5 0-1.1 0-1.6L771.1 193l60.3 0L831.4 833.1z" p-id="5156"></path><path d="M468.7 416c0 17.7-14.3 32-32 32l-148 0c-17.7 0-32-14.3-32-32l0 0c0-17.7 14.3-32 32-32l148 0C454.4 384 468.7 398.3 468.7 416L468.7 416z" p-id="5157"></path><path d="M772.3 565c0 17.7-14.3 32-32 32L291.3 597c-17.7 0-32-14.3-32-32l0 0c0-17.7 14.3-32 32-32l449.1 0C758 533 772.3 547.3 772.3 565L772.3 565z" p-id="5158"></path><path d="M771.4 702c0 17.7-14.3 32-32 32L291.3 734c-17.7 0-32-14.3-32-32l0 0c0-17.7 14.3-32 32-32l448.2 0C757.1 670 771.4 684.4 771.4 702L771.4 702z" p-id="5159"></path></svg>',
   ariaLabel: '收容报告RSS订阅',
   filename: 'weekly.rss',
 }
 const RSS: Theme.RSSOptions = {
-  title: '代码收容所',
+  title: titleText,
   baseUrl,
-  description: '天道酬勤，恒以致遠（大前端相关技术分享）',
+  description: descriptionText,
   id: baseUrl,
   link: baseUrl,
   language: 'zh-cn',
   image: `${relativeUrl}/assert/sitelogo.png`,
   favicon: `${baseUrl}/favicon.ico`,
-  copyright: 'Copyright (c) 2018-present, 代码收容所',
+  copyright: copyrightText,
   url: `${baseUrl}/feed.rss`,
   filter(value) {
     return !value.url.endsWith('/weekly/') && !value.url.endsWith('/case/bad/')
@@ -62,7 +68,7 @@ const blogTheme = getThemeConfig({
   },
   themeColor: 'el-blue',
   RSS: [RSS, RSSWeekly],
-  author: '代码收容所',
+  author: authorText,
   comment: {
     repo: 'cnjimbo/cnjimbo.github.io',
     repoId: 'R_kgDOLK_y4A',
@@ -138,13 +144,13 @@ const blogTheme = getThemeConfig({
   },
   authorList: [
     {
-      nickname: '代码收容所',
+      nickname: titleText,
       url: `${baseUrl}/aboutme.html`,
       des: '天道酬勤，恒以致遠',
     }
   ],
   footer: {
-    copyright: `代码收容所 2006 - ${new Date().getFullYear()}`,
+    copyright: copyrightText,
     icpRecord: {
       name: '京ICP备14018270号',
       link: 'https://beian.miit.gov.cn/',
@@ -186,82 +192,30 @@ const extraHead: any
     ]
   ] : []
 
-export default defineConfig({
+config.head = undefined
+config.themeConfig.nav = undefined
+config.themeConfig.socialLinks = undefined
+config.extends = undefined
+
+export default defineConfig(_.assign(config, {
   base: relativeUrl,
   extends: blogTheme,
-  metaChunk: true,
-  srcExclude: ['CHANGELOG.md'],
-  markdown: {
-    image: {
-      lazyLoading: true,
-    }
-  },
   ignoreDeadLinks: true,
   sitemap: {
     hostname: `${baseUrl}`,
   },
   lang: 'zh-cn',
-  title: '代码收容所',
+  title: `${titleText}`,
   description:
     '代码收容所的个人博客，记录随笔与学习笔记，大前端相关的知识，项目管理，股票等',
   head: [
-    // <meta name="baidu-site-verification" content="codeva-b08avp82Uj" />
-    ['meta', { name: 'baidu-site-verification', content: 'codeva-b08avp82Uj' }],
-    ['meta', { name: 'theme-color', content: '#ffffff' }],
-    ['link', { rel: 'icon', href: '/favicon.ico', type: 'image/png' }],
-    [
-      'link',
-      {
-        rel: 'alternate icon',
-        href: '/favicon.ico',
-        type: 'image/png',
-        sizes: '16x16',
-      },
-    ],
-    ['meta', { name: 'author', content: '代码收容所' }],
-    ['link', { rel: 'mask-icon', href: '/favicon.ico', color: '#ffffff' }],
-    [
-      'link',
-      { rel: 'apple-touch-icon', href: '/favicon.ico', sizes: '180x180' },
-    ],
+
+    ['meta', { name: 'author', content: `${titleText}` }],
+
     ...extraHead,
   ],
-  vite: {
-    plugins: [
-      La51Plugin({
-        id: 'Jgmg5avjAUvoyePS',
-        ck: 'Jgmg5avjAUvoyePS',
-        importMode: 'async'
-      })
-    ]
-  },
-  vue: {
-    template: {
-      compilerOptions: {
-        // https://github.com/vuejs/vitepress/discussions/468
-        isCustomElement: (tag) => {
-          return ['center'].includes(tag.toLocaleLowerCase())
-        },
-      },
-    },
-  },
-  lastUpdated: true,
+
   themeConfig: {
-    outline: {
-      level: [2, 3],
-      label: '目录',
-    },
-    // search: {
-    //   provider: 'algolia',
-    //   options: {
-    //     appId: 'F919JCK8WY',
-    //     apiKey: '3eca209ad24bdfc26db63382dd5e4490',
-    //     indexName: 'sugarat_top',
-    //     placeholder: '请输入要搜索的内容...'
-    //   }
-    // },
-    lastUpdatedText: '上次更新于',
-    // logo: 'https://sugarat.s3.bitiful.net/avatar/blog/zlyst-avatar.jpeg!style:avatar',
     logo: '/logo.png',
     editLink: {
       pattern:
@@ -394,4 +348,4 @@ export default defineConfig({
       },
     ],
   },
-})
+}))
