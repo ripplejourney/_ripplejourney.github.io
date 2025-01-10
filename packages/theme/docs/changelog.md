@@ -1,8 +1,8 @@
 ---
 title: 更新日志
-description: 最近更新（v0.4.9） ⏰ 2024/07/29：依赖升级，sass 警告信息优化
+description: 最近更新（v0.5.3） ⏰ 2024/12/21：pagefind 不检索文章标题
 author: 粥里有勺糖
-top: 2
+top: 3
 tag: 日志
 ---
 
@@ -26,6 +26,73 @@ bun update @sugarat/theme
 bun install vitepress@latest
 ```
 :::
+
+## 0.5.3 (2024/12/21)
+
+### Patch Changes
+
+- Updated dependencies
+  - vitepress-plugin-pagefind@0.4.12
+
+## 0.5.2 (2024/11/07)
+
+### Patch Changes
+
+- fix: sass warn - [legacy-js-api](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/)
+- chore: update dependencies
+- chore: chunkSizeWarningLimit 2048
+
+## 0.5.1 (2024/10/21)
+
+### Patch Changes
+
+- chore: Improving i18n support
+- fix: dev auto reload failed
+
+## 0.5.0 (2024/10/20)
+
+### Minor Changes
+
+- feat: inline group icons plugin
+- feat: support i18n
+- feat: support rewrites and dynamic routes
+- chore: Optimization of theme reloading logic in dev mode
+- Updated dependencies
+  - @sugarat/theme-shared@0.0.3
+  - vitepress-plugin-pagefind@0.4.11
+  - vitepress-plugin-rss@0.3.0
+  - vitepress-plugin-announcement@0.1.3
+
+![](https://cdn.upyun.sugarat.top/mdImg/sugar/d1ece3bc3ff5ee15bb5401b0d20da266)
+
+## 0.4.13 (2024/09/17)
+
+### Patch Changes
+
+- feat: split buildin plugin [vitepress-plugin-announcement](https://www.npmjs.com/package/vitepress-plugin-announcement)
+
+## 0.4.12 (2024/09/13)
+
+### Patch Changes
+
+- fix: utc -number invalid date
+
+## 0.4.11 (2024/09/08)
+
+### Patch Changes
+
+- feat: 支持隐藏 recommend 部分的日期
+- feat: PC 文章列表 title 添加 span 包裹
+- chore: 新增 [vitepress-plugin-51la](https://github.com/ATQQ/sugar-blog/tree/master/packages/vitepress-plugin-51la) 插件
+
+## 0.4.10 (2024/08/17)
+
+### Patch Changes
+
+- feat: support custom analyze titles
+- feat: support custom formatShowDate
+- Updated dependencies
+  - vitepress-plugin-rss@0.2.10
 
 ## 0.4.9 (2024/07/29)
 

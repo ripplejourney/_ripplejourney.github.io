@@ -2,23 +2,23 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRoute, useRouter, withBase } from 'vitepress'
 import { ElButton } from 'element-plus'
-import { formatShowDate, wrapperCleanUrls } from '../utils/client'
-import { useArticles, useBlogConfig, useCleanUrls } from '../composables/config/blog'
+import { wrapperCleanUrls } from '../utils/client'
+import { useArticles, useCleanUrls, useFormatShowDate, useRecommendConfig, useShowRecommend } from '../composables/config/blog'
 import { recommendSVG } from '../constants/svg'
 import type { Theme } from '../composables/config/index'
 
-const { recommend: _recommend } = useBlogConfig()
+const formatShowDate = useFormatShowDate()
+
+const recommend = useRecommendConfig()
+const show = useShowRecommend()
 
 const sidebarStyle = computed(() =>
-  _recommend && _recommend?.style ? _recommend.style : 'sidebar'
+  recommend.value?.style ?? 'sidebar'
 )
 
-const recommendPadding = computed(() =>
-  sidebarStyle.value === 'card' ? '10px' : '0px'
-)
-const recommend = computed(() =>
-  _recommend === false ? undefined : _recommend
-)
+const showDate = computed(() => recommend.value?.showDate ?? true)
+const showNum = computed(() => recommend.value?.showNum ?? true)
+
 const title = computed(() => recommend.value?.title ?? (`<span class="svg-icon">${recommendSVG}</span>` + '相关文章'))
 const pageSize = computed(() => recommend.value?.pageSize || 9)
 const nextText = computed(() => recommend.value?.nextText || '换一组')
@@ -156,7 +156,7 @@ function handleLinkClick(link: string) {
 
 <template>
   <div
-    v-if="_recommend !== false && (recommendList.length || emptyText)" class="recommend"
+    v-if="show && (recommendList.length || emptyText)" class="recommend"
     :class="{ card: sidebarStyle === 'card' }" data-pagefind-ignore="all"
   >
     <!-- 头部 -->
@@ -167,10 +167,16 @@ function handleLinkClick(link: string) {
       </ElButton>
     </div>
     <!-- 文章列表 -->
-    <ol v-if="currentWikiData.length" class="recommend-container">
-      <li v-for="(v, idx) in currentWikiData" :key="v.route">
+    <ol
+      v-if="currentWikiData.length" :class="{
+        'hide-num': !showNum,
+      }" class="recommend-container"
+    >
+      <li
+        v-for="(v, idx) in currentWikiData" :key="v.route"
+      >
         <!-- 序号 -->
-        <i class="num">{{ startIdx + idx + 1 }}</i>
+        <i v-if="showNum" class="num">{{ startIdx + idx + 1 }}</i>
         <!-- 简介 -->
         <div class="des">
           <!-- title -->
@@ -187,7 +193,7 @@ function handleLinkClick(link: string) {
             <span>{{ v.meta.title }}</span>
           </a>
           <!-- 描述信息 -->
-          <div class="suffix">
+          <div v-if="showDate" class="suffix">
             <!-- 日期 -->
             <span class="tag">{{ formatShowDate(v.meta.date) }}</span>
           </div>
@@ -221,7 +227,10 @@ function handleLinkClick(link: string) {
 
 .recommend {
   flex-direction: column;
-  padding: v-bind(recommendPadding);
+  padding: 0px;
+}
+.recommend.card{
+  padding: 10px;
 }
 
 .recommend-container {
@@ -232,6 +241,9 @@ function handleLinkClick(link: string) {
   padding: 0 10px 0 0px;
   width: 100%;
 
+  &.hide-num>li{
+    padding: 5px 0;
+  }
   li {
     display: flex;
 
@@ -251,6 +263,9 @@ function handleLinkClick(link: string) {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .title {
@@ -261,21 +276,21 @@ function handleLinkClick(link: string) {
       font-weight: 500;
       position: relative;
       cursor: pointer;
-
-      &.current {
+      transition: color .25s;
+      &.current,&:hover {
         color: var(--vp-c-brand-1);
       }
     }
 
-    .title:hover::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 0;
-      bottom: -3px;
-      border-bottom: 1px solid #b1b3b8;
-    }
+    // .title:hover::after {
+    //   content: "";
+    //   position: absolute;
+    //   left: 0;
+    //   right: 0;
+    //   height: 0;
+    //   bottom: -3px;
+    //   border-bottom: 1px solid #b1b3b8;
+    // }
 
     .suffix {
       font-size: 12px;

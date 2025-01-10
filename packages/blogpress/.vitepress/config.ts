@@ -2,6 +2,7 @@ import process from 'node:process'
 import { getThemeConfig } from '@sugarat/theme/node'
 import type { Theme } from '@sugarat/theme'
 import { defineConfig } from 'vitepress'
+import { La51Plugin } from 'vitepress-plugin-51la'
 
 const baseUrl = process.env.FULL_URL ?? 'https://www.dmsrs.org'
 const relativeUrl = process.env.PUBLIC_URL ?? ''
@@ -35,10 +36,13 @@ const RSS: Theme.RSSOptions = {
   favicon: `${baseUrl}/favicon.ico`,
   copyright: 'Copyright (c) 2018-present, 代码收容所',
   url: `${baseUrl}/feed.rss`,
+  filter(value) {
+    return !value.url.endsWith('/weekly/') && !value.url.endsWith('/case/bad/')
+  },
   /**
    * 最近100篇，避免太大影响解析
    */
-  limit: 100,
+  limit: 100
 }
 
 const blogTheme = getThemeConfig({
@@ -72,6 +76,9 @@ const blogTheme = getThemeConfig({
       {
         path: 'https://model.oml2d.com/Senko_Normals/senko.model3.json',
       },
+      // {
+      //   path: 'https://oml2d-models.sugarat.top/mai/model.json',
+      // }
     ],
     libraryUrls: {
       complete: 'https://unpkg.com/oh-my-live2d@latest',
@@ -104,6 +111,7 @@ const blogTheme = getThemeConfig({
       },
     ],
     duration: -1,
+    twinkle: true,
   },
   friend: {
     list: [
@@ -121,6 +129,7 @@ const blogTheme = getThemeConfig({
   },
   search: {
     showDate: true,
+    pageResultCount: 4,
   },
   recommend: {
     showSelf: true,
@@ -132,7 +141,7 @@ const blogTheme = getThemeConfig({
       nickname: '代码收容所',
       url: `${baseUrl}/aboutme.html`,
       des: '天道酬勤，恒以致遠',
-    },
+    }
   ],
   footer: {
     copyright: `代码收容所 2006 - ${new Date().getFullYear()}`,
@@ -181,10 +190,11 @@ export default defineConfig({
   base: relativeUrl,
   extends: blogTheme,
   metaChunk: true,
+  srcExclude: ['CHANGELOG.md'],
   markdown: {
     image: {
       lazyLoading: true,
-    },
+    }
   },
   ignoreDeadLinks: true,
   sitemap: {
@@ -217,10 +227,13 @@ export default defineConfig({
     ...extraHead,
   ],
   vite: {
-    server: {
-      port: 4000,
-      host: '0.0.0.0',
-    },
+    plugins: [
+      La51Plugin({
+        id: 'Jgmg5avjAUvoyePS',
+        ck: 'Jgmg5avjAUvoyePS',
+        importMode: 'async'
+      })
+    ]
   },
   vue: {
     template: {
@@ -236,6 +249,7 @@ export default defineConfig({
   themeConfig: {
     outline: {
       level: [2, 3],
+      label: '目录',
     },
     // search: {
     //   provider: 'algolia',

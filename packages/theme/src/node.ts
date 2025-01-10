@@ -23,7 +23,20 @@ export function getThemeConfig(cfg: Partial<Theme.BlogConfig> = {}) {
   // 文章数据
   const pagesData: Theme.PageData[] = []
   const extraVPConfig: any = {
-    vite: {}
+    vite: {
+      // see https://sass-lang.com/documentation/breaking-changes/legacy-js-api/
+      css: {
+        preprocessorOptions: {
+          scss: {
+            api: 'modern',
+          },
+        },
+      },
+      build: {
+        // https://vite.dev/config/build-options.html#build-chunksizewarninglimit
+        chunkSizeWarningLimit: 2048
+      }
+    },
   }
 
   // 获取要加载的vite插件
@@ -46,7 +59,7 @@ export function getThemeConfig(cfg: Partial<Theme.BlogConfig> = {}) {
   return {
     themeConfig: {
       blog: {
-        pagesData,
+        pagesData, // 插件里补全
         ...cfg
       },
       // 补充一些额外的配置用于继承
@@ -61,6 +74,10 @@ export function getThemeConfig(cfg: Partial<Theme.BlogConfig> = {}) {
  */
 export function defineConfig(config: UserConfig<Theme.Config>): any {
   return config
+}
+
+export function defineLocaleConfig(cfg: Omit<Theme.BlogConfig, 'locales' | 'pagesData'>) {
+  return cfg
 }
 
 // 重新导包 tabsMarkdownPlugin 导出CJS格式支持

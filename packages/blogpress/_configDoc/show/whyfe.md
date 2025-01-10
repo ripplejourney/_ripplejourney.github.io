@@ -69,7 +69,7 @@ tips:本文中提到的FE（Front-End）均指前端
 
 ## 快速发展的前端
 
-![图片](./whyfe/MTYwNzgyODkyNTU2OA==607828925568.png)
+![图片](https://img.cdn.sugarat.top/mdImg/MTYwNzgyODkyNTU2OA==607828925568)
 
 在Web1.0时代掌握 HTML,JS,CSS 即可
 
@@ -348,7 +348,7 @@ css:
 
 **桌面应用**
 * [Electron](https://www.electronjs.org/)
-* [Flutter](https://flutter.dev/)
+* [Flutter](https://flutter.dev/) 
 
 **移动应用**
 |                               框架名称                                |  IOS  | Android | 小程序 |  Web  |
@@ -408,3 +408,4 @@ TODO: 补充一张前端技术的思维导图
 
 ## 参考资料
 * [语雀-分享狼叔关于《大前端工程化的实践与思考》](https://www.yuque.com/robinson/fe-pro/gu001d)
+

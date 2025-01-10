@@ -31,6 +31,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var node_exports = {};
 __export(node_exports, {
   defineConfig: () => defineConfig,
+  defineLocaleConfig: () => defineLocaleConfig,
   footerHTML: () => footerHTML,
   getThemeConfig: () => getThemeConfig,
   tabsMarkdownPlugin: () => tabsPlugin
@@ -40,7 +41,7 @@ module.exports = __toCommonJS(node_exports);
 // src/utils/node/mdPlugins.ts
 var import_module = require("module");
 
-// ../../node_modules/.pnpm/vitepress-plugin-tabs@0.2.0_vitepress@1.2.3_@algolia+client-search@4.19.1_@types+node@20.6.3__tasys46ln23ubdv2to2chczqqi/node_modules/vitepress-plugin-tabs/dist/index.js
+// ../../node_modules/.pnpm/vitepress-plugin-tabs@0.2.0_vitepress@1.5.0_@algolia+client-search@4.19.1_@types+node@20.6.3__hxsuj227nyqox5emdzcwg6gwva/node_modules/vitepress-plugin-tabs/dist/index.js
 var tabsMarker = "=tabs";
 var tabsMarkerLen = tabsMarker.length;
 var ruleBlockTabs = (state, startLine, endLine, silent) => {
@@ -206,6 +207,7 @@ var tabsPlugin = (md) => {
 
 // src/utils/node/mdPlugins.ts
 var import_vitepress_markdown_timeline = __toESM(require("vitepress-markdown-timeline"));
+var import_vitepress_plugin_group_icons = require("vitepress-plugin-group-icons");
 
 // src/utils/node/index.ts
 var import_node_path = __toESM(require("path"));
@@ -287,6 +289,7 @@ function getMarkdownPlugins(cfg) {
   if (cfg?.timeline !== false) {
     markdownPlugin.push(import_vitepress_markdown_timeline.default);
   }
+  markdownPlugin.push(import_vitepress_plugin_group_icons.groupIconMdPlugin);
   return markdownPlugin;
 }
 function taskCheckboxPlugin(ops) {
@@ -330,8 +333,6 @@ function patchOptimizeDeps(config) {
 // src/utils/node/theme.ts
 var import_node_fs = __toESM(require("fs"));
 var import_node_path2 = __toESM(require("path"));
-var import_node_process = __toESM(require("process"));
-var import_fast_glob = __toESM(require("fast-glob"));
 var import_theme_shared2 = require("@sugarat/theme-shared");
 
 // src/utils/client/index.ts
@@ -382,13 +383,9 @@ function patchDefaultThemeSideBar(cfg) {
     ]
   } : void 0;
 }
-function getPageRoute(filepath, srcDir) {
-  const route = (0, import_theme_shared2.normalizePath)(import_node_path2.default.relative(srcDir, filepath)).replace(/\.md$/, "");
-  return `/${route}`;
-}
 var defaultTimeZoneOffset = (/* @__PURE__ */ new Date()).getTimezoneOffset() / -60;
-async function getArticleMeta(filepath, route, timeZone = defaultTimeZoneOffset) {
-  const fileContent = await import_node_fs.default.promises.readFile(filepath, "utf-8");
+async function getArticleMeta(filepath, route, timeZone = defaultTimeZoneOffset, baseContent) {
+  const fileContent = baseContent || await import_node_fs.default.promises.readFile(filepath, "utf-8");
   const { data: frontmatter, excerpt, content } = (0, import_theme_shared2.grayMatter)(fileContent, {
     excerpt: true
   });
@@ -398,7 +395,8 @@ async function getArticleMeta(filepath, route, timeZone = defaultTimeZoneOffset)
   if (!meta.title) {
     meta.title = (0, import_theme_shared2.getDefaultTitle)(content);
   }
-  const date = await (meta.date && /* @__PURE__ */ new Date(`${new Date(meta.date).toUTCString()}+${timeZone}`) || (0, import_theme_shared2.getFileLastModifyTime)(filepath));
+  const utcValue = timeZone >= 0 ? `+${timeZone}` : `${timeZone}`;
+  const date = await (meta.date && /* @__PURE__ */ new Date(`${new Date(meta.date).toUTCString()}${utcValue}`) || (0, import_theme_shared2.getFileLastModifyTime)(filepath));
   meta.date = formatDate(date || /* @__PURE__ */ new Date());
   meta.categories = typeof meta.categories === "string" ? [meta.categories] : meta.categories;
   meta.tags = typeof meta.tags === "string" ? [meta.tags] : meta.tags;
@@ -414,20 +412,19 @@ async function getArticleMeta(filepath, route, timeZone = defaultTimeZoneOffset)
   return meta;
 }
 async function getArticles(cfg, vpConfig) {
-  const srcDir = cfg?.srcDir || vpConfig.srcDir.replace(vpConfig.root, "").replace(/^\//, "") || import_node_process.default.argv.slice(2)?.[1] || ".";
-  const files = import_fast_glob.default.sync(`${srcDir}/**/*.md`, { ignore: ["node_modules"], absolute: true });
-  const metaResults = files.reduce((prev, curr) => {
-    const route = getPageRoute(curr, vpConfig.srcDir);
-    const metaPromise = getArticleMeta(curr, route, cfg?.timeZone);
-    prev[curr] = {
+  const pages = (0, import_theme_shared2.getVitePressPages)(vpConfig);
+  const metaResults = pages.reduce((prev, value) => {
+    const { page, route, originRoute, filepath, isDynamic, dynamicRoute } = value;
+    const metaPromise = isDynamic && dynamicRoute ? getArticleMeta(filepath, originRoute, cfg?.timeZone, (0, import_theme_shared2.renderDynamicMarkdown)(filepath, dynamicRoute.params, dynamicRoute.content)) : getArticleMeta(filepath, originRoute, cfg?.timeZone);
+    prev[page] = {
       route,
       metaPromise
     };
     return prev;
   }, {});
   const pageData = [];
-  for (const file of files) {
-    const { route, metaPromise } = metaResults[file];
+  for (const page of pages) {
+    const { route, metaPromise } = metaResults[page.page];
     const meta = await metaPromise;
     if (meta.layout === "home") {
       continue;
@@ -444,8 +441,8 @@ function patchVPConfig(vpConfig, cfg) {
   if (cfg?.comment && "type" in cfg.comment && cfg?.comment?.type === "artalk") {
     const server = cfg.comment?.options?.server;
     if (server) {
-      vpConfig.head.push(["link", { href: `${server}/dist/Artalk.css`, rel: "stylesheet" }]);
-      vpConfig.head.push(["script", { src: `${server}/dist/Artalk.js`, id: "artalk-script" }]);
+      vpConfig.head.push(["link", { href: `${server} /dist/Artalk.css`, rel: "stylesheet" }]);
+      vpConfig.head.push(["script", { src: `${server} /dist/Artalk.js`, id: "artalk-script" }]);
     }
   }
 }
@@ -457,14 +454,15 @@ function checkConfig(cfg) {
 }
 
 // src/utils/node/vitePlugins.ts
-var import_node_path3 = __toESM(require("path"));
-var import_node_fs2 = require("fs");
-var import_node_buffer = require("buffer");
 var import_vitepress_plugin_pagefind = require("vitepress-plugin-pagefind");
 var import_vitepress_plugin_rss = require("vitepress-plugin-rss");
-var import_theme_shared3 = require("@sugarat/theme-shared");
+var import_theme_shared4 = require("@sugarat/theme-shared");
+var import_vitepress_plugin_announcement = require("vitepress-plugin-announcement");
+var import_vitepress_plugin_group_icons2 = require("vitepress-plugin-group-icons");
 
 // src/utils/node/hot-reload-plugin.ts
+var import_fs = __toESM(require("fs"));
+var import_theme_shared3 = require("@sugarat/theme-shared");
 function themeReloadPlugin() {
   let blogConfig;
   let vitepressConfig;
@@ -479,26 +477,51 @@ function themeReloadPlugin() {
       const restart = debounce(() => {
         server.restart();
       }, 500);
-      server.watcher.on("add", async (path4) => {
-        const route = generateRoute(path4);
-        const meta = await getArticleMeta(path4, route, blogConfig?.timeZone);
+      server.watcher.on("add", async (path3) => {
+        const route = generateRoute(path3);
+        const meta = await getArticleMeta(path3, route, blogConfig?.timeZone);
         blogConfig.pagesData.push({
           route,
           meta
         });
         restart();
       });
-      server.watcher.on("change", async (path4) => {
-        const route = generateRoute(path4);
-        const meta = await getArticleMeta(path4, route, blogConfig?.timeZone);
+      server.watcher.on("change", async (path3) => {
+        const route = generateRoute(path3);
+        const fileContent = await import_fs.default.promises.readFile(path3, "utf-8");
+        const { data: frontmatter } = (0, import_theme_shared3.grayMatter)(fileContent, {
+          excerpt: true
+        });
+        const meta = await getArticleMeta(path3, route, blogConfig?.timeZone);
         const matched = blogConfig.pagesData.find((v) => v.route === route);
-        if (matched && !isEqual(matched.meta, meta, ["date", "description"])) {
+        const excludeKeys = ["date", "description"].filter((key) => !frontmatter[key]);
+        const inlineKeys = [
+          // vitepress 默认主题 https://vitepress.dev/zh/reference/frontmatter-config
+          "lang",
+          "outline",
+          "head",
+          "layout",
+          "hero",
+          "features",
+          "navbar",
+          "sidebar",
+          "aside",
+          "lastUpdated",
+          "editLink",
+          "footer",
+          "pageClass",
+          // 本主题扩展 https://theme.sugarat.top/config/frontmatter.html
+          "hiddenCover",
+          "readingTime",
+          "buttonAfterArticle"
+        ];
+        if (matched && !isEqual(matched.meta, meta, inlineKeys.concat(excludeKeys))) {
           matched.meta = meta;
           restart();
         }
       });
-      server.watcher.on("unlink", (path4) => {
-        const route = generateRoute(path4);
+      server.watcher.on("unlink", (path3) => {
+        const route = generateRoute(path3);
         const idx = blogConfig.pagesData.findIndex((v) => v.route === route);
         if (idx >= 0) {
           blogConfig.pagesData.splice(idx, 1);
@@ -540,11 +563,16 @@ function getVitePlugins(cfg = {}) {
     ;
     [cfg?.RSS].flat().forEach((rssConfig) => plugins.push((0, import_vitepress_plugin_rss.RssPlugin)(rssConfig)));
   }
+  if (cfg?.popover) {
+    plugins.push((0, import_vitepress_plugin_announcement.AnnouncementPlugin)(cfg.popover));
+  }
+  plugins.push((0, import_vitepress_plugin_group_icons2.groupIconVitePlugin)(cfg?.groupIcon));
   return plugins;
 }
 function registerVitePlugins(vpCfg, plugins) {
   vpCfg.vite = {
-    plugins
+    plugins,
+    ...vpCfg.vite
   };
 }
 function inlineInjectMermaidClient() {
@@ -563,49 +591,117 @@ function coverImgTransform() {
   let blogConfig;
   let vitepressConfig;
   let assetsDir;
+  const relativeMetaName = ["cover"];
+  const relativeMeta = [];
+  const relativeMetaMap = {};
+  const viteAssetsMap = {};
+  const relativePathMap = {};
   return {
     name: "@sugarat/theme-plugin-cover-transform",
     apply: "build",
-    enforce: "pre",
+    // enforce: 'pre',
     configResolved(config) {
       vitepressConfig = config.vitepress;
       assetsDir = vitepressConfig.assetsDir;
       blogConfig = config.vitepress.site.themeConfig.blog;
+      const pagesData = [...blogConfig.pagesData];
+      if (vitepressConfig.site.locales && Object.keys(vitepressConfig.site.locales).length > 1 && blogConfig?.locales) {
+        Object.values(blogConfig?.locales).map((v) => v.pagesData).filter((v) => !!v).forEach((v) => pagesData.push(...v));
+      }
+      pagesData.forEach((v) => {
+        relativeMetaName.forEach((k) => {
+          const value = v.meta[k];
+          if (value && typeof value === "string" && value.startsWith("/")) {
+            const absolutePath = `${vitepressConfig.srcDir}${value}`;
+            if (relativeMetaMap[absolutePath]) {
+              Object.assign(v.meta, { [k]: relativeMetaMap[absolutePath][k] });
+              return;
+            }
+            relativePathMap[value] = absolutePath;
+            relativePathMap[absolutePath] = value;
+            relativeMeta.push(v.meta);
+            relativeMetaMap[absolutePath] = v.meta;
+          }
+        });
+      });
     },
-    async generateBundle(_, bundle) {
+    moduleParsed(info) {
+      if (!relativePathMap[info.id]) {
+        return;
+      }
+      const asset = info.code?.match(/export default "(.*)"/)?.[1];
+      if (!asset) {
+        return;
+      }
+      viteAssetsMap[info.id] = asset;
+      viteAssetsMap[asset] = info.id;
+      relativeMeta.forEach((meta) => {
+        relativeMetaName.forEach((k) => {
+          const value = meta[k];
+          if (!value || !relativePathMap[value]) {
+            return;
+          }
+          const viteAsset = viteAssetsMap[relativePathMap[value]];
+          if (viteAsset) {
+            Object.assign(meta, { [k]: viteAsset });
+          }
+        });
+      });
+    },
+    generateBundle(_, bundle) {
       const assetsMap = Object.entries(bundle).filter(([key]) => {
         return key.startsWith(assetsDir);
       }).map(([_2, value]) => {
         return value;
-      });
-      for (const page of blogConfig.pagesData) {
-        const { cover } = page.meta;
-        if (!cover?.startsWith?.("/")) {
-          continue;
-        }
-        try {
-          const realPath = import_node_path3.default.join(vitepressConfig.root, cover);
-          if (!(0, import_node_fs2.existsSync)(realPath)) {
-            continue;
-          }
-          const fileBuffer = (0, import_node_fs2.readFileSync)(realPath);
-          const matchAsset = assetsMap.find((v) => import_node_buffer.Buffer.compare(fileBuffer, v.source) === 0);
-          if (matchAsset) {
-            page.meta.cover = (0, import_theme_shared3.joinPath)("/", matchAsset.fileName);
-          }
-        } catch (e) {
-          vitepressConfig.logger.warn(e?.message);
-        }
+      }).filter((v) => v.type === "asset");
+      if (!assetsMap.length) {
+        return;
       }
+      relativeMeta.forEach((meta) => {
+        relativeMetaName.forEach((k) => {
+          const value = meta[k];
+          if (!value || !viteAssetsMap[value]) {
+            return;
+          }
+          const absolutePath = viteAssetsMap[value];
+          const matchAsset = assetsMap.find((v) => (0, import_theme_shared4.joinPath)(`${vitepressConfig.srcDir}/`, v.originalFileName) === absolutePath);
+          if (matchAsset) {
+            Object.assign(meta, { [k]: (0, import_theme_shared4.joinPath)("/", matchAsset.fileName) });
+          }
+        });
+      });
     }
   };
 }
 function providePageData(cfg) {
   return {
     name: "@sugarat/theme-plugin-provide-page-data",
-    async config(config) {
-      const pagesData = await getArticles(cfg, config.vitepress);
-      config.vitepress.site.themeConfig.blog.pagesData = pagesData;
+    async config(config, env) {
+      const vitepressConfig = config.vitepress;
+      const pagesData = await getArticles(cfg, vitepressConfig);
+      if (vitepressConfig.site.locales && Object.keys(vitepressConfig.site.locales).length > 1) {
+        if (!vitepressConfig.site.themeConfig.blog.locales) {
+          vitepressConfig.site.themeConfig.blog.locales = {};
+        }
+        const localeKeys = Object.keys(vitepressConfig.site.locales);
+        localeKeys.forEach((localeKey) => {
+          if (!vitepressConfig.site.themeConfig.blog.locales[localeKey]) {
+            vitepressConfig.site.themeConfig.blog.locales[localeKey] = {};
+          }
+          vitepressConfig.site.themeConfig.blog.locales[localeKey].pagesData = pagesData.filter((v) => {
+            const { route } = v;
+            const isRoot = localeKey === "root";
+            if (isRoot) {
+              return !localeKeys.filter((v2) => v2 !== "root").some((k) => route.startsWith(`/${k}`));
+            }
+            return route.startsWith(`/${localeKey}`);
+          });
+        });
+        if (env.mode === "production") {
+          return;
+        }
+      }
+      vitepressConfig.site.themeConfig.blog.pagesData = pagesData;
     }
   };
 }
@@ -643,7 +739,20 @@ function getThemeConfig(cfg = {}) {
   cfg.mermaid = cfg.mermaid ?? false;
   const pagesData = [];
   const extraVPConfig = {
-    vite: {}
+    vite: {
+      // see https://sass-lang.com/documentation/breaking-changes/legacy-js-api/
+      css: {
+        preprocessorOptions: {
+          scss: {
+            api: "modern"
+          }
+        }
+      },
+      build: {
+        // https://vite.dev/config/build-options.html#build-chunksizewarninglimit
+        chunkSizeWarningLimit: 2048
+      }
+    }
   };
   const vitePlugins = getVitePlugins(cfg);
   registerVitePlugins(extraVPConfig, vitePlugins);
@@ -658,6 +767,7 @@ function getThemeConfig(cfg = {}) {
     themeConfig: {
       blog: {
         pagesData,
+        // 插件里补全
         ...cfg
       },
       // 补充一些额外的配置用于继承
@@ -668,6 +778,9 @@ function getThemeConfig(cfg = {}) {
 }
 function defineConfig(config) {
   return config;
+}
+function defineLocaleConfig(cfg) {
+  return cfg;
 }
 function footerHTML(footerData) {
   const data = [footerData || []].flat();
@@ -682,6 +795,7 @@ function footerHTML(footerData) {
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   defineConfig,
+  defineLocaleConfig,
   footerHTML,
   getThemeConfig,
   tabsMarkdownPlugin
