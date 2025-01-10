@@ -11,8 +11,7 @@
     },
     "target": "esnext",
     "types": [
-      "@types/vue",
-      "typescript-eslint"
+      "@typescript-eslint"
     ],
     "jsx": "preserve",
     "lib": [
