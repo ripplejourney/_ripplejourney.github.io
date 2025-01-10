@@ -11,3 +11,4 @@ packages/theme/node.mjs
 packages/theme/node.d.mts
 _pagefind
 config.ts.timestamp*
+packages/theme/node.*
