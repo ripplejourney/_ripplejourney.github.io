@@ -10,9 +10,7 @@
       ]
     },
     "target": "esnext",
-    "types": [
-      "@typescript-eslint"
-    ],
+    "types": [],
     "jsx": "preserve",
     "lib": [
       "ESNext",
