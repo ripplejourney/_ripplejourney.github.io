@@ -34,12 +34,12 @@
     "build": "npx tsup src/index.ts --dts --external vitepress --format esm,cjs --silent"
   },
   "dependencies": {
-    "cross-spawn": "^7.0.3",
+    "cross-spawn": "^7.0.6",
     "gray-matter": "^4.0.3"
   },
   "devDependencies": {
     "@types/cross-spawn": "^6.0.6",
-    "p-limit": "4",
-    "vitepress": "1.4.1"
+    "p-limit": "^6.2.0",
+    "vitepress": "1.5.0"
   }
 }
