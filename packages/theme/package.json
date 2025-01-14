@@ -19,10 +19,10 @@
   ],
   "exports": {
     "./node": {
-      "types": "./node.d.ts",
-      "import": "./node.mjs",
-      "require": "./node.js",
-      "default": "./node.js"
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.mjs",
+      "require": "./dist/node.js",
+      "default": "./dist/node.js"
     },
     "./package.json": "./package.json",
     ".": "./src/index.ts"
