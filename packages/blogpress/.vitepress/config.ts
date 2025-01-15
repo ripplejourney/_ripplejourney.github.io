@@ -70,10 +70,10 @@ const blogTheme = getThemeConfig({
   RSS: [RSS, RSSWeekly],
   author: authorText,
   comment: {
-    repo: 'cnjimbo/cnjimbo.github.io',
-    repoId: 'R_kgDOLK_y4A',
+    repo: 'ripplejourney/ripplejourney.github.io',
+    repoId: 'R_kgDONnzJWA',
     category: 'Comments',
-    categoryId: 'DIC_kwDOLK_y4M4Cfqnu',
+    categoryId: 'DIC_kwDONnzJWM4CmBcQ',
     inputPosition: 'top',
   },
   oml2d: {
@@ -219,7 +219,7 @@ export default defineConfig(_.assign(config, {
     logo: '/logo.png',
     editLink: {
       pattern:
-        'https://github.com/cnjimbo/cnjimbo.github.io/tree/master/packages/blogpress/:path',
+        'https://github.com/ripplejourney/ripplejourney.github.io/tree/master/packages/blogpress/:path',
       text: '去 GitHub 上编辑内容',
     },
     nav: [
@@ -302,7 +302,7 @@ export default defineConfig(_.assign(config, {
       //   items: [
       //     {
       //       text: 'GitHub',
-      //       link: 'https://github.com/cnjimbo/cnjimbo.github.io'
+      //       link: 'https://github.com/ripplejourney/ripplejourney.github.io'
       //     },
       //     {
       //       text: '博客园',
@@ -341,7 +341,7 @@ export default defineConfig(_.assign(config, {
       },
     ],
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/cnjimbo/cnjimbo.github.io' },
+      { icon: 'github', link: 'https://github.com/ripplejourney/ripplejourney.github.io' },
       {
         icon: 'x',
         link: 'https://x.com/cnJimbo',

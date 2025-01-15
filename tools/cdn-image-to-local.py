@@ -4,8 +4,8 @@ import re
 from urllib.parse import unquote, quote
 import requests
 
-root = 'G:/vPress/cnjimbo.github.io/packages/blogpress'
-# root = 'G:/vPress/cnjimbo.github.io/packages/blogpress/technology/works'
+root = 'G:/vPress/ripplejourney.github.io/packages/blogpress'
+# root = 'G:/vPress/ripplejourney.github.io/packages/blogpress/technology/works'
 img_ext_supportted = ('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg')
 # 对每个文件中的链接分别进行下载和替换链接处理
 img_url_starts = ('https://img.cdn', 'https://cdn.upyun', 'https://pic',

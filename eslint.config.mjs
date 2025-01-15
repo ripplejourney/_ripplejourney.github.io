@@ -112,7 +112,8 @@ export default antfu(
         argsIgnorePattern: '^(?:_|temp_)'
       }],
       'style/eol-last': ['off', 'always'],
-      'jsonc/comma-dangle': 'off'
+      'jsonc/comma-dangle': 'off',
+      'perfectionist/sort-imports': 'off',
     },
   },
 )

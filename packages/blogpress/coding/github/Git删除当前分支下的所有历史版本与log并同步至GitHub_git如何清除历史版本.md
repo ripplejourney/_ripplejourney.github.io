@@ -1,6 +1,6 @@
 ---
 created: 2024-06-21T00:14:35 (UTC +08:00)
-author: cnjimbo
+author: calmripple
 
 sidebar:
  title: Git删除当前分支下的所有历史版本与log并同步至GitHub
@@ -42,7 +42,7 @@ categories:
 
 保留大量的历史版本会给存储设施增加负荷，有时候我们需要删除之前的所有历史版本与log，仅保留当前版本的文件。
 
-删除master分支下的所有历史版本与log，只保留当前的版本，并同步至[GitHub](https://github.com/cnjimbo/cnjimbo.github.io)
+删除master分支下的所有历史版本与log，只保留当前的版本，并同步至[GitHub](https://github.com/ripplejourney/ripplejourney.github.io)
 
 ## 1.2. 方法一
 
