@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useRouter, withBase } from 'vitepress'
 import { computed } from 'vue'
-import { formatShowDate, wrapperCleanUrls } from '../utils/client'
-import { useCleanUrls, useImageStyle } from '../composables/config/blog'
+import { wrapperCleanUrls } from '../utils/client'
+import { useCleanUrls, useFormatShowDate, useImageStyle } from '../composables/config/blog'
 
 const props = defineProps<{
   route: string
@@ -16,8 +16,11 @@ const props = defineProps<{
   cover?: string | false
   pin?: number
 }>()
+
+const formatShowDate = useFormatShowDate()
+
 const showTime = computed(() => {
-  return formatShowDate(props.date)
+  return formatShowDate.value(props.date)
 })
 const cleanUrls = useCleanUrls()
 const link = computed(() => withBase(wrapperCleanUrls(!!cleanUrls, props.route)))
@@ -27,14 +30,15 @@ function handleSkipDoc() {
   router.go(link.value)
 }
 
-const { coverPreview } = useImageStyle()
+const imageStyle = useImageStyle()
+const coverPreview = computed(() => imageStyle.value.coverPreview)
 
 const resultCover = computed(() => {
   if (!props.cover) {
     return ''
   }
   const baseCover = withBase(props.cover)
-  const coverRule = [coverPreview]
+  const coverRule = [coverPreview.value]
     .flat()
     .filter(v => !!v)
     .find((coverRule) => {
@@ -79,7 +83,7 @@ const resultCover = computed(() => {
       <div class="info-part">
         <!-- 标题 -->
         <p class="title pc-visible">
-          {{ title }}
+          <span>{{ title }}</span>
         </p>
         <!-- 简短描述 -->
         <p v-show="!descriptionHTML && !!description" class="description">

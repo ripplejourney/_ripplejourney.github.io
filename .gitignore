@@ -7,4 +7,8 @@ blog.tar.gz
 .DS_Store
 packages/theme/node.d.ts
 packages/theme/node.js
+packages/theme/node.mjs
+packages/theme/node.d.mts
 _pagefind
+config.ts.timestamp*
+packages/theme/node.*

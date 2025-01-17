@@ -1,6 +1,6 @@
-import process from 'node:process'
 import type { Theme } from '@sugarat/theme'
 import { getThemeConfig } from '@sugarat/theme/node'
+import { themeEN } from './locales/en'
 import workConfig from './works'
 
 const baseUrl = 'https://theme.sugarat.top'
@@ -12,8 +12,35 @@ const RSS: Theme.RSSOptions = {
 }
 
 export const blogTheme = getThemeConfig({
+  locales: {
+    en: themeEN
+  },
+  // formatShowDate: {
+  //   justNow: '不久前',
+  //   minutesAgo: ' minutes ago',
+  // },
   search: {
-    pageResultCount: 5
+    pageResultCount: 5,
+    btnPlaceholder: '搜索',
+    placeholder: '搜索文章',
+    emptyText: '没有找到相关文章',
+    heading: '结果数: {{searchResult}} 条。',
+    toSelect: '选择',
+    toClose: '关闭',
+    toNavigate: '移动',
+    searchBy: 'Powered by',
+    locales: {
+      en: {
+        btnPlaceholder: 'Search',
+        placeholder: 'Search Docs',
+        emptyText: 'No results found',
+        heading: 'Total: {{searchResult}} search results.',
+        toSelect: 'to select',
+        toClose: 'to close',
+        toNavigate: 'to navigate',
+        searchBy: 'Search by',
+      }
+    }
   },
   // 图表支持
   mermaid: true,
@@ -121,29 +148,26 @@ export const blogTheme = getThemeConfig({
         link: '/group.html',
       }
     ],
-    duration: 0
+    locales: {
+      en: {
+        title: 'Announcement',
+        body: [
+          { type: 'text', content: '👇 Wechat 👇' },
+          {
+            type: 'image',
+            src: 'https://img.cdn.sugarat.top/mdImg/MTYxNTAxODc2NTIxMA==615018765210~fmt.webp'
+          },
+          {
+            type: 'button',
+            content: 'Author Blog',
+            link: 'https://sugarat.top'
+          },
+        ]
+      }
+    }
   },
   works: workConfig,
   footer: {
     copyright: 'MIT License | 粥里有勺糖',
   }
 })
-
-export const extraHead: any
-  = process.env.NODE_ENV === 'production'
-    ? [
-        [
-          'script',
-          {
-            charset: 'UTF-8',
-            id: 'LA_COLLECT',
-            src: '//sdk.51.la/js-sdk-pro.min.js'
-          }
-        ],
-        [
-          'script',
-          {},
-          'LA.init({id:"Jyzk2AcXA3JsYbrG",ck:"Jyzk2AcXA3JsYbrG",hashMode:true})'
-        ]
-      ]
-    : []

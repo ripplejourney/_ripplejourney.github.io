@@ -10,10 +10,7 @@
       ]
     },
     "target": "esnext",
-    "types": [
-      "@types/vue",
-      "typescript-eslint"
-    ],
+    "types": [],
     "jsx": "preserve",
     "lib": [
       "ESNext",

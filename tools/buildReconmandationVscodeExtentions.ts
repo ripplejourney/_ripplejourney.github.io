@@ -66,7 +66,7 @@ async function findInstalledExtensions(data): Promise<string[]> {
 
 console.log('-----------------------------', 'start', '-----------------------------')
 const codeProfile = './tswindows.code-profile'
-const codeWorkspace = './../cnjimbo.github.io.code-workspace'
+const codeWorkspace = './../ripplejourney.github.io.code-workspace'
 const extensionWorkspace = './../.vscode/extensions.json'
 
 readFileToJson(codeProfile)

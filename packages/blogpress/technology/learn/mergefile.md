@@ -20,10 +20,9 @@ categories:
 装个Node环境即可
 * [Node](https://nodejs.org/zh-cn/)
 
-
 ## 目标
 执行一行如下指令，就搞定目标目录的文件合并
-```js
+```
 node index.js <target_directory>
 ```
 ## 开工
@@ -70,22 +69,23 @@ const fs = require('fs')
  * @returns {string[]} 文件绝对路径数组
  */
 function getDirFiles(dir) {
-    let result = []
-    let files = fs.readdirSync(dir, { withFileTypes: true })
-    files.forEach(file => {
-        const filepath = path.join(dir, file.name)
-        if (file.isFile()) {
-            result.push(filepath)
-        } else if (file.isDirectory()) {
-            result.push(...getDirFiles(filepath))
-        }
-    })
-    return result;
+  const result = []
+  const files = fs.readdirSync(dir, { withFileTypes: true })
+  files.forEach((file) => {
+    const filepath = path.join(dir, file.name)
+    if (file.isFile()) {
+      result.push(filepath)
+    }
+    else if (file.isDirectory()) {
+      result.push(...getDirFiles(filepath))
+    }
+  })
+  return result
 }
 ```
 测试
 ```js
-console.log(getDirFiles('/home/sugar/Documents/VueProject/my-blog-vuepress/docs'));
+console.log(getDirFiles('/home/sugar/Documents/VueProject/my-blog-vuepress/docs'))
 ```
 打印结果，能获取到所有的文件的绝对路径
 ```sh
@@ -109,22 +109,23 @@ console.log(getDirFiles('/home/sugar/Documents/VueProject/my-blog-vuepress/docs'
  * @returns {string[]} 文件绝对路径数组
  */
 function getDirFiles(dir, exclude = []) {
-    let result = []
-    let files = fs.readdirSync(dir, { withFileTypes: true })
-    files.forEach(file => {
-        const filepath = path.join(dir, file.name)
-        const isExclude = exclude.some(v => {
-            return filepath.endsWith(v)
-        })
-        if (!isExclude) {
-            if (file.isFile()) {
-                result.push(filepath)
-            } else if (file.isDirectory()) {
-                result.push(...getDirFiles(filepath, exclude))
-            }
-        }
+  const result = []
+  const files = fs.readdirSync(dir, { withFileTypes: true })
+  files.forEach((file) => {
+    const filepath = path.join(dir, file.name)
+    const isExclude = exclude.some((v) => {
+      return filepath.endsWith(v)
     })
-    return result;
+    if (!isExclude) {
+      if (file.isFile()) {
+        result.push(filepath)
+      }
+      else if (file.isDirectory()) {
+        result.push(...getDirFiles(filepath, exclude))
+      }
+    }
+  })
+  return result
 }
 ```
 
@@ -141,24 +142,24 @@ function getDirFiles(dir, exclude = []) {
  * @param {string[]} files
  */
 function mergeFile(files) {
-    // 写入的目标文件(时间戳命名)
-    const writeFilepath = path.join(__dirname, `${Date.now()}.txt`)
-    files.forEach(f => {
-        // 文件中的内容
-        const txt = fs.readFileSync(f, { encoding: 'utf-8' })
-        // 文件的相对路径（注意，这个targetDir是外部变量表示这些文件的公共目录，此行代码主要为获取文件的相对路径）
-        const dir = f.slice(targetDir.length + 1)
+  // 写入的目标文件(时间戳命名)
+  const writeFilepath = path.join(__dirname, `${Date.now()}.txt`)
+  files.forEach((f) => {
+    // 文件中的内容
+    const txt = fs.readFileSync(f, { encoding: 'utf-8' })
+    // 文件的相对路径（注意，这个targetDir是外部变量表示这些文件的公共目录，此行代码主要为获取文件的相对路径）
+    const dir = f.slice(targetDir.length + 1)
 
-        // 追加内容的方式
-        fs.appendFileSync(writeFilepath, `${dir}\n`)
-        fs.appendFileSync(writeFilepath, `${txt}\n\n`)
-    })
-    console.log('ok', files.length, '个文件');
-    console.log(files);
+    // 追加内容的方式
+    fs.appendFileSync(writeFilepath, `${dir}\n`)
+    fs.appendFileSync(writeFilepath, `${txt}\n\n`)
+  })
+  console.log('ok', files.length, '个文件')
+  console.log(files)
 }
 ```
 ## 测试
-以我[当前的项目](https://github.com/cnjimbo/cnjimbo.github.io)为例子
+以我[当前的项目](https://github.com/ripplejourney/ripplejourney.github.io)为例子
 ```sh
 node index.js /home/sugar/Documents/VueProject/my-blog-vuepress
 ```
@@ -180,9 +181,7 @@ const fs = require('fs')
 // 传入的目录
 const targetDir = process.argv[2]
 // 忽略的内容
-const ignore = ['node_modules', '.git', 'dist',
- 'ignore', 'README.md', '.lock', '.png','docs','.eslintrc.js',
- '.env','LICENSE','tsconfig.json','.github','_tests_']
+const ignore = ['node_modules', '.git', 'dist', 'ignore', 'README.md', '.lock', '.png', 'docs', '.eslintrc.js', '.env', 'LICENSE', 'tsconfig.json', '.github', '_tests_']
 
 const files = getDirFiles(targetDir, ignore)
 
@@ -193,20 +192,20 @@ mergeFile(files)
  * @param {string[]} files
  */
 function mergeFile(files) {
-    // 写入的目标文件(时间戳命名)
-    const writeFilepath = path.join(__dirname, `${Date.now()}.txt`)
-    files.forEach(f => {
-        // 文件中的内容
-        const txt = fs.readFileSync(f, { encoding: 'utf-8' })
-        // 文件的相对路径
-        const dir = f.slice(targetDir.length + 1)
+  // 写入的目标文件(时间戳命名)
+  const writeFilepath = path.join(__dirname, `${Date.now()}.txt`)
+  files.forEach((f) => {
+    // 文件中的内容
+    const txt = fs.readFileSync(f, { encoding: 'utf-8' })
+    // 文件的相对路径
+    const dir = f.slice(targetDir.length + 1)
 
-        // 追加内容的方式
-        fs.appendFileSync(writeFilepath, `${dir}\n`)
-        fs.appendFileSync(writeFilepath, `${txt}\n\n`)
-    })
-    console.log('ok', files.length, '个文件');
-    console.log(files);
+    // 追加内容的方式
+    fs.appendFileSync(writeFilepath, `${dir}\n`)
+    fs.appendFileSync(writeFilepath, `${txt}\n\n`)
+  })
+  console.log('ok', files.length, '个文件')
+  console.log(files)
 }
 
 /**
@@ -216,22 +215,22 @@ function mergeFile(files) {
  * @returns {string[]} 文件绝对路径数组
  */
 function getDirFiles(dir, exclude = []) {
-    let result = []
-    let files = fs.readdirSync(dir, { withFileTypes: true })
-    files.forEach(file => {
-        const filepath = path.join(dir, file.name)
-        const isExclude = exclude.some(v => {
-            return filepath.endsWith(v)
-        })
-        if (!isExclude) {
-            if (file.isFile()) {
-                result.push(filepath)
-            } else if (file.isDirectory()) {
-                result.push(...getDirFiles(filepath, exclude))
-            }
-        }
+  const result = []
+  const files = fs.readdirSync(dir, { withFileTypes: true })
+  files.forEach((file) => {
+    const filepath = path.join(dir, file.name)
+    const isExclude = exclude.some((v) => {
+      return filepath.endsWith(v)
     })
-    return result;
+    if (!isExclude) {
+      if (file.isFile()) {
+        result.push(filepath)
+      }
+      else if (file.isDirectory()) {
+        result.push(...getDirFiles(filepath, exclude))
+      }
+    }
+  })
+  return result
 }
 ```
-
