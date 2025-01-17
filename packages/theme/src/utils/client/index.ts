@@ -94,13 +94,6 @@ export default function countWord(data: string) {
   return count
 }
 
-export function chineseSearchOptimize(input: string) {
-  return input
-    .replace(/[\u4E00-\u9FA5]/g, ' $& ')
-    .replace(/\s+/g, ' ')
-    .trim()
-}
-
 /**
  * 根据Github地址跨域获取最后更新时间
  * @param url
@@ -176,4 +169,8 @@ export function getImageUrl(
 export function wrapperCleanUrls(cleanUrls: boolean, route: string) {
   const tempUrl = route.replace(/\.html$/, '')
   return cleanUrls ? tempUrl : `${tempUrl}.html`
+}
+
+export function replaceValue(str: string, value: any) {
+  return str.replace(/\{\{value\}\}/, value)
 }
