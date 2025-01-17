@@ -34,6 +34,11 @@ on:
 permissions:
   contents: write
   actions: write
+  deployments: write
+  id-token: write
+  pull-requests: write
+  issues: write
+  statuses: write
 concurrency:
   # 针对远程部署库，无法同时部署多个preview 添加并行限制
   group: preview-${{ github.event_name }}-${{ github.event.number || github.ref_name }}
