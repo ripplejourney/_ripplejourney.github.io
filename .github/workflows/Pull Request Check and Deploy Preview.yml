@@ -130,9 +130,7 @@ jobs:
           preview_base_url: ${{ env.PAGES_BASE }}
           preview_repo: ${{ env.PREVIEW_REPO }}
           preview_token: ${{ secrets.PREVIEW_TOKEN }}
-        env:
-          PUBLIC_URL: ${{ steps.baseurl.outputs.relative }}
-          FULL_URL: ${{ steps.baseurl.outputs.full }}
+
       # - uses: EndBug/pages-preview@v1
       #   with:
       #     # The directory in which the website has been built, in the a/b/c format
