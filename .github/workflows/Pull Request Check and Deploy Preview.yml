@@ -31,7 +31,9 @@ on:
       # - review_request_removed
       # - auto_merge_enabled
       # - auto_merge_disabled
-
+permissions:
+  contents: write
+  actions: write
 concurrency:
   # 针对远程部署库，无法同时部署多个preview 添加并行限制
   group: preview-${{ github.event_name }}-${{ github.event.number || github.ref_name }}
