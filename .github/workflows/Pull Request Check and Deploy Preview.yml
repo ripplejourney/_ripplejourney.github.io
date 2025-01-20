@@ -150,11 +150,11 @@ jobs:
 
       #     # The name of the author of the resulting commit
       #     # Default: the GitHub Actor
-      #     git_author_name: calmripple
+          git_author_name: calmripple
 
       #     # The email of the author of the resulting commit
       #     # Default: the GitHub Actor's
-      #     git_author_email: calmripple@users.noreply.github.com
+          git_author_email: calmripple@users.noreply.github.com
 
       #     # The committer of the resulting commit
       #     # Default: copies git_author_name
@@ -162,7 +162,7 @@ jobs:
 
       #     # The email of the committer of the resulting commit
       #     # Default: copies git_author_email
-      #     git_committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+          git_committer_email: 41898282+github-actions[bot]@users.noreply.github.com
 
       #     # Whether to comment on PRs
       #     # Default: 'true'
