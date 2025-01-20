@@ -18,7 +18,7 @@ on:
     branches: [master, master--]
   schedule:
     - cron: '27 15 * * 4'
-
+permissions: write-all
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
