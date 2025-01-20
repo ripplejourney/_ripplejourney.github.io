@@ -5,9 +5,11 @@ on:
     types: [opened]
   pull_request_target:
     types: [opened]
-permissions:
-  contents: write
-  actions: write
+# permissions:
+#   contents: write
+#   actions: write
+
+permissions: write-all
 jobs:
   welcome:
     runs-on: ubuntu-latest
