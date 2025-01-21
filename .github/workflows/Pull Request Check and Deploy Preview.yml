@@ -20,7 +20,7 @@ on:
       # - unlabeled
       - opened
       - edited
-      - closed
+      # - closed
       - reopened
       - synchronize
       # - converted_to_draft
@@ -31,7 +31,7 @@ on:
       # - review_request_removed
       # - auto_merge_enabled
       # - auto_merge_disabled
-permissions: write-all
+# permissions: write-all
 
 concurrency:
   # 针对远程部署库，无法同时部署多个preview 添加并行限制
@@ -119,16 +119,14 @@ jobs:
 
       # This will trigger the action. Make sure to change the build_dir input to the correct directory
       - uses: EndBug/pages-preview@v1.1.1
+        env:
+          PUBLIC_URL: ${{ steps.baseurl.outputs.relative }}
+          FULL_URL: ${{ steps.baseurl.outputs.full }}
         with:
           build_dir: packages/blogpress/.vitepress/dist # Change this!
           preview_base_url: ${{ env.PAGES_BASE }}
           preview_repo: ${{ env.PREVIEW_REPO }}
           preview_token: ${{ secrets.PREVIEW_TOKEN }}
-        env:
-          PUBLIC_URL: ${{ steps.baseurl.outputs.relative }}
-          FULL_URL: ${{ steps.baseurl.outputs.full }}
-      # - uses: EndBug/pages-preview@v1
-      #   with:
       #     # The directory in which the website has been built, in the a/b/c format
       #     build_dir: packages/blogpress/.vitepress/dist
 
@@ -171,9 +169,9 @@ jobs:
       #     pr_comment: 'false'
 
       #     # The name of the branch that hosts the previews
-      #     # Default: gh-pages
-      #     preview_branch: gh-pages
+          # Default: gh-pages
+          preview_branch: gh-pages
 
-      #     # The name of the workflow file that contains the comment workflow in the preview repo
-      #     # Default: preview.yml
-      #     preview_workflow_file_name: preview.yml
+          # The name of the workflow file that contains the comment workflow in the preview repo
+          # Default: preview.yml
+          preview_workflow_file_name: preview.yml
