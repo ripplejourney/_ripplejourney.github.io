@@ -1,14 +1,17 @@
 name: Auto Create Pull Request
 on:
   push:
-    branches:
-      - 'feature/*' # 监听以'feature/'开头的分支
+    # branches:
+    #   - 'feature/*' # 监听以'feature/'开头的分支
+    #   - 'fix/*'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 permissions: write-all
+env:
+  MAIN_BRANCH: ${{ vars.MAIN_BRANCH || 'master' }} # 主分支名称
 jobs:
   create-pr:
-    if: ${{ !contains(github.ref, 'master') }}
+    if: ${{ !contains(github.ref, github.env.MAIN_BRANCH)}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -25,4 +28,4 @@ jobs:
             This is an automated pull request created from a feature branch.
             Please review and merge if ready.
           branch: ${{ github.ref }}
-          base: master # 目标分支，根据你的仓库情况可能是'main'或'master'
+          base: ${{github.env.MAIN_BRANCH}} # 目标分支，根据你的仓库情况可能是'main'或'master'
