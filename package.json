@@ -41,17 +41,15 @@
     "postinstall": "npx simple-git-hooks",
     "preinstall": "npx only-allow pnpm"
   },
-  "dependencies": {
-    "radash": "^12.1.0"
-  },
   "devDependencies": {
-    "@antfu/eslint-config": "3.14.0",
+    "radash": "^12.1.0",
+    "@antfu/eslint-config": "3.16.0",
     "@changesets/cli": "^2.27.11",
-    "@types/bun": "^1.1.16",
-    "@types/node": "^22.10.6",
+    "@types/bun": "^1.2.0",
+    "@types/node": "^22.10.9",
     "eslint": "^9.18.0",
     "eslint-plugin-todo-ddl": "^1.1.1",
-    "lint-staged": "^15.3.0",
+    "lint-staged": "^15.4.2",
     "prettier": "^3.4.2",
     "simple-git-hooks": "^2.11.1",
     "tsup": "^8.3.5",
