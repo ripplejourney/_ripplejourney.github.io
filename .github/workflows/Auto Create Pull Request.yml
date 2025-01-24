@@ -1,9 +1,9 @@
 name: Auto Create Pull Request
 on:
   push:
-    # branches:
-    #   - 'feature/*' # 监听以'feature/'开头的分支
-    #   - 'fix/*'
+  # branches:
+  #   - 'feature/*' # 监听以'feature/'开头的分支
+  #   - 'fix/*'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 permissions: write-all
@@ -29,3 +29,11 @@ jobs:
             Please review and merge if ready.
           branch: ${{ github.ref }}
           base: ${{github.env.MAIN_BRANCH}} # 目标分支，根据你的仓库情况可能是'main'或'master'
+
+      - name: Enable Pull Request Automerge
+        if: steps.create_pr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.create_pr.outputs.pull-request-number }}
+          merge-method: squash
