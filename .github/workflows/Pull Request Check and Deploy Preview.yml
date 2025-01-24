@@ -7,6 +7,7 @@
 
 name: Pull Request Check and Deploy Preview
 on:
+  workflow_dispatch:
   # push:
   #   branches:
   #     - main
