@@ -50,3 +50,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.create_pr.outputs.pull-request-number }}
           merge-method: squash
+
+      - name: Invoke 'Pull Request Check and Deploy Preview.yml' in current repo with inputs # 因为使用github token，不能创建新的工作流运行，需要手动触发
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Pull Request Check and Deploy Preview.yml
+          # repo: benc-uk/example
+          # inputs: '{ "message": "blah blah", "something": false }'
+          # Required when using the `repo` option. Either a PAT or a token generated from the GitHub app or CLI
+          # token: "${{ secrets.MY_TOKEN }}"
