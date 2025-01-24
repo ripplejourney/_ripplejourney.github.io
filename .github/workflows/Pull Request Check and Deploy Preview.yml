@@ -29,8 +29,8 @@ on:
       # - unlocked
       # - review_requested
       # - review_request_removed
-      # - auto_merge_enabled
-      # - auto_merge_disabled
+      - auto_merge_enabled
+      - auto_merge_disabled
 permissions: write-all
 
 concurrency:
@@ -127,43 +127,43 @@ jobs:
         env:
           PUBLIC_URL: ${{ steps.baseurl.outputs.relative }}
           FULL_URL: ${{ steps.baseurl.outputs.full }}
-      # - uses: EndBug/pages-preview@v1
-      #   with:
-      #     # The directory in which the website has been built, in the a/b/c format
-      #     build_dir: packages/blogpress/.vitepress/dist
+          # - uses: EndBug/pages-preview@v1
+          #   with:
+          #     # The directory in which the website has been built, in the a/b/c format
+          #     build_dir: packages/blogpress/.vitepress/dist
 
-      #     # The GitHub Pages base URL of the preview repo
-      #     preview_base_url: https://ripplejourney.github.io/preview
+          #     # The GitHub Pages base URL of the preview repo
+          #     preview_base_url: https://ripplejourney.github.io/preview
 
-      #     # The repository to push previews to, in the Owner/Name format
-      #     preview_repo: ripplejourney/preview
+          #     # The repository to push previews to, in the Owner/Name format
+          #     preview_repo: ripplejourney/preview
 
-      #     # The token to access the preview repo, that you created during setup
-      #     preview_token: ${{ secrets.PREVIEW_TOKEN }}
+          #     # The token to access the preview repo, that you created during setup
+          #     preview_token: ${{ secrets.PREVIEW_TOKEN }}
 
-      #     # --- OPTIONAL ---
-      #     # The name of the environment to use for the deployment
-      #     # Default: 'preview'
-      #     deployment_env: 'development'
+          #     # --- OPTIONAL ---
+          #     # The name of the environment to use for the deployment
+          #     # Default: 'preview'
+          #     deployment_env: 'development'
 
-      #     # Whether to use the deployments API
-      #     # Default: 'true'
-      #     deployments: false
+          #     # Whether to use the deployments API
+          #     # Default: 'true'
+          #     deployments: false
 
-      #     # The name of the author of the resulting commit
-      #     # Default: the GitHub Actor
+          #     # The name of the author of the resulting commit
+          #     # Default: the GitHub Actor
           git_author_name: calmripple
 
-      #     # The email of the author of the resulting commit
-      #     # Default: the GitHub Actor's
+          #     # The email of the author of the resulting commit
+          #     # Default: the GitHub Actor's
           git_author_email: calmripple@users.noreply.github.com
 
-      #     # The committer of the resulting commit
-      #     # Default: copies git_author_name
-      #     git_committer_name: GitHub Actions
+          #     # The committer of the resulting commit
+          #     # Default: copies git_author_name
+          #     git_committer_name: GitHub Actions
 
-      #     # The email of the committer of the resulting commit
-      #     # Default: copies git_author_email
+          #     # The email of the committer of the resulting commit
+          #     # Default: copies git_author_email
           git_committer_email: 41898282+github-actions[bot]@users.noreply.github.com
 
       #     # Whether to comment on PRs
