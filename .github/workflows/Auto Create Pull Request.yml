@@ -11,13 +11,13 @@ env:
   MAIN_BRANCH: ${{ vars.MAIN_BRANCH || 'master' }} # 主分支名称
 jobs:
   create-pr:
-
+    if: ${{ !contains(github.ref, env.MAIN_BRANCH)}}
     runs-on: ubuntu-latest
     steps:
-      - name: github.env.MAIN_BRANCH
-        run: echo "1 MAIN_BRANCH=${{ github.env.MAIN_BRANCH }}"
-      - name: env.MAIN_BRANCH
-        run: echo "2 MAIN_BRANCH=${{ env.MAIN_BRANCH }}"
+      - name: display some info
+        run: |
+          echo "1 MAIN_BRANCH=${{ github.env.MAIN_BRANCH }}"
+          echo "2 MAIN_BRANCH=${{ env.MAIN_BRANCH }}"
       - name: printenv
         run: printenv
 
