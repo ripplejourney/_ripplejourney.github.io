@@ -9,7 +9,7 @@ export default antfu(
     ignores: [
       // "packages/theme/dist/*.js",
       '**/node_modules',
-      // '**/*.md',
+      '**/*.md',
       // "**/*.yml",
       '**/.history/**',
       '**/dist/',
