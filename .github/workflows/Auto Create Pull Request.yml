@@ -1,9 +1,9 @@
 name: Auto Create Pull Request
 on:
   push:
-    # branches:
-    #   - 'feature/*' # 监听以'feature/'开头的分支
-    #   - 'fix/*'
+  # branches:
+  #   - 'feature/*' # 监听以'feature/'开头的分支
+  #   - 'fix/*'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 permissions: write-all
@@ -11,10 +11,23 @@ env:
   MAIN_BRANCH: ${{ vars.MAIN_BRANCH || 'master' }} # 主分支名称
 jobs:
   create-pr:
-    if: ${{ !contains(github.ref, github.env.MAIN_BRANCH)}}
+
     runs-on: ubuntu-latest
     steps:
+      - name: display some info
+        run: |
+          echo "github.env.MAIN_BRANCH = ${{ github.env.MAIN_BRANCH }}"
+          echo "env.MAIN_BRANCH = ${{ env.MAIN_BRANCH }}"
+          echo "${{ !contains(github.ref, env.MAIN_BRANCH)}} =${{github.ref}} ? ${{env.MAIN_BRANCH}}"
+      - name: printenv
+        run: printenv
+
       - name: Checkout repository
+        if: ${{ !contains(github.ref, env.MAIN_BRANCH)}}
+        run: echo "${{ !contains(github.ref, env.MAIN_BRANCH)}} =${{github.ref}} ? ${{env.MAIN_BRANCH}}"
+
+      - name: Checkout repository
+        if: ${{ !contains(github.ref, env.MAIN_BRANCH)}}
         uses: actions/checkout@v4
 
       - name: Create Pull Request
@@ -28,4 +41,21 @@ jobs:
             This is an automated pull request created from a feature branch.
             Please review and merge if ready.
           branch: ${{ github.ref }}
-          base: ${{github.env.MAIN_BRANCH}} # 目标分支，根据你的仓库情况可能是'main'或'master'
+          base: ${{env.MAIN_BRANCH}} # 目标分支，根据你的仓库情况可能是'main'或'master'
+
+      - name: Enable Pull Request Automerge
+        if: steps.create_pr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.create_pr.outputs.pull-request-number }}
+          merge-method: squash
+
+      - name: Invoke 'Pull Request Check and Deploy Preview.yml' in current repo with inputs # 因为使用github token，不能创建新的工作流运行，需要手动触发
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Pull Request Check and Deploy Preview.yml
+          # repo: benc-uk/example
+          # inputs: '{ "message": "blah blah", "something": false }'
+          # Required when using the `repo` option. Either a PAT or a token generated from the GitHub app or CLI
+          # token: "${{ secrets.MY_TOKEN }}"

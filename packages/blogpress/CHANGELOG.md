@@ -1,11 +1,127 @@
----
-publish: false
----
+## 2.0.65
+
+### Patch Changes
+
+- @sugarat/theme@0.5.3
+
+## 2.0.64
+
+### Patch Changes
+
+- @sugarat/theme@0.5.3
+
+## 2.0.63
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.5.2
+
+## 2.0.62
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.5.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.4.14
+
+## 2.0.60
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.4.13
+
+## 2.0.59
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.4.12
+
+## 2.0.58
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.4.11
+
+## 2.0.57
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.4.10
+
+## 2.0.56
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.4.9
+
+## 2.0.55
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.4.7
 
 # CHANGELOG
 
+## 2.0.54
+
+### Patch Changes
+
+- @sugarat/theme@0.4.6
+
+## 2.0.53
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.4.5
+
+## 2.0.52
+
+### Patch Changes
+
+- @sugarat/theme@0.4.4
+
+## 2.0.51
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.4.3
+
+## 2.0.50
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.4.2
+
+## 2.0.49
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.4.1
+
+## 2.0.48
+
+### Patch Changes
+
+- Updated dependencies
+  - @sugarat/theme@0.4.0
 
 ## 2.0.47
+
 ### Patch Changes
 
 - Updated dependencies
