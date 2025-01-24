@@ -11,10 +11,14 @@ env:
   MAIN_BRANCH: ${{ vars.MAIN_BRANCH || 'master' }} # 主分支名称
 jobs:
   create-pr:
-    if: ${{ !contains(github.ref, github.env.MAIN_BRANCH)}}
+
     runs-on: ubuntu-latest
     steps:
+      - name: printenv
+        run: printenv
+
       - name: Checkout repository
+        if: ${{ !contains(github.ref, github.env.MAIN_BRANCH)}}
         uses: actions/checkout@v4
 
       - name: Create Pull Request
