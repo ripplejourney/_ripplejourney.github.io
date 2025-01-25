@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 permissions: write-all
 env:
-  MAIN_BRANCH: ${{ vars.MAIN_BRANCH || 'master' }} # 主分支名称
+  MAIN_BRANCH: ${{ vars.MAIN_BRANCH || github.event.repository.default_branch }} # 主分支名称
 
 concurrency:
   # 针对远程部署库，无法同时部署多个preview 添加并行限制
@@ -53,7 +53,7 @@ jobs:
             Please review and merge if ready.
           branch: ${{ github.ref }}
           base: ${{env.MAIN_BRANCH}} # 目标分支，根据你的仓库情况可能是'main'或'master'
-          delete-branch: true
+          delete-branch: false
 
       - name: Enable Pull Request Automerge
         if: steps.create_pr.outputs.pull-request-operation == 'created'
