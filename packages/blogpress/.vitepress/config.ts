@@ -80,11 +80,14 @@ const blogTheme = getThemeConfig({
     mobileDisplay: true,
     models: [
       {
-        path: 'https://model.oml2d.com/Senko_Normals/senko.model3.json',
+        path: 'https://cdn.jsdelivr.net/gh/open-dmsrs/live2d-models@master/models/Senko_Normals/senko.model3.json',
       },
-      // {
-      //   path: 'https://oml2d-models.sugarat.top/mai/model.json',
-      // }
+      {
+        path: 'https://cdn.jsdelivr.net/gh/open-dmsrs/live2d-models@master/models/mai/model.json',
+      },
+      {
+        path: 'https://cdn.jsdelivr.net/gh/open-dmsrs/live2d-models@master/models/bilibili-33/index.json',
+      }
     ],
     libraryUrls: {
       complete: 'https://unpkg.com/oh-my-live2d@latest',
