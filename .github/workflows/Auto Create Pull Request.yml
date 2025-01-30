@@ -87,7 +87,7 @@ jobs:
           # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
           fetch-depth: 0
       - name: Checkout PR head
-        if: ${{ startsWith(github.event_name, 'pull_request') && steps.create_pr.outputs.pull-request-operation != 'closed' }}
+        if: ${{  steps.create_pr.outputs.pull-request-operation != 'closed' }}
         uses: actions/checkout@v4
         with:
           ref: refs/pull/${{ steps.create_pr.outputs.pull-request-number }}/merge
