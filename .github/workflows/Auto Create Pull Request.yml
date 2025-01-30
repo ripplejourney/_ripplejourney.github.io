@@ -25,21 +25,29 @@ jobs:
       PREVIEW_REPO: ripplejourney/preview
       PAGES_BASE: https://www.dmsrs.org/preview
     steps:
-      - name: display some info
-        run: |
-          echo "github.env.MAIN_BRANCH = ${{ github.env.MAIN_BRANCH }}"
-          echo "env.MAIN_BRANCH = ${{ env.MAIN_BRANCH }}"
-          echo "${{ !contains(github.ref, env.MAIN_BRANCH)}} =${{github.ref}} ? ${{env.MAIN_BRANCH}}"
-      - name: printenv
-        run: printenv
+      # - name: display some info
+      #   run: |
+      #     echo "github.env.MAIN_BRANCH = ${{ github.env.MAIN_BRANCH }}"
+      #     echo "env.MAIN_BRANCH = ${{ env.MAIN_BRANCH }}"
+      #     echo "${{ !contains(github.ref, env.MAIN_BRANCH)}} =${{github.ref}} ? ${{env.MAIN_BRANCH}}"
+      # - name: printenv
+      #   run: printenv
 
-      - name: display some info
-        if: ${{ !contains(github.ref, env.MAIN_BRANCH)}}
-        run: echo "${{ !contains(github.ref, env.MAIN_BRANCH)}} =${{github.ref}} ? ${{env.MAIN_BRANCH}}"
+      # - name: display some info
+      #   if: ${{ !contains(github.ref, env.MAIN_BRANCH)}}
+      #   run: echo "${{ !contains(github.ref, env.MAIN_BRANCH)}} =${{github.ref}} ? ${{env.MAIN_BRANCH}}"
 
       - name: Checkout repository
         if: ${{ !contains(github.ref, env.MAIN_BRANCH)}}
         uses: actions/checkout@v4
+
+      - name: Git Configuration
+        # 2、配置 Git
+        run: |
+          git config --global core.quotePath false
+          git config --global core.autocrlf false
+          git config --global core.safecrlf true
+          git config --global core.ignorecase false
 
       - name: Create Pull Request
         id: create_pr
@@ -72,17 +80,17 @@ jobs:
       #     # Required when using the `repo` option. Either a PAT or a token generated from the GitHub app or CLI
       #     # token: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Checkout branch
-        if: ${{ !startsWith(github.event_name, 'pull_request') }}
+      - name: Checkout ${{env.MAIN_BRANCH}} branch
         uses: actions/checkout@v4
         with:
+          ref: ${{env.MAIN_BRANCH}}
           # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
           fetch-depth: 0
       - name: Checkout PR head
-        if: ${{ startsWith(github.event_name, 'pull_request') && github.event.action != 'closed' }}
+        if: ${{ startsWith(github.event_name, 'pull_request') && steps.create_pr.outputs.pull-request-operation != 'closed' }}
         uses: actions/checkout@v4
         with:
-          ref: refs/pull/${{ github.event.pull_request.number }}/merge
+          ref: refs/pull/${{ steps.create_pr.outputs.pull-request-number }}/merge
           # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
           fetch-depth: 0
 
@@ -95,14 +103,14 @@ jobs:
       # Assuming you're using Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4.2.0
-        if: ${{ github.event.action != 'closed' }} # Skipping these steps if the PR has been closed
+        if: ${{ steps.create_pr.outputs.pull-request-operation != 'closed' }} # Skipping these steps if the PR has been closed
         with:
           node-version: 21
           # registry-url: https://registry.npmjs.org
           cache: pnpm
 
       - name: Install dependencies
-        if: ${{ github.event.action != 'closed' }}
+        if: ${{ steps.create_pr.outputs.pull-request-operation != 'closed' }}
         # run: pnpm install --ignore-scripts
         run: |
           pnpm install
@@ -111,11 +119,11 @@ jobs:
       # This will calculate the base URL for the website, based on the event that triggered the workflow.
       # Leave this step as it is, unless you know what you're doing.
       - name: Determine base URL
-        if: ${{ github.event.action != 'closed' }}
+        if: ${{ steps.create_pr.outputs.pull-request-operation != 'closed' }}
         id: baseurl
         run: |
           if [ "${{ github.event_name }}" == "pull_request_target" ]; then
-            full="${{ env.PAGES_BASE }}/${{ github.repository }}/pr/${{ github.event.number }}"
+            full="${{ env.PAGES_BASE }}/${{ github.repository }}/pr/${{ steps.create_pr.outputs.pull-request-number }}"
           else
             full="${{ env.PAGES_BASE }}/${{ github.repository }}/branch/${{ github.ref_name }}"
           fi
@@ -129,14 +137,10 @@ jobs:
       # Run your usual build command, but make sure to use the correct base URL
       # This example assumes you're using React, and that you're using the PUBLIC_URL env variable
       - name: pnpm buildlib
-        if: ${{ github.event.action != 'closed' }}
-        run: pnpm buildlib
-        env:
-          PUBLIC_URL: ${{ steps.baseurl.outputs.relative }}
-          FULL_URL: ${{ steps.baseurl.outputs.full }}
-      - name: pnpm build
-        if: ${{ github.event.action != 'closed' }}
-        run: pnpm build
+        if: ${{ steps.create_pr.outputs.pull-request-operation != 'closed' }}
+        run: |
+          pnpm buildlib
+          pnpm build
         env:
           PUBLIC_URL: ${{ steps.baseurl.outputs.relative }}
           FULL_URL: ${{ steps.baseurl.outputs.full }}
