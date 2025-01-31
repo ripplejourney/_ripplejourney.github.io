@@ -6,9 +6,18 @@ on:
   #   - 'fix/*'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      manual_branch:
+        description: Set branch
+        required: true
+        type: string
+
 permissions: write-all
 env:
   MAIN_BRANCH: ${{ vars.MAIN_BRANCH || github.event.repository.default_branch }} # 主分支名称
+  PREVIEW_REPO: ${{ vars.PREVIEW_REPO || 'ripplejourney/preview' }}
+  PAGES_BASE: ${{ vars.PAGES_BASE || 'https://www.dmsrs.org/preview' }}
+  reviewers: ${{ vars.reviewers || 'calmripple' }}
 
 concurrency:
   # 针对远程部署库，无法同时部署多个preview 添加并行限制
@@ -19,11 +28,12 @@ concurrency:
 
 jobs:
   create-pr:
-
+    if: ! contains(github.event.head_commit.message, 'wip')
     runs-on: ubuntu-latest
-    env:
-      PREVIEW_REPO: ripplejourney/preview
-      PAGES_BASE: https://www.dmsrs.org/preview
+    outputs:
+      pull-request-number: ${{ steps.create_pr.outputs.pull-request-number }}
+      pull-request-operation: ${{ steps.create_pr.outputs.pull-request-operation }}
+
     steps:
       # - name: display some info
       #   run: |
@@ -61,14 +71,18 @@ jobs:
             Please review and merge if ready.
           branch: ${{ github.ref }}
           base: ${{env.MAIN_BRANCH}} # 目标分支，根据你的仓库情况可能是'main'或'master'
-          delete-branch: false
-
+          delete-branch: true
+  enable-automerge:
+    if: ! contains(github.event.head_commit.message, 'wip')
+    needs: create-pr
+    runs-on: ubuntu-latest
+    steps:
       - name: Enable Pull Request Automerge
-        if: steps.create_pr.outputs.pull-request-operation == 'created'
+        if: ${{ needs.create-pr.outputs.pull-request-operation != 'closed' }}
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-number: ${{ steps.create_pr.outputs.pull-request-number }}
+          pull-request-number: ${{ needs.create-pr.outputs.pull-request-number }}
           merge-method: rebase
 
       # - name: Invoke 'Pull Request Check and Deploy Preview.yml' in current repo with inputs # 因为使用github token，不能创建新的工作流运行，需要手动触发
@@ -79,18 +93,40 @@ jobs:
       #     # inputs: '{ "message": "blah blah", "something": false }'
       #     # Required when using the `repo` option. Either a PAT or a token generated from the GitHub app or CLI
       #     # token: "${{ secrets.GITHUB_TOKEN }}"
+  preview:
+    if: ! contains(github.event.head_commit.message, 'wip') && needs.create-pr.outputs.pull-request-operation != 'closed'
+    runs-on: ubuntu-latest
+    needs: [create-pr, enable-automerge]
+    outputs:
+      preview_url: ${{ steps.baseurl.outputs.full }}
+    steps:
+     # This will calculate the base URL for the website, based on the event that triggered the workflow.
+      # Leave this step as it is, unless you know what you're doing.
+      - name: Determine base URL
+        id: baseurl
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request_target" ]; then
+            full="${{ env.PAGES_BASE }}/${{ github.repository }}/pr/${{ needs.create-pr.outputs.pull-request-number }}"
+          else
+            full="${{ env.PAGES_BASE }}/${{ github.repository }}/branch/${{ github.ref_name }}"
+          fi
 
-      - name: Checkout ${{env.MAIN_BRANCH}} branch
+          relative=/$(echo "$full" | cut -d/ -f4-)
+
+          echo "full=$full" >> "$GITHUB_OUTPUT"
+          echo "relative=$relative" >> "$GITHUB_OUTPUT"
+        shell: bash
+      - name: Checkout branch - ${{env.MAIN_BRANCH}}
         uses: actions/checkout@v4
         with:
           ref: ${{env.MAIN_BRANCH}}
           # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
           fetch-depth: 0
       - name: Checkout PR head
-        if: ${{  steps.create_pr.outputs.pull-request-operation != 'closed' }}
+
         uses: actions/checkout@v4
         with:
-          ref: refs/pull/${{ steps.create_pr.outputs.pull-request-number }}/merge
+          ref: refs/pull/${{ needs.create-pr.outputs.pull-request-number }}/merge
           # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
           fetch-depth: 0
 
@@ -103,41 +139,20 @@ jobs:
       # Assuming you're using Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4.2.0
-        if: ${{ steps.create_pr.outputs.pull-request-operation != 'closed' }} # Skipping these steps if the PR has been closed
         with:
           node-version: 21
           # registry-url: https://registry.npmjs.org
           cache: pnpm
 
       - name: Install dependencies
-        if: ${{ steps.create_pr.outputs.pull-request-operation != 'closed' }}
         # run: pnpm install --ignore-scripts
         run: |
           pnpm install
           # pnpm install -w -r --no-frozen-lockfile #不知何故，突然无法正确安装，去掉所有参数后可以正常安装pkg 20240708
 
-      # This will calculate the base URL for the website, based on the event that triggered the workflow.
-      # Leave this step as it is, unless you know what you're doing.
-      - name: Determine base URL
-        if: ${{ steps.create_pr.outputs.pull-request-operation != 'closed' }}
-        id: baseurl
-        run: |
-          if [ "${{ github.event_name }}" == "pull_request_target" ]; then
-            full="${{ env.PAGES_BASE }}/${{ github.repository }}/pr/${{ steps.create_pr.outputs.pull-request-number }}"
-          else
-            full="${{ env.PAGES_BASE }}/${{ github.repository }}/branch/${{ github.ref_name }}"
-          fi
-
-          relative=/$(echo "$full" | cut -d/ -f4-)
-
-          echo "full=$full" >> "$GITHUB_OUTPUT"
-          echo "relative=$relative" >> "$GITHUB_OUTPUT"
-        shell: bash
-
       # Run your usual build command, but make sure to use the correct base URL
       # This example assumes you're using React, and that you're using the PUBLIC_URL env variable
       - name: pnpm buildlib
-        if: ${{ steps.create_pr.outputs.pull-request-operation != 'closed' }}
         run: |
           pnpm buildlib
           pnpm build
@@ -147,27 +162,22 @@ jobs:
 
       # This will trigger the action. Make sure to change the build_dir input to the correct directory
       - uses: EndBug/pages-preview@v1.1.1
-        with:
-          build_dir: packages/blogpress/.vitepress/dist # Change this!
-          preview_base_url: ${{ env.PAGES_BASE }}
-          preview_repo: ${{ env.PREVIEW_REPO }}
-          preview_token: ${{ secrets.PREVIEW_TOKEN }}
+
         env:
           PUBLIC_URL: ${{ steps.baseurl.outputs.relative }}
           FULL_URL: ${{ steps.baseurl.outputs.full }}
-          # - uses: EndBug/pages-preview@v1
-          #   with:
+        with:
           #     # The directory in which the website has been built, in the a/b/c format
-          #     build_dir: packages/blogpress/.vitepress/dist
+          build_dir: packages/blogpress/.vitepress/dist # Change this!
 
           #     # The GitHub Pages base URL of the preview repo
-          #     preview_base_url: https://ripplejourney.github.io/preview
+          preview_base_url: ${{ env.PAGES_BASE }}
 
           #     # The repository to push previews to, in the Owner/Name format
-          #     preview_repo: ripplejourney/preview
+          preview_repo: ${{ env.PREVIEW_REPO }}
 
           #     # The token to access the preview repo, that you created during setup
-          #     preview_token: ${{ secrets.PREVIEW_TOKEN }}
+          preview_token: ${{ secrets.PREVIEW_TOKEN }}
 
           #     # --- OPTIONAL ---
           #     # The name of the environment to use for the deployment
@@ -180,11 +190,11 @@ jobs:
 
           #     # The name of the author of the resulting commit
           #     # Default: the GitHub Actor
-          git_author_name: calmripple
+          # git_author_name: calmripple
 
           #     # The email of the author of the resulting commit
           #     # Default: the GitHub Actor's
-          git_author_email: calmripple@users.noreply.github.com
+          # git_author_email: calmripple@users.noreply.github.com
 
           #     # The committer of the resulting commit
           #     # Default: copies git_author_name
@@ -192,16 +202,20 @@ jobs:
 
           #     # The email of the committer of the resulting commit
           #     # Default: copies git_author_email
-          git_committer_email: 41898282+github-actions[bot]@users.noreply.github.com
+          # git_committer_email: 41898282+github-actions[bot]@users.noreply.github.com
 
-      #     # Whether to comment on PRs
-      #     # Default: 'true'
-      #     pr_comment: 'false'
+          #     # Whether to comment on PRs
+          #     # Default: 'true'
+          #     pr_comment: 'false'
 
-      #     # The name of the branch that hosts the previews
-      #     # Default: gh-pages
-      #     preview_branch: gh-pages
+          #     # The name of the branch that hosts the previews
+          #     # Default: gh-pages
+          #     preview_branch: gh-pages
 
-      #     # The name of the workflow file that contains the comment workflow in the preview repo
-      #     # Default: preview.yml
-      #     preview_workflow_file_name: preview.yml
+          #     # The name of the workflow file that contains the comment workflow in the preview repo
+          #     # Default: preview.yml
+          #     preview_workflow_file_name: preview.yml
+          # # A comma or newline-separated list of reviewers (GitHub usernames) to request a review from.
+          # reviewers: ${{env.reviewers}}
+	        # # A comma or newline-separated list of GitHub teams to request a review from. Note that a repo scoped PAT, or equivalent GitHub App permissions, are required.
+          # team-reviewers: ${{env.team-reviewers}}
