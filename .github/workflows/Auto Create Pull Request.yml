@@ -162,7 +162,6 @@ jobs:
 
       # This will trigger the action. Make sure to change the build_dir input to the correct directory
       - uses: EndBug/pages-preview@v1.1.1
-
         env:
           PUBLIC_URL: ${{ steps.baseurl.outputs.relative }}
           FULL_URL: ${{ steps.baseurl.outputs.full }}
@@ -216,6 +215,6 @@ jobs:
           #     # Default: preview.yml
           #     preview_workflow_file_name: preview.yml
           # # A comma or newline-separated list of reviewers (GitHub usernames) to request a review from.
-          # reviewers: ${{env.reviewers}}
+          reviewers: ${{env.reviewers}}
 	        # # A comma or newline-separated list of GitHub teams to request a review from. Note that a repo scoped PAT, or equivalent GitHub App permissions, are required.
           # team-reviewers: ${{env.team-reviewers}}
