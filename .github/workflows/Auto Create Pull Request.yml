@@ -100,7 +100,7 @@ jobs:
   preview:
     if: ${{!contains(github.event.head_commit.message, 'wip') && needs.create-pr.outputs.pull-request-operation != 'closed'}}
     runs-on: ubuntu-latest
-    needs: [create-pr, enable-automerge]
+    needs: [create-pr]
     outputs:
       preview_url: ${{ steps.baseurl.outputs.full }}
     steps:
