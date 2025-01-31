@@ -72,6 +72,10 @@ jobs:
           branch: ${{ github.ref }}
           base: ${{env.MAIN_BRANCH}} # 目标分支，根据你的仓库情况可能是'main'或'master'
           delete-branch: true
+          # # A comma or newline-separated list of reviewers (GitHub usernames) to request a review from.
+          reviewers: ${{env.reviewers}}
+          # # A comma or newline-separated list of GitHub teams to request a review from. Note that a repo scoped PAT, or equivalent GitHub App permissions, are required.
+          # team-reviewers: ${{env.team-reviewers}}
   enable-automerge:
     if: ! contains(github.event.head_commit.message, 'wip')
     needs: create-pr
@@ -214,7 +218,3 @@ jobs:
           #     # The name of the workflow file that contains the comment workflow in the preview repo
           #     # Default: preview.yml
           #     preview_workflow_file_name: preview.yml
-          # # A comma or newline-separated list of reviewers (GitHub usernames) to request a review from.
-          reviewers: ${{env.reviewers}}
-	        # # A comma or newline-separated list of GitHub teams to request a review from. Note that a repo scoped PAT, or equivalent GitHub App permissions, are required.
-          # team-reviewers: ${{env.team-reviewers}}
