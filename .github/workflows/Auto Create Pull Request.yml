@@ -224,14 +224,17 @@ jobs:
     needs: [create-pr, preview]
     runs-on: ubuntu-latest
     outputs:
-      commit: ${{ steps.merge.outputs.commit }}
+      commit: ${{ steps.merge1.outputs.commit }}
     steps:
-      - name: merge
+      - name: merge1
         uses: nbrugger-tgm/merge-pr-action@v0.2.3
         with:
           pull_request: ${{needs.create-pr.outputs.pull-request-number }}
           token: ${{ secrets.GITHUB_TOKEN }}
           method: rebase
+      - name: output
+        run: |
+          echo "commit = ${{ toJson(steps)  }}"
 
   deploy:
 
