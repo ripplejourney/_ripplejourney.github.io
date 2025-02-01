@@ -1,7 +1,8 @@
 name: Auto Create Pull Request
 on:
   push:
-  # branches:
+    branches:
+      - '*'
   #   - 'feature/*' # 监听以'feature/'开头的分支
   #   - 'fix/*'
   # Allows you to run this workflow manually from the Actions tab
