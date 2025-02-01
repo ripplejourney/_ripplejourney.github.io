@@ -223,10 +223,9 @@ jobs:
   merge:
     needs: [create-pr, preview]
     runs-on: ubuntu-latest
-    outputs:
-      commit: ${{ steps.merge1.outputs.commit }}
+
     steps:
-      - name: merge1
+      - name: merge
         uses: nbrugger-tgm/merge-pr-action@v0.2.3
         with:
           pull_request: ${{needs.create-pr.outputs.pull-request-number }}
@@ -242,7 +241,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    if: ${{ needs.merge.outputs.commit !='' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
