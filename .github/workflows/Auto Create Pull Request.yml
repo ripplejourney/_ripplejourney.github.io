@@ -27,13 +27,13 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+
   create-pr:
     if: ${{ !contains(github.event.head_commit.message, 'wip') }}
     runs-on: ubuntu-latest
     outputs:
       pull-request-number: ${{ steps.create_pr.outputs.pull-request-number }}
       pull-request-operation: ${{ steps.create_pr.outputs.pull-request-operation }}
-
     steps:
       # - name: display some info
       #   run: |
@@ -76,27 +76,27 @@ jobs:
           reviewers: ${{env.reviewers}}
           # # A comma or newline-separated list of GitHub teams to request a review from. Note that a repo scoped PAT, or equivalent GitHub App permissions, are required.
           # team-reviewers: ${{env.team-reviewers}}
-  enable-automerge:
-    if: ${{!contains(github.event.head_commit.message, 'wip') && needs.create-pr.outputs.pull-request-operation != 'closed'}}
-    needs: create-pr
-    runs-on: ubuntu-latest
-    steps:
-      - name: Enable Pull Request Automerge
-        if: ${{ needs.create-pr.outputs.pull-request-operation != 'closed' }}
-        uses: peter-evans/enable-pull-request-automerge@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-number: ${{ needs.create-pr.outputs.pull-request-number }}
-          merge-method: rebase
+  # enable-automerge:
+  #   if: ${{!contains(github.event.head_commit.message, 'wip') && needs.create-pr.outputs.pull-request-operation != 'closed'}}
+  #   needs: create-pr
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Enable Pull Request Automerge
+  #       if: ${{ needs.create-pr.outputs.pull-request-operation != 'closed' }}
+  #       uses: peter-evans/enable-pull-request-automerge@v3
+  #       with:
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #         pull-request-number: ${{ needs.create-pr.outputs.pull-request-number }}
+  #         merge-method: rebase
 
-      # - name: Invoke 'Pull Request Check and Deploy Preview.yml' in current repo with inputs # 因为使用github token，不能创建新的工作流运行，需要手动触发
-      #   uses: benc-uk/workflow-dispatch@v1
-      #   with:
-      #     workflow: 'Pull Request Check and Deploy Preview.yml'
-      #     # repo: benc-uk/example
-      #     # inputs: '{ "message": "blah blah", "something": false }'
-      #     # Required when using the `repo` option. Either a PAT or a token generated from the GitHub app or CLI
-      #     # token: "${{ secrets.GITHUB_TOKEN }}"
+  # - name: Invoke 'Pull Request Check and Deploy Preview.yml' in current repo with inputs # 因为使用github token，不能创建新的工作流运行，需要手动触发
+  #   uses: benc-uk/workflow-dispatch@v1
+  #   with:
+  #     workflow: 'Pull Request Check and Deploy Preview.yml'
+  #     # repo: benc-uk/example
+  #     # inputs: '{ "message": "blah blah", "something": false }'
+  #     # Required when using the `repo` option. Either a PAT or a token generated from the GitHub app or CLI
+  #     # token: "${{ secrets.GITHUB_TOKEN }}"
   preview:
     if: ${{!contains(github.event.head_commit.message, 'wip') && needs.create-pr.outputs.pull-request-operation != 'closed'}}
     runs-on: ubuntu-latest
@@ -219,3 +219,72 @@ jobs:
           #     # The name of the workflow file that contains the comment workflow in the preview repo
           #     # Default: preview.yml
           #     preview_workflow_file_name: preview.yml
+
+  merge:
+    needs: [create-pr, preview]
+    runs-on: ubuntu-latest
+    steps:
+      - name: merge
+        uses: nbrugger-tgm/merge-pr-action@v0.2.3
+        with:
+          pull_request: ${{needs.create-pr.outputs.pull-request-number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          method: rebase
+
+  deploy:
+    needs: [merge]
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
+          fetch-depth: 0
+      - name: Git Configuration
+        # 2、配置 Git
+        run: |
+          git config --global core.quotePath false
+          git config --global core.autocrlf false
+          git config --global core.safecrlf true
+          git config --global core.ignorecase false
+
+      - name: Setup PNPM
+        # 3、安装 PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        # 4、安装 Node 环境
+        uses: actions/setup-node@v4.2.0
+        with:
+          node-version: 21
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
+
+      - name: Install Dependencies
+        run: |
+          pnpm install --no-frozen-lockfile
+          # if [ -f pnpm-lock.yaml ]; then
+          #   pnpm install --frozen-lockfile
+          # else
+          #   pnpm install
+          # fi
+          pnpm buildlib
+          pnpm build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: packages/blogpress/.vitepress/dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
