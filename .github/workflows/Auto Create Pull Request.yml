@@ -30,19 +30,21 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, 'wip')}}
     outputs:
       is_main_branch: ${{ steps.check.outputs.is_main_branch }}
-      is_contain_wip: ${{ steps.check.outputs.is_contain_wip }}
+      is_not_contain_wip: ${{ steps.check.outputs.is_not_contain_wip }}
     steps:
       - name: Check if it is the main branch
-        if: ${{ !contains(github.event.head_commit.message, 'wip') && !contains(github.ref, env.MAIN_BRANCH)}}
+        if: ${{ !contains(github.ref, env.MAIN_BRANCH)}}
         id: check
         run: |
           echo "::set-output name=is_main_branch::${{ github.ref  == 'refs/heads/${{ env.MAIN_BRANCH }}' }}"
-          echo "::set-output name=is_contain_wip::${{ contains(github.event.head_commit.message, 'wip') }}"
+          echo "::set-output name=is_not_contain_wip::${{ !contains(github.event.head_commit.message, 'wip') }}"
   create-pr:
     runs-on: ubuntu-latest
     needs: check
+    if: ${{ needs.check.outputs.is_main_branch && needs.check.outputs.is_not_contain_wip }}
     outputs:
       pull-request-number: ${{ steps.create_pr.outputs.pull-request-number }}
       pull-request-operation: ${{ steps.create_pr.outputs.pull-request-operation }}
