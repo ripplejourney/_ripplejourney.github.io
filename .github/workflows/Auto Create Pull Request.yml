@@ -151,8 +151,8 @@ jobs:
       - name: Install dependencies
         # run: pnpm install --ignore-scripts
         run: |
-          pnpm install
-          # pnpm install -w -r --no-frozen-lockfile #不知何故，突然无法正确安装，去掉所有参数后可以正常安装pkg 20240708
+          # pnpm install
+          pnpm install -w -r --no-frozen-lockfile #不知何故，突然无法正确安装，去掉所有参数后可以正常安装pkg 20240708
 
       # Run your usual build command, but make sure to use the correct base URL
       # This example assumes you're using React, and that you're using the PUBLIC_URL env variable
