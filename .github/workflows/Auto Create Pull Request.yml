@@ -16,8 +16,9 @@ permissions: write-all
 env:
   MAIN_BRANCH: ${{ vars.MAIN_BRANCH || github.event.repository.default_branch }} # 主分支名称
   PREVIEW_REPO: ${{ vars.PREVIEW_REPO || 'ripplejourney/preview' }}
-  PAGES_BASE: ${{ vars.PAGES_BASE || 'https://www.dmsrs.org/preview' }}
-  reviewers: ${{ vars.reviewers || 'calmripple' }}
+  PREVIEW_BASE_URL: ${{ vars.PREVIEW_BASE_URL || 'https://www.dmsrs.org/preview' }}
+  PRODUCT_BASE_URL: ${{ vars.PRODUCT_BASE_URL || 'https://www.dmsrs.org' }}
+  REVIEWERS: ${{ vars.REVIEWERS || 'calmripple' }}
 
 concurrency:
   # 针对远程部署库，无法同时部署多个preview 添加并行限制
@@ -29,7 +30,7 @@ concurrency:
 jobs:
 
   create-pr:
-    if: ${{ !contains(github.event.head_commit.message, 'wip') }}
+    if: ${{ !contains(github.event.head_commit.message, 'wip') && !contains(github.ref, github.env.MAIN_BRANCH)}}
     runs-on: ubuntu-latest
     outputs:
       pull-request-number: ${{ steps.create_pr.outputs.pull-request-number }}
@@ -65,13 +66,13 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'chore: auto-create-pr'
-          title: '[AutoPR]${{ github.ref_name }}'
+          title: '[auto PR]${{ github.ref_name }}'
           body: |
             This is an automated pull request created from a feature branch.
             Please review and merge if ready.
           branch: ${{ github.ref }}
           base: ${{env.MAIN_BRANCH}} # 目标分支，根据你的仓库情况可能是'main'或'master'
-          delete-branch: true
+          delete-branch: false
           # # A comma or newline-separated list of reviewers (GitHub usernames) to request a review from.
           reviewers: ${{env.reviewers}}
           # # A comma or newline-separated list of GitHub teams to request a review from. Note that a repo scoped PAT, or equivalent GitHub App permissions, are required.
@@ -102,10 +103,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [create-pr]
     environment:
-      name: github-pages
-      url: ${{ steps.baseurl.outputs.full }}
+      name: preview
+      url: ${{ steps.baseurl.outputs.PREVIEW_BASE_URL }}
     outputs:
-      preview_url: ${{ steps.baseurl.outputs.full }}
+      preview_url: ${{ steps.baseurl.outputs.PREVIEW_BASE_URL }}
     steps:
       # This will calculate the base URL for the website, based on the event that triggered the workflow.
       # Leave this step as it is, unless you know what you're doing.
@@ -113,15 +114,15 @@ jobs:
         id: baseurl
         run: |
           if [ "${{ github.event_name }}" == "pull_request_target" ]; then
-            full="${{ env.PAGES_BASE }}/${{ github.repository }}/pr/${{ needs.create-pr.outputs.pull-request-number }}"
+            PREVIEW_BASE_URL="${{ env.PREVIEW_BASE_URL }}/${{ github.repository }}/pr/${{ needs.create-pr.outputs.pull-request-number }}"
           else
-            full="${{ env.PAGES_BASE }}/${{ github.repository }}/branch/${{ github.ref_name }}"
+            PREVIEW_BASE_URL="${{ env.PREVIEW_BASE_URL }}/${{ github.repository }}/branch/${{ github.ref_name }}"
           fi
 
-          relative=/$(echo "$full" | cut -d/ -f4-)
+          RELATIVE_URL=/$(echo "$PREVIEW_BASE_URL" | cut -d/ -f4-)
 
-          echo "full=$full" >> "$GITHUB_OUTPUT"
-          echo "relative=$relative" >> "$GITHUB_OUTPUT"
+          echo "PREVIEW_BASE_URL=$PREVIEW_BASE_URL" >> "$GITHUB_OUTPUT"
+          echo "RELATIVE_URL=$RELATIVE_URL" >> "$GITHUB_OUTPUT"
         shell: bash
       - name: Checkout branch - ${{env.MAIN_BRANCH}}
         uses: actions/checkout@v4
@@ -159,26 +160,26 @@ jobs:
           pnpm install --no-frozen-lockfile #不知何故，突然无法正确安装，去掉所有参数后可以正常安装pkg 20240708
 
       # Run your usual build command, but make sure to use the correct base URL
-      # This example assumes you're using React, and that you're using the PUBLIC_URL env variable
+      # This example assumes you're using React, and that you're using the RELATIVE_URL env variable
       - name: pnpm buildlib
+        env:
+          RELATIVE_URL: ${{ steps.baseurl.outputs.RELATIVE_URL }}
+          BASE_URL: ${{ steps.baseurl.outputs.PREVIEW_BASE_URL }}
         run: |
           pnpm buildlib
           pnpm build
-        env:
-          PUBLIC_URL: ${{ steps.baseurl.outputs.relative }}
-          FULL_URL: ${{ steps.baseurl.outputs.full }}
 
       # This will trigger the action. Make sure to change the build_dir input to the correct directory
       - uses: EndBug/pages-preview@v1.1.1
-        env:
-          PUBLIC_URL: ${{ steps.baseurl.outputs.relative }}
-          FULL_URL: ${{ steps.baseurl.outputs.full }}
+        # env:
+        #   RELATIVE_URL: ${{ steps.baseurl.outputs.RELATIVE_URL }}
+        #   BASE_URL: ${{ steps.baseurl.outputs.PREVIEW_BASE_URL }}
         with:
           #     # The directory in which the website has been built, in the a/b/c format
           build_dir: packages/blogpress/.vitepress/dist # Change this!
 
           #     # The GitHub Pages base URL of the preview repo
-          preview_base_url: ${{ env.PAGES_BASE }}
+          preview_base_url: ${{ env.PREVIEW_BASE_URL }}
 
           #     # The repository to push previews to, in the Owner/Name format
           preview_repo: ${{ env.PREVIEW_REPO }}
@@ -274,7 +275,10 @@ jobs:
           registry-url: https://registry.npmjs.org
           cache: pnpm
 
-      - name: Install Dependencies
+      - name: Install Dependencies & Build
+        env:
+          RELATIVE_URL: ''
+          BASE_URL: ${{ env.PRODUCT_BASE_URL }}
         run: |
           pnpm install --no-frozen-lockfile
           # if [ -f pnpm-lock.yaml ]; then
