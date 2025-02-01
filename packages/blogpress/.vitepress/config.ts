@@ -5,8 +5,8 @@ import { defineConfig } from 'vitepress'
 import * as _ from 'radash'
 import config from './config.base'
 
-const baseUrl = process.env.FULL_URL ?? 'https://www.dmsrs.org'
-const relativeUrl = process.env.PUBLIC_URL ?? ''
+const baseUrl = process.env.BASE_URL ?? 'https://www.dmsrs.org'
+const relativeUrl = process.env.RELATIVE_URL ?? ''
 const weekly = `${baseUrl}/weekly`
 const titleText = '代码收容所'
 const authorText = 'Calm Ripple'
