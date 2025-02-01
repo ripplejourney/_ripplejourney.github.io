@@ -104,7 +104,7 @@ jobs:
     outputs:
       preview_url: ${{ steps.baseurl.outputs.full }}
     steps:
-     # This will calculate the base URL for the website, based on the event that triggered the workflow.
+      # This will calculate the base URL for the website, based on the event that triggered the workflow.
       # Leave this step as it is, unless you know what you're doing.
       - name: Determine base URL
         id: baseurl
@@ -152,7 +152,8 @@ jobs:
         # run: pnpm install --ignore-scripts
         run: |
           # pnpm install
-          pnpm install -w -r --no-frozen-lockfile #不知何故，突然无法正确安装，去掉所有参数后可以正常安装pkg 20240708
+          # pnpm install -w -r --no-frozen-lockfile #不知何故，突然无法正确安装，去掉所有参数后可以正常安装pkg 20240708
+          pnpm install --no-frozen-lockfile #不知何故，突然无法正确安装，去掉所有参数后可以正常安装pkg 20240708
 
       # Run your usual build command, but make sure to use the correct base URL
       # This example assumes you're using React, and that you're using the PUBLIC_URL env variable
