@@ -18,6 +18,7 @@ env:
   PREVIEW_REPO: ${{ vars.PREVIEW_REPO || 'ripplejourney/preview' }}
   PAGES_BASE: ${{ vars.PAGES_BASE || 'https://www.dmsrs.org/preview' }}
   reviewers: ${{ vars.reviewers || 'calmripple' }}
+  team-reviewers: ${{ vars.team-reviewers || 'calmripple' }}
 
 concurrency:
   # 针对远程部署库，无法同时部署多个preview 添加并行限制
@@ -243,6 +244,7 @@ jobs:
         with:
           # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
           fetch-depth: 0
+          ref: ${{env.MAIN_BRANCH}}
       - name: Git Configuration
         # 2、配置 Git
         run: |
