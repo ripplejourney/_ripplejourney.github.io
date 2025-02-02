@@ -17,8 +17,6 @@ tags:
 
 ![图片](./th2.jpg)
 
-![图片](./th3.jpg)
-
 ## :sparkles:在做什么
 ### 公司
 * 2014 - ing：[项目管理](https://www.dmsrs.org/)
