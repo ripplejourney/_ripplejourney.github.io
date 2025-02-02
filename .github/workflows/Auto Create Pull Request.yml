@@ -141,9 +141,9 @@ jobs:
     needs: [create-pr]
     environment:
       name: preview
-      url: ${{ steps.baseurl.outputs.PREVIEW_BASE_URL }}
+      url: ${{ steps.baseurl.outputs.PREVIEW_URL }}
     outputs:
-      preview_url: ${{ steps.baseurl.outputs.PREVIEW_BASE_URL }}
+      preview_url: ${{ steps.baseurl.outputs.PREVIEW_URL }}
     steps:
       # This will calculate the base URL for the website, based on the event that triggered the workflow.
       # Leave this step as it is, unless you know what you're doing.
@@ -151,14 +151,14 @@ jobs:
         id: baseurl
         run: |
           if [ "${{ github.event_name }}" == "pull_request_target" ]; then
-            PREVIEW_BASE_URL="${{ env.PREVIEW_BASE_URL }}/${{ github.repository }}/pr/${{ needs.create-pr.outputs.pull-request-number }}"
+            PREVIEW_URL="${{ env.PREVIEW_BASE_URL }}/${{ github.repository }}/pr/${{ needs.create-pr.outputs.pull-request-number }}"
           else
-            PREVIEW_BASE_URL="${{ env.PREVIEW_BASE_URL }}/${{ github.repository }}/branch/${{ github.ref_name }}"
+            PREVIEW_URL="${{ env.PREVIEW_BASE_URL }}/${{ github.repository }}/branch/${{ github.ref_name }}"
           fi
-          PREVIEW_BASE_URL=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$PREVIEW_BASE_URL'''))")
-          RELATIVE_URL=/$(echo "$PREVIEW_BASE_URL" | cut -d/ -f4-)
+          PREVIEW_URL=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$PREVIEW_URL'''))")
+          RELATIVE_URL=/$(echo "$PREVIEW_URL" | cut -d/ -f4-)
 
-          echo "PREVIEW_BASE_URL=$PREVIEW_BASE_URL" >> "$GITHUB_OUTPUT"
+          echo "PREVIEW_URL=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
           echo "RELATIVE_URL=$RELATIVE_URL" >> "$GITHUB_OUTPUT"
 
         shell: bash
@@ -201,7 +201,7 @@ jobs:
       - name: pnpm build
         env:
           RELATIVE_URL: ${{ steps.baseurl.outputs.RELATIVE_URL }}
-          BASE_URL: ${{ steps.baseurl.outputs.PREVIEW_BASE_URL }}
+          BASE_URL: ${{ steps.baseurl.outputs.PREVIEW_URL }}
         run: |
           pnpm install --no-frozen-lockfile
           pnpm buildlib
@@ -211,7 +211,7 @@ jobs:
       - uses: EndBug/pages-preview@v1.1.1
         # env:
         #   RELATIVE_URL: ${{ steps.baseurl.outputs.RELATIVE_URL }}
-        #   BASE_URL: ${{ steps.baseurl.outputs.PREVIEW_BASE_URL }}
+        #   BASE_URL: ${{ steps.baseurl.outputs.PREVIEW_URL }}
         with:
           #     # The directory in which the website has been built, in the a/b/c format
           build_dir: packages/blogpress/.vitepress/dist # Change this!
