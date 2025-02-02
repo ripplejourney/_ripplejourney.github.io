@@ -147,6 +147,7 @@ jobs:
     steps:
       # This will calculate the base URL for the website, based on the event that triggered the workflow.
       # Leave this step as it is, unless you know what you're doing.
+      # PREVIEW_URL=${{ env.PREVIEW_BASE_URL }}/$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$PREVIEW_URL'''))")
       - name: Determine base URL
         id: baseurl
         run: |
@@ -155,7 +156,7 @@ jobs:
           else
             PREVIEW_URL="${{ github.repository }}/branch/${{ github.ref_name }}"
           fi
-          PREVIEW_URL=${{ env.PREVIEW_BASE_URL }}/$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$PREVIEW_URL'''))")
+          PREVIEW_URL="${{ env.PREVIEW_BASE_URL }}/$PREVIEW_URL"
           RELATIVE_URL=/$(echo "$PREVIEW_URL" | cut -d/ -f4-)
 
           echo "PREVIEW_URL=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
