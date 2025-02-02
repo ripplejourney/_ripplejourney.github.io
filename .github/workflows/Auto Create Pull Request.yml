@@ -155,11 +155,12 @@ jobs:
           else
             PREVIEW_BASE_URL="${{ env.PREVIEW_BASE_URL }}/${{ github.repository }}/branch/${{ github.ref_name }}"
           fi
-
+          PREVIEW_BASE_URL=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$PREVIEW_BASE_URL'''))")
           RELATIVE_URL=/$(echo "$PREVIEW_BASE_URL" | cut -d/ -f4-)
 
           echo "PREVIEW_BASE_URL=$PREVIEW_BASE_URL" >> "$GITHUB_OUTPUT"
           echo "RELATIVE_URL=$RELATIVE_URL" >> "$GITHUB_OUTPUT"
+
         shell: bash
       - name: Checkout branch - ${{env.MAIN_BRANCH}}
         uses: actions/checkout@v4
