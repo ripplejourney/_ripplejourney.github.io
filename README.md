@@ -1,4 +1,4 @@
-<h1 align="center"> 代码收容所 </h1>
+<h1 align="center"> 代码 </h1>
 <p align="center">天道酬勤，恒以致遠</p>
 <p align="center">博客主题：<a href="https://theme.sugarat.top/" target="_blank">@sugarat/theme</a></p>
 
@@ -66,7 +66,7 @@ pnpm dev:theme
 
 ## :link:个人相关链接
 
-* [代码收容所●博客园](https://www.cnblogs.com/68681395/)
+* [代码●博客园](https://www.cnblogs.com/68681395/)
 
 ## :phone:联系我
 如对博客内容，知识，排版等有疑问或者建议，欢迎邮件和我联系

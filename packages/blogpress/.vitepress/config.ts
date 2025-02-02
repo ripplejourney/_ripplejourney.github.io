@@ -8,7 +8,7 @@ import config from './config.base'
 const baseUrl = process.env.BASE_URL ?? 'https://www.dmsrs.org'
 const relativeUrl = process.env.RELATIVE_URL ?? ''
 const weekly = `${baseUrl}/weekly`
-const titleText = '代码收容所'
+const titleText = '代码'
 const authorText = 'Calm Ripple'
 const descriptionText = '天道酬勤，恒以致遠（大前端相关技术分享）'
 const copyrightText = `${titleText} 2006 - ${new Date().getFullYear()}`

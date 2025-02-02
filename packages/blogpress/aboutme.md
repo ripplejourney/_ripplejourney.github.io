@@ -11,24 +11,25 @@ tags:
 
 ---
 
-40岁码农大叔,热爱开源与知识分享
+码农大叔, 爱开源与分享
 
-目前就职于 `宇宙大药厂`
+就职于 `宇宙大药厂`
 
-![图片](./digital_pharmaceutical.jpg)
+![图片](./th2.jpg)
+![图片](./th3.jpg)
 
 ## :sparkles:在做什么
 ### 公司
 * 2014 - ing：[项目管理](https://www.dmsrs.org/)
-* 2012 - 2014：[创业，热计量与收费](https://www.dmsrs.org)
-* 2008 - 2010：[低代码平台](https://www.dmsrs.org)
-* 2006 - 2008：[联网煤矿安全监控](https://www.dmsrs.org)
+* 2012 - 2014：[热计量与收费](https://www.dmsrs.org)
+* 2008 - 2010：[DNA研发与应用平台](https://www.dmsrs.org)
+* 2006 - 2008：[三级联网安全监控](https://www.dmsrs.org)
 
 ### 技术
-* .Net Framework & dotnet
-* Java
-* Html、Css、Javascript
-* Delphi
+* C# & dotnet
+* Java & Spring & JSP
+* Html、Css、Javascript、Vue、JQuery、vite*
+
 * Python
 
 ### 开源
@@ -43,6 +44,6 @@ tags:
 天道酬勤，恒以致遠:smile:
 
 ## :phone:联系我
-**邮箱**：happycoder@foxmail.com
+**邮箱**：calmripple@dmsrs.org
 
 **微信**：
