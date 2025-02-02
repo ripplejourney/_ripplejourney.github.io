@@ -249,6 +249,7 @@ jobs:
       commit: ${{ steps.merge.outputs.commit }}
     steps:
       - name: merge
+        id: merge
         uses: nbrugger-tgm/merge-pr-action@v0.2.3
         with:
           pull_request: ${{needs.create-pr.outputs.pull-request-number }}
