@@ -151,11 +151,11 @@ jobs:
         id: baseurl
         run: |
           if [ "${{ github.event_name }}" == "pull_request_target" ]; then
-            PREVIEW_URL="${{ env.PREVIEW_BASE_URL }}/${{ github.repository }}/pr/${{ needs.create-pr.outputs.pull-request-number }}"
+            PREVIEW_URL="${{ github.repository }}/pr/${{ needs.create-pr.outputs.pull-request-number }}"
           else
-            PREVIEW_URL="${{ env.PREVIEW_BASE_URL }}/${{ github.repository }}/branch/${{ github.ref_name }}"
+            PREVIEW_URL="${{ github.repository }}/branch/${{ github.ref_name }}"
           fi
-          PREVIEW_URL=$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$PREVIEW_URL'''))")
+          PREVIEW_URL=${{ env.PREVIEW_BASE_URL }}/$(python3 -c "import urllib.parse; print(urllib.parse.quote('''$PREVIEW_URL'''))")
           RELATIVE_URL=/$(echo "$PREVIEW_URL" | cut -d/ -f4-)
 
           echo "PREVIEW_URL=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
