@@ -245,7 +245,8 @@ jobs:
   merge:
     needs: [create-pr, preview]
     runs-on: ubuntu-latest
-
+    outputs:
+      commit: ${{ steps.merge.outputs.commit }}
     steps:
       - name: merge
         uses: nbrugger-tgm/merge-pr-action@v0.2.3
@@ -253,9 +254,10 @@ jobs:
           pull_request: ${{needs.create-pr.outputs.pull-request-number }}
           token: ${{ secrets.GITHUB_TOKEN }}
           method: rebase
+          # title: 'chore: auto-merge'
       - name: output
         run: |
-          echo "commit = ${{ toJson(steps)  }}"
+          echo "commit = ${{ steps.merge.outputs.commit   }}"
 
   deploy:
 
