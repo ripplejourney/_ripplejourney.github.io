@@ -296,11 +296,6 @@ jobs:
           BASE_URL: ${{ env.PRODUCT_BASE_URL }}
         run: |
           pnpm install --no-frozen-lockfile
-          # if [ -f pnpm-lock.yaml ]; then
-          #   pnpm install --frozen-lockfile
-          # else
-          #   pnpm install
-          # fi
           pnpm buildlib
           pnpm build
 
