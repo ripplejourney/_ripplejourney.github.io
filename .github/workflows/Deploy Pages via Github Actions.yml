@@ -21,6 +21,12 @@ permissions:
   pages: write
   id-token: write
   actions: write
+env:
+  MAIN_BRANCH: ${{ vars.MAIN_BRANCH || github.event.repository.default_branch }} # 主分支名称
+  PREVIEW_REPO: ${{ vars.PREVIEW_REPO || 'ripplejourney/preview' }}
+  PREVIEW_BASE_URL: ${{ vars.PREVIEW_BASE_URL || 'https://www.dmsrs.org/preview' }}
+  PRODUCT_BASE_URL: ${{ vars.PRODUCT_BASE_URL || 'https://www.dmsrs.org' }}
+  REVIEWERS: ${{ vars.REVIEWERS || 'calmripple' }}
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
@@ -61,14 +67,12 @@ jobs:
           registry-url: https://registry.npmjs.org
           cache: pnpm
 
-      - name: Install Dependencies
+      - name: Install Dependencies & Build
+        env:
+          RELATIVE_URL: ''
+          BASE_URL: ${{ env.PRODUCT_BASE_URL }}
         run: |
-          pnpm install
-          # if [ -f pnpm-lock.yaml ]; then
-          #   pnpm install --frozen-lockfile
-          # else
-          #   pnpm install
-          # fi
+          pnpm install --no-frozen-lockfile
           pnpm buildlib
           pnpm build
 
