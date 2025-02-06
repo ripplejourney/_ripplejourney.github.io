@@ -159,12 +159,24 @@
       "path": "packages/theme"
     },
     {
+      "name": "📦 vitepress-plugin-51la",
+      "path": "packages/vitepress-plugin-51la"
+    },
+    {
+      "name": "📦 vitepress-plugin-announcement",
+      "path": "packages/vitepress-plugin-announcement"
+    },
+    {
       "name": "📦 vitepress-plugin-pagefind",
       "path": "packages/vitepress-plugin-pagefind"
     },
     {
       "name": "📦 vitepress-plugin-rss",
       "path": "packages/vitepress-plugin-rss"
+    },
+    {
+      "name": "vitepress-plugin-slot-inject-template",
+      "path": "template/vitepress-plugin-slot-inject-template"
     }
   ],
   "settings": {
