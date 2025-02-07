@@ -136,7 +136,7 @@ jobs:
   #       with:
   #         token: ${{ secrets.GITHUB_TOKEN }}
   #         pull-request-number: ${{ needs.create-pr.outputs.pull-request-number }}
-  #         merge-method: rebase
+  #         merge-method: merge
 
   # - name: Invoke 'Pull Request Check and Deploy Preview.yml' in current repo with inputs # 因为使用github token，不能创建新的工作流运行，需要手动触发
   #   uses: benc-uk/workflow-dispatch@v1
@@ -149,7 +149,7 @@ jobs:
   preview:
     if: ${{ needs.create-pr.outputs.pull-request-operation != 'closed'}}
     runs-on: ubuntu-latest
-    needs: [create-pr,check]
+    needs: [create-pr, check]
     environment:
       name: preview
       url: ${{ steps.baseurl.outputs.PREVIEW_URL }}
@@ -271,7 +271,7 @@ jobs:
 
   merge:
     if: ${{needs.check.outputs.is_not_contain_wip}}
-    needs: [create-pr, preview,check]
+    needs: [create-pr, preview, check]
     runs-on: ubuntu-latest
     outputs:
       commit: ${{ steps.merge.outputs.commit }}
@@ -284,14 +284,14 @@ jobs:
         with:
           pull_request: ${{needs.create-pr.outputs.pull-request-number }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          method: rebase
+          method: merge
           # title: 'chore: auto-merge'
       - name: output
         run: |
           echo "commit = ${{ steps.merge.outputs.commit   }}"
 
   deploy:
-    needs: [merge,check]
+    needs: [merge, check]
     if: ${{ needs.merge.outputs.commit!='' && needs.check.outputs.is_not_contain_wip }}
     environment:
       name: github-pages
