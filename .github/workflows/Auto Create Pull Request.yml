@@ -277,7 +277,7 @@ jobs:
     steps:
 
       - name: merge
-        if: ${{ contains(env.REVIEWERS,github.event.head_commit.committer.username)}}
+        if: ${{ contains(env.REVIEWERS, github.event.sender.login)}}
         id: merge
         uses: nbrugger-tgm/merge-pr-action@v0.2.3
         with:
