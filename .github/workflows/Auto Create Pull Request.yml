@@ -93,6 +93,7 @@ jobs:
     outputs:
       pull-request-number: ${{ steps.create_pr.outputs.pull-request-number }}
       pull-request-operation: ${{ steps.create_pr.outputs.pull-request-operation }}
+      pull-request-url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
       - name: Checkout repository
         if: ${{ !contains(github.ref, env.TARGET_BRANCH)}}
@@ -283,7 +284,8 @@ jobs:
           pull_request: ${{needs.create-pr.outputs.pull-request-number }}
           token: ${{ secrets.GITHUB_TOKEN }}
           method: merge
-          # title: 'chore: auto-merge'
+          title: 'chore: auto-merge pr -${{needs.create-pr.outputs.pull-request-number }}'
+          message: 'auto-merge: ${{needs.create-pr.outputs.pull-request-url}}'
       - name: output
         run: |
           echo "commit = ${{ steps.merge.outputs.commit   }}"
