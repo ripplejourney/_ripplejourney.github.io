@@ -96,7 +96,8 @@ jobs:
       pull-request-url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
       - name: Checkout repository
-        if: ${{ !contains(github.ref, env.TARGET_BRANCH)}}
+        id: checkout
+        if: ${{ needs.check.outputs.is_not_target_branch}}
         uses: actions/checkout@v4
 
       - name: Git Configuration
@@ -109,6 +110,7 @@ jobs:
 
       - name: Create Pull Request
         id: create_pr
+        if: ${{ steps.checkout.outcome == 'success'}}
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
