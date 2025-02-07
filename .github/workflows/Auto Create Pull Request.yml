@@ -164,6 +164,19 @@ jobs:
 
         shell: bash
 
+      # - name: Checkout branch - ${{env.MAIN_BRANCH}}
+      #   uses: actions/checkout@v4
+      #   with:
+      #     ref: ${{env.MAIN_BRANCH}}
+      #     # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
+      #     fetch-depth: 0
+      - name: Checkout PR head - ${{env.MAIN_BRANCH}} - ${{ needs.create-pr.outputs.pull-request-number }}
+        uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ needs.create-pr.outputs.pull-request-number }}/merge
+          # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
+          fetch-depth: 0
+
       - name: Setup PNPM
         # 3、安装 PNPM
         uses: pnpm/action-setup@v4
@@ -177,19 +190,6 @@ jobs:
           node-version: 21
           # registry-url: https://registry.npmjs.org
           cache: pnpm
-
-      # - name: Checkout branch - ${{env.MAIN_BRANCH}}
-      #   uses: actions/checkout@v4
-      #   with:
-      #     ref: ${{env.MAIN_BRANCH}}
-      #     # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
-      #     fetch-depth: 0
-      - name: Checkout PR head - ${{env.MAIN_BRANCH}} - ${{ needs.create-pr.outputs.pull-request-number }}
-        uses: actions/checkout@v4
-        with:
-          ref: refs/pull/${{ needs.create-pr.outputs.pull-request-number }}/merge
-          # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
-          fetch-depth: 0
 
       # Run your usual build command, but make sure to use the correct base URL
       # This example assumes you're using React, and that you're using the RELATIVE_URL env variable
