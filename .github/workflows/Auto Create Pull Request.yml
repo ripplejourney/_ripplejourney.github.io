@@ -288,7 +288,7 @@ jobs:
           message: 'auto-merge: ${{needs.create-pr.outputs.pull-request-url}}'
       - name: output
         run: |
-          echo "commit = ${{ steps.merge.outputs.commit   }}"
+          echo 'commit = ${{ steps.merge.outputs.commit   }}'
 
   deploy:
     needs: [merge, check]
