@@ -163,14 +163,13 @@ jobs:
           echo "RELATIVE_URL=$RELATIVE_URL" >> "$GITHUB_OUTPUT"
 
         shell: bash
-      - name: Checkout branch - ${{env.MAIN_BRANCH}}
-        uses: actions/checkout@v4
-        with:
-          ref: ${{env.MAIN_BRANCH}}
-          # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
-          fetch-depth: 0
-      - name: Checkout PR head
-
+      # - name: Checkout branch - ${{env.MAIN_BRANCH}}
+      #   uses: actions/checkout@v4
+      #   with:
+      #     ref: ${{env.MAIN_BRANCH}}
+      #     # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
+      #     fetch-depth: 0
+      - name: Checkout PR head - ${{env.MAIN_BRANCH}} - ${{ needs.create-pr.outputs.pull-request-number }}
         uses: actions/checkout@v4
         with:
           ref: refs/pull/${{ needs.create-pr.outputs.pull-request-number }}/merge
