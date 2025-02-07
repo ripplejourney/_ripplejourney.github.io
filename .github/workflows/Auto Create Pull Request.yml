@@ -64,13 +64,13 @@ jobs:
       - name: show github context
         if: ${{ env.IS_DEBUG == 'true' }}
         run: |
-          echo "github.env.TARGET_BRANCH = ${{ github.env.TARGET_BRANCH }}"
-          echo "env.TARGET_BRANCH = ${{ env.TARGET_BRANCH }}"
-          echo "${{ !contains(github.ref, env.TARGET_BRANCH)}} =${{github.ref}} ? ${{env.TARGET_BRANCH}}"
-          echo "${{ !contains(github.ref, env.TARGET_BRANCH)}} =${{github.ref}} ? ${{env.TARGET_BRANCH}}"
+          echo 'github.env.TARGET_BRANCH = ${{ github.env.TARGET_BRANCH }}'
+          echo 'env.TARGET_BRANCH = ${{ env.TARGET_BRANCH }}'
+          echo '${{ !contains(github.ref, env.TARGET_BRANCH)}} =${{github.ref}} ? ${{env.TARGET_BRANCH}}'
+          echo '${{ !contains(github.ref, env.TARGET_BRANCH)}} =${{github.ref}} ? ${{env.TARGET_BRANCH}}'
 
           echo "GitHub Context:"
-          echo "${{ toJson(github) }}"
+          echo '${{ toJson(github) }}'
 
         shell: bash
 
