@@ -1,30 +1,30 @@
-name: Auto Create Pull Request
+name: Auto Create Pull Request_push
 on:
   push:
     branches-ignore:
       - master
       - main
-  pull_request_target:
-    types:
-      # - assigned
-      # - unassigned
-      # - labeled
-      # - unlabeled
-      - opened
-      - edited
-      # - closed
-      - reopened
-      - synchronize
-      # - converted_to_draft
-      # - ready_for_review
-      # - locked
-      # - unlocked
-      # - review_requested
-      # - review_request_removed
-      - auto_merge_enabled
-      - auto_merge_disabled
-  #   - 'feature/*' # 监听以'feature/'开头的分支
-  #   - 'fix/*'
+  # pull_request_target:
+  #   types:
+  #     # - assigned
+  #     # - unassigned
+  #     # - labeled
+  #     # - unlabeled
+  #     - opened
+  #     - edited
+  #     # - closed
+  #     - reopened
+  #     - synchronize
+  #     # - converted_to_draft
+  #     # - ready_for_review
+  #     # - locked
+  #     # - unlocked
+  #     # - review_requested
+  #     # - review_request_removed
+  #     - auto_merge_enabled
+  #     - auto_merge_disabled
+  # #   - 'feature/*' # 监听以'feature/'开头的分支
+  # #   - 'fix/*'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
