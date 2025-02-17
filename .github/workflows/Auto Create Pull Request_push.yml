@@ -271,7 +271,7 @@ jobs:
           #     preview_workflow_file_name: preview.yml
 
   merge:
-    if: ${{needs.check.outputs.is_not_contain_wip}}
+    if: ${{success() && needs.check.outputs.is_not_contain_wip}}
     needs: [create-pr, preview, check]
     runs-on: ubuntu-latest
     outputs:

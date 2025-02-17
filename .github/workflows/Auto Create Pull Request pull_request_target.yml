@@ -219,6 +219,7 @@ jobs:
   merge:
     needs: [preview, check]
     runs-on: ubuntu-latest
+    if: ${{ success() }}
     outputs:
       commit: ${{ steps.merge.outputs.commit }}
     steps:
