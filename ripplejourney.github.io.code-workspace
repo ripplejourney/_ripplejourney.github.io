@@ -46,8 +46,6 @@
       "foxundermoon.shell-format",
       "geeksharp.openssl-configuration-file",
       "gerrnperl.outline-map",
-      "github.copilot",
-      "github.copilot-chat",
       "github.remotehub",
       "github.vscode-github-actions",
       "gregorbiswanger.json2ts",
@@ -113,13 +111,13 @@
       "qwtel.sqlite-viewer",
       "redhat.vscode-xml",
       "redhat.vscode-yaml",
-      "sanjulaganepola.github-local-actions",
       "sirtori.indenticator",
       "sleistner.vscode-fileutils",
       "spencerrobertson.github-action-editor",
       "spmeesseman.vscode-taskexplorer",
       "stringham.move-ts",
       "tencent-cloud.coding-copilot",
+      "tencentcloud.cloudbase-toolkit",
       "tintoy.msbuild-project-tools",
       "tombonnike.vscode-status-bar-format-toggle",
       "typeholes.ts-versions-switcher",
@@ -468,6 +466,7 @@
       "warn": 3000,
       "error": 6000
     },
-    "eslint.quiet": false
+    "eslint.quiet": false,
+    "editor.language.colorizedBracketPairs": []
   }
 }
