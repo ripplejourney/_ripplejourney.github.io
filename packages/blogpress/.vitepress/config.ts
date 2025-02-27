@@ -199,6 +199,7 @@ config.head = undefined
 config.themeConfig.nav = undefined
 config.themeConfig.socialLinks = undefined
 config.extends = undefined
+config.vite.plugins = []
 
 export default defineConfig(_.assign(config, {
   base: relativeUrl,
