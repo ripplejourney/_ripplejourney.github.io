@@ -5,6 +5,9 @@ on:
   #     - master
   #     - main
   pull_request_target:
+    branches-ignore:
+      - master
+      - main
     types:
       # - assigned
       # - unassigned

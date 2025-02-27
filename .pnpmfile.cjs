@@ -21,7 +21,7 @@ module.exports = {
       if (pkgNames.includes(pkg.name) === false) {
         return pkg
       }
-      context.log(`'Package name:' ${pkg.name}`)
+      context.log(`Package name:'${pkg.name}'`)
       if (isDebug) {
         Object.entries(replaceLibWithPaths)
           .forEach(([libName, libPaths]) => {
