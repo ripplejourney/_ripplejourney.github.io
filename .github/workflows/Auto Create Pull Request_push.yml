@@ -100,7 +100,7 @@ jobs:
       - name: Checkout repository
         id: checkout
         if: ${{ needs.check.outputs.is_not_target_branch}}
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Git Configuration
         # 2、配置 Git
@@ -113,7 +113,7 @@ jobs:
       - name: Create Pull Request
         id: create_pr
         if: ${{ steps.checkout.outcome == 'success'}}
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'chore: auto-create-pr'
@@ -185,7 +185,7 @@ jobs:
       #     # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
       #     fetch-depth: 0
       - name: Checkout PR head - ${{env.TARGET_BRANCH}} - ${{ needs.create-pr.outputs.pull-request-number }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           ref: refs/pull/${{ needs.create-pr.outputs.pull-request-number }}/merge
           # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
@@ -199,7 +199,7 @@ jobs:
 
       # Assuming you're using Node.js
       - name: Setup Node.js
-        uses: actions/setup-node@v4.3.0
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
         with:
           node-version: 21
           # registry-url: https://registry.npmjs.org
@@ -218,7 +218,7 @@ jobs:
           pnpm build
 
       # This will trigger the action. Make sure to change the build_dir input to the correct directory
-      - uses: EndBug/pages-preview@v1.1.1
+      - uses: EndBug/pages-preview@196e85fb8eb6e55cb82c565e2bffa8911d6ee2d6 # v1.1.1
         # env:
         #   RELATIVE_URL: ${{ steps.baseurl.outputs.RELATIVE_URL }}
         #   BASE_URL: ${{ steps.baseurl.outputs.PREVIEW_URL }}
@@ -283,7 +283,7 @@ jobs:
       - name: merge
         if: ${{ contains(env.REVIEWERS, github.event.sender.login)}}
         id: merge
-        uses: nbrugger-tgm/merge-pr-action@v0.2.3
+        uses: nbrugger-tgm/merge-pr-action@e1b91b360774201120b08d0558db072c259d032e # v0.2.3
         with:
           pull_request: ${{needs.create-pr.outputs.pull-request-number }}
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -303,7 +303,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           ref: ${{env.TARGET_BRANCH}}
           # 默认只拉取分支最近一次的 commit，可能会导致一些文章的 GitInfo 变量无法获取，设为 0 代表拉取所有分支所有提交
@@ -324,7 +324,7 @@ jobs:
 
       - name: Setup Node
         # 4、安装 Node 环境
-        uses: actions/setup-node@v4.3.0
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
         with:
           node-version: 21
           registry-url: https://registry.npmjs.org
@@ -340,14 +340,14 @@ jobs:
           pnpm build
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
           # Upload entire repository
           path: packages/blogpress/.vitepress/dist
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
