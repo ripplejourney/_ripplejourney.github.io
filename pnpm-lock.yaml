@@ -111,8 +111,8 @@ importers:
   packages/theme:
     dependencies:
       '@giscus/vue':
-        specifier: ^2.4.0
-        version: 2.4.0(vue@3.5.13(typescript@5.8.2))
+        specifier: ^3.0.0
+        version: 3.1.1(vue@3.5.13(typescript@5.8.2))
       '@mdit-vue/shared':
         specifier: ^0.12.1
         version: 0.12.1
@@ -127,7 +127,7 @@ importers:
         version: 3.5.13
       '@vueuse/core':
         specifier: ^9.13.0
-        version: 12.8.2(typescript@5.8.2)
+        version: 9.13.0(vue@3.5.13(typescript@5.8.2))
       markdown-it-task-checkbox:
         specifier: ^1.0.6
         version: 1.0.6
@@ -182,7 +182,7 @@ importers:
         version: 5.8.2
       vite:
         specifier: ^5.4.9
-        version: 6.2.2(@types/node@22.13.10)(sass@1.86.0)(yaml@2.7.0)
+        version: 5.4.14(@types/node@22.13.10)(sass@1.86.0)
       vitepress:
         specifier: 1.6.3
         version: 1.6.3(@algolia/client-search@5.20.3)(@types/node@22.13.10)(async-validator@4.2.5)(axios@1.8.3)(postcss@8.5.3)(sass@1.86.0)(search-insights@2.13.0)(typescript@5.8.2)
@@ -1068,8 +1068,8 @@ packages:
   '@floating-ui/utils@0.2.9':
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
 
-  '@giscus/vue@2.4.0':
-    resolution: {integrity: sha512-QOxKHgsMT91myyQagP2v20YYAei1ByZuc3qcaYxbHx4AwOeyVrybDIuRFwG9YDv6OraC86jYnU4Ixd37ddC/0A==}
+  '@giscus/vue@3.1.1':
+    resolution: {integrity: sha512-xgsc93MibRQ0d1glBxN1BrEREHTIf3BPYs/3R+UZHNqawFFoWBV6iJ7uVCXMqoEKZdE2c78B3aKt5gfGqo8I5A==}
     peerDependencies:
       vue: '>=3.2.0'
 
@@ -4996,7 +4996,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.9': {}
 
-  '@giscus/vue@2.4.0(vue@3.5.13(typescript@5.8.2))':
+  '@giscus/vue@3.1.1(vue@3.5.13(typescript@5.8.2))':
     dependencies:
       giscus: 1.6.0
       vue: 3.5.13(typescript@5.8.2)
@@ -8441,7 +8441,7 @@ snapshots:
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.3
-      rollup: 4.34.8
+      rollup: 4.36.0
     optionalDependencies:
       '@types/node': 22.13.10
       fsevents: 2.3.3
