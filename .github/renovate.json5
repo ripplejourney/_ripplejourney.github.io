@@ -14,5 +14,15 @@
     "group:allNonMajor",
     "replacements:all",
     "workarounds:all"
+  ],
+  "dependencyDashboard": true,
+  "rangeStrategy": "bump",
+  "packageRules": [
+    {
+      "matchManagers": [
+        "npm"
+      ],
+      "automerge": true
+    }
   ]
 }
