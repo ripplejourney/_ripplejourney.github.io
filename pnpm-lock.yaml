@@ -122,8 +122,8 @@ importers:
         specifier: ^2.4.0
         version: 2.4.0(vue@3.5.13(typescript@5.8.2))
       '@mdit-vue/shared':
-        specifier: ^0.12.1
-        version: 0.12.1
+        specifier: ^1.0.0
+        version: 1.0.0
       '@mermaid-js/mermaid-mindmap':
         specifier: ^9.3.0
         version: 9.3.0
@@ -1006,11 +1006,11 @@ packages:
   '@manypkg/get-packages@1.1.3':
     resolution: {integrity: sha512-fo+QhuU3qE/2TQMQmbVMqaQ6EWbMhi4ABWP+O4AM1NqPBuy0OrApV5LO6BrrgnhtAHS2NH6RrVk9OL181tTi8A==}
 
-  '@mdit-vue/shared@0.12.1':
-    resolution: {integrity: sha512-bXgd0KThe4jC2leCFDFsyrudXIckvTwV4WnQK/rRMrXq0/BAuVdSNdIv1LGCWZxD5+oDyPyEPd0lalTIFwqsmg==}
+  '@mdit-vue/shared@1.0.0':
+    resolution: {integrity: sha512-nbYBfmEi+pR2Lm0Z6TMVX2/iBjfr/kGEsHW8CC0rQw+3+sG5dY6VG094HuFAkiAmmvZx9DZZb+7ZMWp9vkwCRw==}
 
-  '@mdit-vue/types@0.12.0':
-    resolution: {integrity: sha512-mrC4y8n88BYvgcgzq9bvTlDgFyi2zuvzmPilRvRc3Uz1iIvq8mDhxJ0rHKFUNzPEScpDvJdIujqiDrulMqiudA==}
+  '@mdit-vue/types@1.0.0':
+    resolution: {integrity: sha512-xeF5+sHLzRNF7plbksywKCph4qli20l72of2fMlZQQ7RECvXYrRkE9+bjRFQCyULC7B8ydUYbpbkux5xJlVWyw==}
 
   '@mermaid-js/mermaid-mindmap@9.3.0':
     resolution: {integrity: sha512-IhtYSVBBRYviH1Ehu8gk69pMDF8DSRqXBRDMWrEfHoaMruHeaP2DXA3PBnuwsMaCdPQhlUUcy/7DBLAEIXvCAw==}
@@ -4725,13 +4725,13 @@ snapshots:
       globby: 11.1.0
       read-yaml-file: 1.1.0
 
-  '@mdit-vue/shared@0.12.1':
+  '@mdit-vue/shared@1.0.0':
     dependencies:
-      '@mdit-vue/types': 0.12.0
+      '@mdit-vue/types': 1.0.0
       '@types/markdown-it': 13.0.9
       markdown-it: 13.0.2
 
-  '@mdit-vue/types@0.12.0': {}
+  '@mdit-vue/types@1.0.0': {}
 
   '@mermaid-js/mermaid-mindmap@9.3.0':
     dependencies:
