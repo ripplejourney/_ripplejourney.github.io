@@ -65,7 +65,7 @@ importers:
         specifier: workspace:*
         version: link:../theme
       element-plus:
-        specifier: ^2.9.5
+        specifier: ^2.9.6
         version: 2.9.6(vue@3.5.13(typescript@5.8.2))
       vitepress:
         specifier: 1.6.3
@@ -131,7 +131,7 @@ importers:
         specifier: workspace:*
         version: link:../shared
       '@vue/shared':
-        specifier: ^3.4.26
+        specifier: ^3.4.38
         version: 3.5.13
       '@vueuse/core':
         specifier: ^10.11.1
@@ -140,23 +140,23 @@ importers:
         specifier: ^1.0.6
         version: 1.0.6
       mermaid:
-        specifier: ^10.9.0
+        specifier: ^10.9.3
         version: 10.9.3
       oh-my-live2d:
         specifier: ^0.19.3
         version: 0.19.3
       swiper:
-        specifier: ^11.1.1
+        specifier: ^11.1.15
         version: 11.2.5
       vitepress-markdown-timeline:
-        specifier: ^1.2.1
+        specifier: ^1.2.2
         version: 1.2.2
       vitepress-plugin-announcement:
         specifier: workspace:*
         version: link:../vitepress-plugin-announcement
       vitepress-plugin-group-icons:
-        specifier: ^1.2.4
-        version: 1.3.7
+        specifier: ^1.3.8
+        version: 1.3.8
       vitepress-plugin-mermaid:
         specifier: 2.0.17
         version: 2.0.17(mermaid@10.9.3)(vitepress@1.6.3(@algolia/client-search@5.20.3)(@types/node@22.13.10)(async-validator@4.2.5)(axios@1.8.3)(postcss@8.5.3)(sass@1.86.0)(search-insights@2.13.0)(typescript@5.8.2))
@@ -244,7 +244,7 @@ importers:
         specifier: workspace:*
         version: link:../shared
       '@vueuse/core':
-        specifier: ^12.7.0
+        specifier: ^12.8.2
         version: 12.8.2(typescript@5.8.2)
       javascript-stringify:
         specifier: ^2.1.0
@@ -3896,8 +3896,8 @@ packages:
   vitepress-markdown-timeline@1.2.2:
     resolution: {integrity: sha512-eDFcvudmTW33pI7XdT+ZeUPvpc4CPXI0LZbsZZ54j36G56AN6qYEBiwZpDHl77E4QvqAIJMc8phXXvm7P/Lc+Q==}
 
-  vitepress-plugin-group-icons@1.3.7:
-    resolution: {integrity: sha512-2pS7KATeAPXTVOiXF0cU9Jh8TiMWuLn7uzQr1RkYG8fmILvUfue60w2WtloOfrAenByzYSQ724A4aQzUCgVfqw==}
+  vitepress-plugin-group-icons@1.3.8:
+    resolution: {integrity: sha512-BIx1HgXEvbDeJX8NqVvthWHQqEW2slj1SkAWLMNoUR5IJq1dq6LmrURYCyznMJCB3/0g+YY89ifvQp3in1fX3g==}
 
   vitepress-plugin-mermaid@2.0.17:
     resolution: {integrity: sha512-IUzYpwf61GC6k0XzfmAmNrLvMi9TRrVRMsUyCA8KNXhg/mQ1VqWnO0/tBVPiX5UoKF1mDUwqn5QV4qAJl6JnUg==}
@@ -7937,7 +7937,7 @@ snapshots:
     dependencies:
       dayjs: 1.11.13
 
-  vitepress-plugin-group-icons@1.3.7:
+  vitepress-plugin-group-icons@1.3.8:
     dependencies:
       '@iconify-json/logos': 1.2.4
       '@iconify-json/vscode-icons': 1.2.16

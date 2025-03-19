@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@sugarat/theme-shared": "workspace:*",
-    "@vueuse/core": "^12.7.0",
+    "@vueuse/core": "^12.8.2",
     "javascript-stringify": "^2.1.0",
     "vue": "^3.5.13",
     "vue-command-palette": "0.2.3"
