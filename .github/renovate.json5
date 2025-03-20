@@ -1,60 +1,60 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "automerge": true,
-  "extends": [
-    "config:base"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  automerge: true,
+  extends: [
+    'config:recommended',
   ],
-  "gitIgnoredAuthors": [
-    "41898282+github-actions[bot]@users.noreply.github.com"
+  gitIgnoredAuthors: [
+    '41898282+github-actions[bot]@users.noreply.github.com',
   ],
-  "labels": [
-    "dependencies"
+  labels: [
+    'dependencies',
   ],
-  "lockFileMaintenance": {
-    "enabled": true
+  lockFileMaintenance: {
+    enabled: true,
   },
-  "major": {
-    "minimumReleaseAge": "18 days"
+  major: {
+    minimumReleaseAge: '18 days',
   },
-  "minor": {
-    "minimumReleaseAge": "9 days"
+  minor: {
+    minimumReleaseAge: '9 days',
   },
-  "packageRules": [
+  packageRules: [
     {
-      "enabled": false,
-      "matchManagers": [
-        "npm"
+      enabled: false,
+      matchManagers: [
+        'npm',
       ],
-      "matchPackagePatterns": [
-        "^@herp-inc-private/"
-      ]
+      matchPackageNames: [
+        '/^@herp-inc-private//',
+      ],
     },
     {
-      "allowedVersions": "/^(18|20|21|22|23)\\./",
-      "groupName": "Node.js",
-      "matchPackageNames": [
-        "@types/node",
-        "node"
-      ]
+      allowedVersions: '/^(18|20|21|22|23)\\./',
+      groupName: 'Node.js',
+      matchPackageNames: [
+        '@types/node',
+        'node',
+      ],
     },
     {
-      "groupName": "@herp-inc/eslint-config monorepo",
-      "matchPackagePrefixes": [
-        "@herp-inc/eslint-config"
-      ]
-    }
+      groupName: '@herp-inc/eslint-config monorepo',
+      matchPackageNames: [
+        '@herp-inc/eslint-config{/,}**',
+      ],
+    },
   ],
-  "patch": {
-    "groupName": "dependencies (patch)",
-    "groupSlug": "patch",
-    "minimumReleaseAge": "6 days"
+  patch: {
+    groupName: 'dependencies (patch)',
+    groupSlug: 'patch',
+    minimumReleaseAge: '6 days',
   },
-  "platformAutomerge": true,
-  "postUpdateOptions": [
-    "pnpmDedupe"
+  platformAutomerge: true,
+  postUpdateOptions: [
+    'pnpmDedupe',
   ],
-  "prCreation": "not-pending",
-  "separateMultipleMajor": true,
-  "timezone": "Asia/Shanghai",
-  "updateInternalDeps": true
+  prCreation: 'not-pending',
+  separateMultipleMajor: true,
+  timezone: 'Asia/Shanghai',
+  updateInternalDeps: true,
 }
