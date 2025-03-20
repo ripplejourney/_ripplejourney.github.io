@@ -1,28 +1,60 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "automerge": true,
   "extends": [
-    "nuhs-projects/renovate-config:exceptMajor",
-    "github>macchiitaka/renovate-config",
-    ":assignee(GITHUB_USERNAME)",
-    "config:recommended",
-    ":dependencyDashboard",
-    ":semanticPrefixFixDepsChoreOthers",
-    ":prHourlyLimitNone",
-    ":prConcurrentLimitNone",
-    ":ignoreModulesAndTests",
-    "schedule:monthly",
-    "group:allNonMajor",
-    "replacements:all",
-    "workarounds:all"
+    "config:base"
   ],
-  "dependencyDashboard": true,
-  "rangeStrategy": "bump",
+  "gitIgnoredAuthors": [
+    "41898282+github-actions[bot]@users.noreply.github.com"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "major": {
+    "minimumReleaseAge": "18 days"
+  },
+  "minor": {
+    "minimumReleaseAge": "9 days"
+  },
   "packageRules": [
     {
+      "enabled": false,
       "matchManagers": [
         "npm"
       ],
-      "automerge": true
+      "matchPackagePatterns": [
+        "^@herp-inc-private/"
+      ]
+    },
+    {
+      "allowedVersions": "/^(18|20|21|22|23)\\./",
+      "groupName": "Node.js",
+      "matchPackageNames": [
+        "@types/node",
+        "node"
+      ]
+    },
+    {
+      "groupName": "@herp-inc/eslint-config monorepo",
+      "matchPackagePrefixes": [
+        "@herp-inc/eslint-config"
+      ]
     }
-  ]
+  ],
+  "patch": {
+    "groupName": "dependencies (patch)",
+    "groupSlug": "patch",
+    "minimumReleaseAge": "6 days"
+  },
+  "platformAutomerge": true,
+  "postUpdateOptions": [
+    "pnpmDedupe"
+  ],
+  "prCreation": "not-pending",
+  "separateMultipleMajor": true,
+  "timezone": "Asia/Shanghai",
+  "updateInternalDeps": true
 }
