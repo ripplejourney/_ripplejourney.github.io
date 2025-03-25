@@ -56,7 +56,7 @@ jobs:
 
       # 使用 最新的 PNPM
       # 你也可以指定为具体的版本
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
         name: Install pnpm
         with:
           version: latest
