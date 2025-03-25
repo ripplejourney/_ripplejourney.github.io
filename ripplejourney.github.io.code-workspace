@@ -466,6 +466,7 @@
     },
     "eslint.quiet": false,
     "editor.language.colorizedBracketPairs": [],
-    "codingcopilot.commitMessageLanguage": "en"
+    "codingcopilot.commitMessageLanguage": "en",
+    "editor.defaultFormatter": "Tencent-Cloud.coding-copilot"
   }
 }

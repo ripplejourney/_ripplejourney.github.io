@@ -1,60 +1,151 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "automerge": true,
   "extends": [
-    "config:recommended",
+    "github>renovatebot/.github"
   ],
-  "gitIgnoredAuthors": [
-    "41898282+github-actions[bot]@users.noreply.github.com",
+  "semanticCommitScope": "deps",
+  "automergeType": "pr",
+  "prCreation": "immediate",
+  "ignorePresets": [
+    ":ignoreModulesAndTests"
   ],
-  "labels": [
-    "dependencies",
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/__fixtures__/**",
+    "test/**"
   ],
-  "lockFileMaintenance": {
-    "enabled": true,
-  },
-  "major": {
-    "minimumReleaseAge": "18 days",
-  },
-  "minor": {
-    "minimumReleaseAge": "9 days",
+  "rebaseWhen": "conflicted",
+  "baseBranches": [
+    "$default",
+    "next"
+  ],
+  "dockerfile": {
+    "semanticCommitType": "build"
   },
   "packageRules": [
     {
-      "enabled": false,
-      "matchManagers": [
-        "npm",
-      ],
       "matchPackageNames": [
-        "/^@herp-inc-private//",
+        "containerbase/node"
       ],
+      "versioning": "node"
     },
     {
-      "allowedVersions": "/^(18|20|21|22|23)\\./",
-      "groupName": "Node.js",
-      "matchPackageNames": [
-        "@types/node",
-        "node",
+      "matchDepTypes": [
+        "dependencies",
+        "optionalDependencies"
       ],
+      "semanticCommitType": "build"
     },
     {
-      "groupName": "@herp-inc/eslint-config monorepo",
       "matchPackageNames": [
-        "@herp-inc/eslint-config{/,}**",
+        "semantic-release"
       ],
+      "semanticCommitType": "build"
     },
+    {
+      "matchPackageNames": [
+        "@types/jest"
+      ],
+      "groupName": "jest monorepo"
+    },
+    {
+      "matchFileNames": [
+        "**/__fixtures__/**"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "set fix scope for base image",
+      "matchPackageNames": [
+        "ghcr.io/renovatebot/base-image"
+      ],
+      "semanticCommitType": "fix"
+    },
+    {
+      "description": "set feat scope for base image major and minor",
+      "matchPackageNames": [
+        "ghcr.io/renovatebot/base-image"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
+      "semanticCommitType": "feat"
+    },
+    {
+      "description": "use `feat` semantic commit scope with breaking change for for base image major",
+      "matchPackageNames": [
+        "ghcr.io/renovatebot/base-image"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "commitMessagePrefix": "feat(deps)!:"
+    },
+    {
+      "description": "allow prereleases for base image on next branch",
+      "matchPackageNames": [
+        "ghcr.io/renovatebot/base-image"
+      ],
+      "matchBaseBranches": [
+        "next"
+      ],
+      "ignoreUnstable": false
+    },
+    {
+      "description": "set build scope for node updates",
+      "matchPackageNames": [
+        "node"
+      ],
+      "matchFileNames": [
+        ".nvmrc",
+        "tools/docker/Dockerfile"
+      ],
+      "semanticCommitType": "build"
+    },
+    {
+      "description": "set branch prefix for node major updates to split from minor updates",
+      "matchPackageNames": [
+        "node"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "additionalBranchPrefix": "major"
+    },
+    {
+      "description": "disable some invalid deps from docs",
+      "matchPackageNames": [
+        "my.old.registry/**",
+        "my.new.registry/**"
+      ],
+      "matchFileNames": [
+        "docs/**/*.md"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "require approval on next branch",
+      "matchPackageNames": [
+        "!ghcr.io/containerbase/sidecar",
+        "!ghcr.io/renovatebot/base-image"
+      ],
+      "matchBaseBranches": [
+        "next"
+      ],
+      "dependencyDashboardApproval": true
+    }
   ],
-  "patch": {
-    "groupName": "dependencies (patch)",
-    "groupSlug": "patch",
-    "minimumReleaseAge": "6 days",
-  },
-  "platformAutomerge": true,
-  "postUpdateOptions": [
-    "pnpmDedupe",
-  ],
-  "prCreation": "not-pending",
-  "separateMultipleMajor": true,
-  "timezone": "Asia/Shanghai",
-  "updateInternalDeps": true,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "config/options/index.ts"
+      ],
+      "matchStrings": [
+        "default: '(?<depName>ghcr.io/containerbase/sidecar):(?<currentValue>.*)'"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ]
 }
