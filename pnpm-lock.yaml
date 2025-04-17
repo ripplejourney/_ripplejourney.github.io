@@ -11,8 +11,8 @@ importers:
   .:
     devDependencies:
       '@antfu/eslint-config':
-        specifier: 4.11.0
-        version: 4.11.0(@typescript-eslint/utils@8.29.1(eslint@9.24.0)(typescript@5.8.3))(@vue/compiler-sfc@3.5.13)(eslint@9.24.0)(typescript@5.8.3)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.0)(sass@1.86.3)(yaml@2.7.1))
+        specifier: 4.12.0
+        version: 4.12.0(@typescript-eslint/utils@8.29.1(eslint@9.24.0)(typescript@5.8.3))(@vue/compiler-sfc@3.5.13)(eslint@9.24.0)(typescript@5.8.3)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.0)(sass@1.86.3)(yaml@2.7.1))
       '@changesets/cli':
         specifier: 2.28.1
         version: 2.28.1
@@ -387,11 +387,11 @@ packages:
     resolution: {integrity: sha512-UZiTNmUBQFPl3tUKuXaDd8BxEC0t0ny86wwW6XgwfM9IQf4PrzuMpvuOGIJMcCGlrNolZDEI0mcbz/tqRdKW7A==}
     engines: {node: '>= 14.0.0'}
 
-  '@antfu/eslint-config@4.11.0':
-    resolution: {integrity: sha512-KMLIrZflEFsOEF/N0Xl8iVaheLTdgT3gAwXVzdG5Ng8ieNhBsRsaThnqI7of10kh6psSBLJ6SkNK+ZF98fQIXQ==}
+  '@antfu/eslint-config@4.12.0':
+    resolution: {integrity: sha512-8NszLFXu9/cwOP/qliYS3heD+9ZCouGgOWQmsXgDHLNkjC9IjI1yXBOp6Xs4EvwTKsSAZp3SVw382M8naqMQUg==}
     hasBin: true
     peerDependencies:
-      '@eslint-react/eslint-plugin': ^1.19.0
+      '@eslint-react/eslint-plugin': ^1.38.4
       '@prettier/plugin-xml': ^3.4.1
       '@unocss/eslint-plugin': '>=0.50.0'
       astro-eslint-parser: ^1.0.2
@@ -1900,8 +1900,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
-  builtin-modules@4.0.0:
-    resolution: {integrity: sha512-p1n8zyCkt1BVrKNFymOHjcDSAl7oq/gUvfgULv2EblgpPVQlQr9yHnWjg9IJ2MhfwPqiYqMMrr01OY7yQoK2yA==}
+  builtin-modules@5.0.0:
+    resolution: {integrity: sha512-bkXY9WsVpY7CvMhKSR6pZilZu9Ln5WDrKVBUXf2S443etkmEO4V58heTecXcUIsNsi4Rx8JUO4NfX1IcQl4deg==}
     engines: {node: '>=18.20'}
 
   bun-types@1.2.9:
@@ -2490,11 +2490,11 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
-  eslint-plugin-unicorn@57.0.0:
-    resolution: {integrity: sha512-zUYYa6zfNdTeG9BISWDlcLmz16c+2Ck2o5ZDHh0UzXJz3DEP7xjmlVDTzbyV0W+XksgZ0q37WEWzN2D2Ze+g9Q==}
-    engines: {node: '>=18.18'}
+  eslint-plugin-unicorn@58.0.0:
+    resolution: {integrity: sha512-fc3iaxCm9chBWOHPVjn+Czb/wHS0D2Mko7wkOdobqo9R2bbFObc4LyZaLTNy0mhZOP84nKkLhTUQxlLOZ7EjKw==}
+    engines: {node: ^18.20.0 || ^20.10.0 || >=21.0.0}
     peerDependencies:
-      eslint: '>=9.20.0'
+      eslint: '>=9.22.0'
 
   eslint-plugin-unused-imports@4.1.4:
     resolution: {integrity: sha512-YptD6IzQjDardkl0POxnnRBhU1OEePMV0nd6siHaRBbd+lyh6NAhFEobiznKU7kTsSsDeSD62Pe7kAM1b7dAZQ==}
@@ -2855,8 +2855,8 @@ packages:
     resolution: {integrity: sha512-5Hh7Y1wQbvY5ooGgPbDaL5iYLAPzMTUrjMulskHLH6wnv/A+1q5rgEaiuqEjB+oxGXIVZs1FF+R/KPN3ZSQYYg==}
     engines: {node: '>=12'}
 
-  is-builtin-module@4.0.0:
-    resolution: {integrity: sha512-rWP3AMAalQSesXO8gleROyL2iKU73SX5Er66losQn9rWOWL4Gef0a/xOEOVqjWGMuR2vHG3FJ8UUmT700O8oFg==}
+  is-builtin-module@5.0.0:
+    resolution: {integrity: sha512-f4RqJKBUe5rQkJ2eJEJBXSticB3hGbN9j0yxxMQFqIW89Jp9WYFtzfTcRlstDKVUTRzSOTLKRfO9vIztenwtxA==}
     engines: {node: '>=18.20'}
 
   is-core-module@2.16.1:
@@ -4405,7 +4405,7 @@ snapshots:
     dependencies:
       '@algolia/client-common': 5.23.3
 
-  '@antfu/eslint-config@4.11.0(@typescript-eslint/utils@8.29.1(eslint@9.24.0)(typescript@5.8.3))(@vue/compiler-sfc@3.5.13)(eslint@9.24.0)(typescript@5.8.3)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.0)(sass@1.86.3)(yaml@2.7.1))':
+  '@antfu/eslint-config@4.12.0(@typescript-eslint/utils@8.29.1(eslint@9.24.0)(typescript@5.8.3))(@vue/compiler-sfc@3.5.13)(eslint@9.24.0)(typescript@5.8.3)(vitest@3.1.1(@types/debug@4.1.12)(@types/node@22.14.0)(sass@1.86.3)(yaml@2.7.1))':
     dependencies:
       '@antfu/install-pkg': 1.0.0
       '@clack/prompts': 0.10.1
@@ -4432,7 +4432,7 @@ snapshots:
       eslint-plugin-pnpm: 0.3.1(eslint@9.24.0)
       eslint-plugin-regexp: 2.7.0(eslint@9.24.0)
       eslint-plugin-toml: 0.12.0(eslint@9.24.0)
-      eslint-plugin-unicorn: 57.0.0(eslint@9.24.0)
+      eslint-plugin-unicorn: 58.0.0(eslint@9.24.0)
       eslint-plugin-unused-imports: 4.1.4(@typescript-eslint/eslint-plugin@8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))(eslint@9.24.0)(typescript@5.8.3))(eslint@9.24.0)
       eslint-plugin-vue: 10.0.0(eslint@9.24.0)(vue-eslint-parser@10.1.3(eslint@9.24.0))
       eslint-plugin-yml: 1.17.0(eslint@9.24.0)
@@ -5912,7 +5912,7 @@ snapshots:
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.24.4)
 
-  builtin-modules@4.0.0: {}
+  builtin-modules@5.0.0: {}
 
   bun-types@1.2.9:
     dependencies:
@@ -6583,18 +6583,19 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-unicorn@57.0.0(eslint@9.24.0):
+  eslint-plugin-unicorn@58.0.0(eslint@9.24.0):
     dependencies:
       '@babel/helper-validator-identifier': 7.25.9
       '@eslint-community/eslint-utils': 4.6.0(eslint@9.24.0)
+      '@eslint/plugin-kit': 0.2.8
       ci-info: 4.2.0
       clean-regexp: 1.0.0
       core-js-compat: 3.41.0
       eslint: 9.24.0
       esquery: 1.6.0
-      globals: 15.15.0
+      globals: 16.0.0
       indent-string: 5.0.0
-      is-builtin-module: 4.0.0
+      is-builtin-module: 5.0.0
       jsesc: 3.1.0
       pluralize: 8.0.0
       read-package-up: 11.0.0
@@ -6998,9 +6999,9 @@ snapshots:
 
   internmap@2.0.3: {}
 
-  is-builtin-module@4.0.0:
+  is-builtin-module@5.0.0:
     dependencies:
-      builtin-modules: 4.0.0
+      builtin-modules: 5.0.0
 
   is-core-module@2.16.1:
     dependencies:
