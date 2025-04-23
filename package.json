@@ -54,7 +54,7 @@
     "tsup": "8.4.0",
     "typescript": "5.8.3",
     "wait-on": "8.0.3",
-    "zx": "8.5.2"
+    "zx": "8.5.3"
   },
   "pnpm": {
     "peerDependencyRules": {
