@@ -17,7 +17,7 @@
   "rebaseWhen": "conflicted",
   "baseBranches": [
     "$default",
-    "next"
+    "master"
   ],
   "dockerfile": {
     "semanticCommitType": "build"
@@ -83,12 +83,12 @@
       "commitMessagePrefix": "feat(deps)!:"
     },
     {
-      "description": "allow prereleases for base image on next branch",
+      "description": "allow prereleases for base image on master branch",
       "matchPackageNames": [
         "ghcr.io/renovatebot/base-image"
       ],
       "matchBaseBranches": [
-        "next"
+        "master"
       ],
       "ignoreUnstable": false
     },
@@ -125,13 +125,13 @@
       "enabled": false
     },
     {
-      "description": "require approval on next branch",
+      "description": "require approval on master branch",
       "matchPackageNames": [
         "!ghcr.io/containerbase/sidecar",
         "!ghcr.io/renovatebot/base-image"
       ],
       "matchBaseBranches": [
-        "next"
+        "master"
       ],
       "dependencyDashboardApproval": true
     }
