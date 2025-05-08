@@ -1,151 +1,151 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>renovatebot/.github"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'github>renovatebot/.github',
   ],
-  "semanticCommitScope": "deps",
-  "automergeType": "pr",
-  "prCreation": "immediate",
-  "ignorePresets": [
-    ":ignoreModulesAndTests"
+  semanticCommitScope: 'deps',
+  automergeType: 'pr',
+  prCreation: 'immediate',
+  ignorePresets: [
+    ':ignoreModulesAndTests',
   ],
-  "ignorePaths": [
-    "**/node_modules/**",
-    "**/__fixtures__/**",
-    "test/**"
+  ignorePaths: [
+    '**/node_modules/**',
+    '**/__fixtures__/**',
+    'test/**',
   ],
-  "rebaseWhen": "conflicted",
-  "baseBranches": [
-    "$default",
-    "master"
+  rebaseWhen: 'conflicted',
+  baseBranches: [
+    '$default',
+    'master',
   ],
-  "dockerfile": {
-    "semanticCommitType": "build"
+  dockerfile: {
+    semanticCommitType: 'build',
   },
-  "packageRules": [
+  packageRules: [
     {
-      "matchPackageNames": [
-        "containerbase/node"
+      matchPackageNames: [
+        'containerbase/node',
       ],
-      "versioning": "node"
+      versioning: 'node',
     },
     {
-      "matchDepTypes": [
-        "dependencies",
-        "optionalDependencies"
+      matchDepTypes: [
+        'dependencies',
+        'optionalDependencies',
       ],
-      "semanticCommitType": "build"
+      semanticCommitType: 'build',
     },
     {
-      "matchPackageNames": [
-        "semantic-release"
+      matchPackageNames: [
+        'semantic-release',
       ],
-      "semanticCommitType": "build"
+      semanticCommitType: 'build',
     },
     {
-      "matchPackageNames": [
-        "@types/jest"
+      matchPackageNames: [
+        '@types/jest',
       ],
-      "groupName": "jest monorepo"
+      groupName: 'jest monorepo',
     },
     {
-      "matchFileNames": [
-        "**/__fixtures__/**"
+      matchFileNames: [
+        '**/__fixtures__/**',
       ],
-      "enabled": false
+      enabled: false,
     },
     {
-      "description": "set fix scope for base image",
-      "matchPackageNames": [
-        "ghcr.io/renovatebot/base-image"
+      description: 'set fix scope for base image',
+      matchPackageNames: [
+        'ghcr.io/renovatebot/base-image',
       ],
-      "semanticCommitType": "fix"
+      semanticCommitType: 'fix',
     },
     {
-      "description": "set feat scope for base image major and minor",
-      "matchPackageNames": [
-        "ghcr.io/renovatebot/base-image"
+      description: 'set feat scope for base image major and minor',
+      matchPackageNames: [
+        'ghcr.io/renovatebot/base-image',
       ],
-      "matchUpdateTypes": [
-        "major",
-        "minor"
+      matchUpdateTypes: [
+        'major',
+        'minor',
       ],
-      "semanticCommitType": "feat"
+      semanticCommitType: 'feat',
     },
     {
-      "description": "use `feat` semantic commit scope with breaking change for for base image major",
-      "matchPackageNames": [
-        "ghcr.io/renovatebot/base-image"
+      description: 'use `feat` semantic commit scope with breaking change for for base image major',
+      matchPackageNames: [
+        'ghcr.io/renovatebot/base-image',
       ],
-      "matchUpdateTypes": [
-        "major"
+      matchUpdateTypes: [
+        'major',
       ],
-      "commitMessagePrefix": "feat(deps)!:"
+      commitMessagePrefix: 'feat(deps)!:',
     },
     {
-      "description": "allow prereleases for base image on master branch",
-      "matchPackageNames": [
-        "ghcr.io/renovatebot/base-image"
+      description: 'allow prereleases for base image on master branch',
+      matchPackageNames: [
+        'ghcr.io/renovatebot/base-image',
       ],
-      "matchBaseBranches": [
-        "master"
+      matchBaseBranches: [
+        'master',
       ],
-      "ignoreUnstable": false
+      ignoreUnstable: false,
     },
     {
-      "description": "set build scope for node updates",
-      "matchPackageNames": [
-        "node"
+      description: 'set build scope for node updates',
+      matchPackageNames: [
+        'node',
       ],
-      "matchFileNames": [
-        ".nvmrc",
-        "tools/docker/Dockerfile"
+      matchFileNames: [
+        '.nvmrc',
+        'tools/docker/Dockerfile',
       ],
-      "semanticCommitType": "build"
+      semanticCommitType: 'build',
     },
     {
-      "description": "set branch prefix for node major updates to split from minor updates",
-      "matchPackageNames": [
-        "node"
+      description: 'set branch prefix for node major updates to split from minor updates',
+      matchPackageNames: [
+        'node',
       ],
-      "matchUpdateTypes": [
-        "major"
+      matchUpdateTypes: [
+        'major',
       ],
-      "additionalBranchPrefix": "major"
+      additionalBranchPrefix: 'major',
     },
     {
-      "description": "disable some invalid deps from docs",
-      "matchPackageNames": [
-        "my.old.registry/**",
-        "my.new.registry/**"
+      description: 'disable some invalid deps from docs',
+      matchPackageNames: [
+        'my.old.registry/**',
+        'my.new.registry/**',
       ],
-      "matchFileNames": [
-        "docs/**/*.md"
+      matchFileNames: [
+        'docs/**/*.md',
       ],
-      "enabled": false
+      enabled: false,
     },
     {
-      "description": "require approval on master branch",
-      "matchPackageNames": [
-        "!ghcr.io/containerbase/sidecar",
-        "!ghcr.io/renovatebot/base-image"
+      description: 'require approval on master branch',
+      matchPackageNames: [
+        '!ghcr.io/containerbase/sidecar',
+        '!ghcr.io/renovatebot/base-image',
       ],
-      "matchBaseBranches": [
-        "master"
+      matchBaseBranches: [
+        'master',
       ],
-      "dependencyDashboardApproval": true
-    }
+      dependencyDashboardApproval: true,
+    },
   ],
-  "customManagers": [
+  customManagers: [
     {
-      "customType": "regex",
-      "fileMatch": [
-        "config/options/index.ts"
+      customType: 'regex',
+      managerFilePatterns: [
+        '/config/options/index.ts/',
       ],
-      "matchStrings": [
-        "default: '(?<depName>ghcr.io/containerbase/sidecar):(?<currentValue>.*)'"
+      matchStrings: [
+        "default: '(?<depName>ghcr.io/containerbase/sidecar):(?<currentValue>.*)'",
       ],
-      "datasourceTemplate": "docker"
-    }
-  ]
+      datasourceTemplate: 'docker',
+    },
+  ],
 }
