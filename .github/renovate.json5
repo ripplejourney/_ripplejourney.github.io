@@ -1,35 +1,38 @@
 {
-  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: [
-    'github>renovatebot/.github',
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>renovatebot/.github",
   ],
-  semanticCommitScope: 'deps',
-  automergeType: 'pr',
-  baseBranches: [
-    '$default',
-    'master',
+  "semanticCommitScope": "deps",
+  "automergeType": "pr",
+  "baseBranches": [
+    "$default",
+    "master",
   ],
-  dockerfile: {
-    semanticCommitType: 'build',
-  },
-  packageRules: [
+  "versioning": "semver",
+  "updateTypes": [
+    "minor",
+    "patch"
+  ],
+  "stabilityDays": 7,
+  "packageRules": [
     {
-      matchUpdateTypes: [
-        'minor',
-        'patch',
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
       ],
-      groupName: 'dependencies',
+      "groupName": "dependencies",
     },
     {
-      matchUpdateTypes: [
-        'major',
+      "matchUpdateTypes": [
+        "major",
       ],
-      groupName: 'major-dependencies',
+      "groupName": "major-dependencies",
     },
   ],
-  automerge: true,
-  major: {
-    automerge: false,
-    groupName: 'major',
+  "automerge": true,
+  "major": {
+    "automerge": false,
+    "groupName": "major",
   },
 }
