@@ -455,6 +455,9 @@
     "eslint.quiet": false,
     "editor.language.colorizedBracketPairs": [],
     "codingcopilot.commitMessageLanguage": "en",
-    "editor.defaultFormatter": "Tencent-Cloud.coding-copilot"
+    "editor.defaultFormatter": "Tencent-Cloud.coding-copilot",
+    "[json5]": {
+      "editor.defaultFormatter": "BlueGlassBlock.better-json5"
+    }
   }
 }
