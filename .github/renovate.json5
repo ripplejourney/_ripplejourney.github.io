@@ -21,13 +21,13 @@
         "minor",
         "patch",
       ],
-      "groupName": "dependencies",
+      "groupName": "minor & patch deps",
     },
     {
       "matchUpdateTypes": [
         "major",
       ],
-      "groupName": "major-dependencies",
+      "groupName": "major deps",
     },
   ],
   "automerge": true,
