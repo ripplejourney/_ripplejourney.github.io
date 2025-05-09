@@ -1,151 +1,38 @@
 {
-  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: [
-    'github>renovatebot/.github',
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>renovatebot/.github",
   ],
-  semanticCommitScope: 'deps',
-  automergeType: 'pr',
-  prCreation: 'immediate',
-  ignorePresets: [
-    ':ignoreModulesAndTests',
+  "semanticCommitScope": "deps",
+  "automergeType": "pr",
+  "baseBranches": [
+    "$default",
+    "master",
   ],
-  ignorePaths: [
-    '**/node_modules/**',
-    '**/__fixtures__/**',
-    'test/**',
-  ],
-  rebaseWhen: 'conflicted',
-  baseBranches: [
-    '$default',
-    'master',
-  ],
-  dockerfile: {
-    semanticCommitType: 'build',
+  "dockerfile": {
+    "semanticCommitType": "build",
   },
-  packageRules: [
+  "group": {
+    "all": true
+  },
+  "packageRules": [
     {
-      matchPackageNames: [
-        'containerbase/node',
+      "updateTypes": [
+        "minor",
+        "patch"
       ],
-      versioning: 'node',
+      "groupName": "dependencies"
     },
     {
-      matchDepTypes: [
-        'dependencies',
-        'optionalDependencies',
+      "updateTypes": [
+        "major"
       ],
-      semanticCommitType: 'build',
-    },
-    {
-      matchPackageNames: [
-        'semantic-release',
-      ],
-      semanticCommitType: 'build',
-    },
-    {
-      matchPackageNames: [
-        '@types/jest',
-      ],
-      groupName: 'jest monorepo',
-    },
-    {
-      matchFileNames: [
-        '**/__fixtures__/**',
-      ],
-      enabled: false,
-    },
-    {
-      description: 'set fix scope for base image',
-      matchPackageNames: [
-        'ghcr.io/renovatebot/base-image',
-      ],
-      semanticCommitType: 'fix',
-    },
-    {
-      description: 'set feat scope for base image major and minor',
-      matchPackageNames: [
-        'ghcr.io/renovatebot/base-image',
-      ],
-      matchUpdateTypes: [
-        'major',
-        'minor',
-      ],
-      semanticCommitType: 'feat',
-    },
-    {
-      description: 'use `feat` semantic commit scope with breaking change for for base image major',
-      matchPackageNames: [
-        'ghcr.io/renovatebot/base-image',
-      ],
-      matchUpdateTypes: [
-        'major',
-      ],
-      commitMessagePrefix: 'feat(deps)!:',
-    },
-    {
-      description: 'allow prereleases for base image on master branch',
-      matchPackageNames: [
-        'ghcr.io/renovatebot/base-image',
-      ],
-      matchBaseBranches: [
-        'master',
-      ],
-      ignoreUnstable: false,
-    },
-    {
-      description: 'set build scope for node updates',
-      matchPackageNames: [
-        'node',
-      ],
-      matchFileNames: [
-        '.nvmrc',
-        'tools/docker/Dockerfile',
-      ],
-      semanticCommitType: 'build',
-    },
-    {
-      description: 'set branch prefix for node major updates to split from minor updates',
-      matchPackageNames: [
-        'node',
-      ],
-      matchUpdateTypes: [
-        'major',
-      ],
-      additionalBranchPrefix: 'major',
-    },
-    {
-      description: 'disable some invalid deps from docs',
-      matchPackageNames: [
-        'my.old.registry/**',
-        'my.new.registry/**',
-      ],
-      matchFileNames: [
-        'docs/**/*.md',
-      ],
-      enabled: false,
-    },
-    {
-      description: 'require approval on master branch',
-      matchPackageNames: [
-        '!ghcr.io/containerbase/sidecar',
-        '!ghcr.io/renovatebot/base-image',
-      ],
-      matchBaseBranches: [
-        'master',
-      ],
-      dependencyDashboardApproval: true,
-    },
+      "groupName": "major-dependencies"
+    }
   ],
-  customManagers: [
-    {
-      customType: 'regex',
-      managerFilePatterns: [
-        '/config/options/index.ts/',
-      ],
-      matchStrings: [
-        "default: '(?<depName>ghcr.io/containerbase/sidecar):(?<currentValue>.*)'",
-      ],
-      datasourceTemplate: 'docker',
-    },
-  ],
+  "automerge": true, // 自动合并已通过的 PR
+  "major": { // 单独处理 major 更新
+    "automerge": false,
+    "groupName": "major"
+  }
 }
