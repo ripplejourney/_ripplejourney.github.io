@@ -9,12 +9,6 @@
     "$default",
     "master",
   ],
-  "versioning": "semver",
-  "updateTypes": [
-    "minor",
-    "patch"
-  ],
-  "stabilityDays": 7,
   "packageRules": [
     {
       "matchUpdateTypes": [
@@ -22,12 +16,14 @@
         "patch",
       ],
       "groupName": "minor & patch deps",
+      "minimumReleaseAge": "3 days"
     },
     {
       "matchUpdateTypes": [
         "major",
       ],
       "groupName": "major deps",
+      "minimumReleaseAge": "7 days"
     },
   ],
   "automerge": true,
