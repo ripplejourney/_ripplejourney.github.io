@@ -4,7 +4,7 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-pnpmfileChecksum: sha256-3NiSAOZAegMczpK0OclDdAK05B7VXi/xTWTYy2/tHLw=
+pnpmfileChecksum: q5jnxgp3ztahrwsne2so7p7o7a
 
 importers:
 
@@ -84,8 +84,8 @@ importers:
         specifier: 1.86.3
         version: 1.86.3
       vite:
-        specifier: 6.3.0
-        version: 6.3.0(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
+        specifier: 6.3.4
+        version: 6.3.4(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
 
   packages/create-theme:
     dependencies:
@@ -189,8 +189,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vite:
-        specifier: 6.3.0
-        version: 6.3.0(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
+        specifier: 6.3.4
+        version: 6.3.4(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
       vitepress:
         specifier: 1.6.3
         version: 1.6.3(@algolia/client-search@5.24.0)(@types/node@22.14.1)(async-validator@4.2.5)(axios@1.9.0)(postcss@8.5.3)(sass@1.86.3)(search-insights@2.17.3)(typescript@5.8.3)
@@ -204,8 +204,8 @@ importers:
   packages/vitepress-plugin-51la:
     devDependencies:
       vite:
-        specifier: 6.3.0
-        version: 6.3.0(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
+        specifier: 6.3.4
+        version: 6.3.4(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
       vitepress:
         specifier: 1.6.3
         version: 1.6.3(@algolia/client-search@5.24.0)(@types/node@22.14.1)(async-validator@4.2.5)(axios@1.9.0)(postcss@8.5.3)(sass@1.86.3)(search-insights@2.17.3)(typescript@5.8.3)
@@ -229,8 +229,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vite:
-        specifier: 6.3.0
-        version: 6.3.0(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
+        specifier: 6.3.4
+        version: 6.3.4(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
       vitepress:
         specifier: 1.6.3
         version: 1.6.3(@algolia/client-search@5.24.0)(@types/node@22.14.1)(async-validator@4.2.5)(axios@1.9.0)(postcss@8.5.3)(sass@1.86.3)(search-insights@2.17.3)(typescript@5.8.3)
@@ -260,8 +260,8 @@ importers:
         version: 0.2.3
     devDependencies:
       vite:
-        specifier: 6.3.0
-        version: 6.3.0(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
+        specifier: 6.3.4
+        version: 6.3.4(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
       vitepress:
         specifier: 1.6.3
         version: 1.6.3(@algolia/client-search@5.24.0)(@types/node@22.14.1)(async-validator@4.2.5)(axios@1.9.0)(postcss@8.5.3)(sass@1.86.3)(search-insights@2.17.3)(typescript@5.8.3)
@@ -276,8 +276,8 @@ importers:
         version: 4.2.2
     devDependencies:
       vite:
-        specifier: 6.3.0
-        version: 6.3.0(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
+        specifier: 6.3.4
+        version: 6.3.4(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
       vitepress:
         specifier: 1.6.3
         version: 1.6.3(@algolia/client-search@5.24.0)(@types/node@22.14.1)(async-validator@4.2.5)(axios@1.9.0)(postcss@8.5.3)(sass@1.86.3)(search-insights@2.17.3)(typescript@5.8.3)
@@ -304,8 +304,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       vite:
-        specifier: 6.3.0
-        version: 6.3.0(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
+        specifier: 6.3.4
+        version: 6.3.4(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1)
       vitepress:
         specifier: 1.6.3
         version: 1.6.3(@algolia/client-search@5.24.0)(@types/node@22.14.1)(async-validator@4.2.5)(axios@1.9.0)(postcss@8.5.3)(sass@1.86.3)(search-insights@2.17.3)(typescript@5.8.3)
@@ -3822,6 +3822,10 @@ packages:
     resolution: {integrity: sha512-qkf4trmKSIiMTs/E63cxH+ojC2unam7rJ0WrauAzpT3ECNTxGRMlaXxVbfxMUC/w0LaYk6jQ4y/nGR9uBO3tww==}
     engines: {node: '>=12.0.0'}
 
+  tinyglobby@0.2.13:
+    resolution: {integrity: sha512-mEwzpUgrLySlveBwEVDMKk5B57bhLPYovRfPAXD5gA/98Opn0rCDj3GtLwFvCvH5RK9uPCExUROW5NjDwvqkxw==}
+    engines: {node: '>=12.0.0'}
+
   tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
     engines: {node: '>=0.6.0'}
@@ -3987,8 +3991,8 @@ packages:
       terser:
         optional: true
 
-  vite@6.3.0:
-    resolution: {integrity: sha512-9aC0n4pr6hIbvi1YOpFjwQ+QOTGssvbJKoeYkuHHGWwlXfdxQlI8L2qNMo9awEEcCPSiS+5mJZk5jH1PAqoDeQ==}
+  vite@6.3.4:
+    resolution: {integrity: sha512-BiReIiMS2fyFqbqNT/Qqt4CVITDU9M9vE+DKcVAsB+ZV0wvTKd+3hMbkpxz1b+NmEDMegpVbisKiAZOnvO92Sw==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -7991,6 +7995,11 @@ snapshots:
       fdir: 6.4.4(picomatch@4.0.2)
       picomatch: 4.0.2
 
+  tinyglobby@0.2.13:
+    dependencies:
+      fdir: 6.4.4(picomatch@4.0.2)
+      picomatch: 4.0.2
+
   tmp@0.0.33:
     dependencies:
       os-tmpdir: 1.0.2
@@ -8152,14 +8161,14 @@ snapshots:
       fsevents: 2.3.3
       sass: 1.86.3
 
-  vite@6.3.0(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1):
+  vite@6.3.4(@types/node@22.14.1)(sass@1.86.3)(yaml@2.7.1):
     dependencies:
       esbuild: 0.25.4
       fdir: 6.4.4(picomatch@4.0.2)
       picomatch: 4.0.2
       postcss: 8.5.3
       rollup: 4.40.2
-      tinyglobby: 0.2.12
+      tinyglobby: 0.2.13
     optionalDependencies:
       '@types/node': 22.14.1
       fsevents: 2.3.3
