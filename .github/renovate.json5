@@ -12,10 +12,6 @@
   "dockerfile": {
     "semanticCommitType": "build",
   },
-  "group": {
-    "all": true,
-    "groupName": "all dependencies"
-  },
   "packageRules": [
     {
       "updateTypes": [
