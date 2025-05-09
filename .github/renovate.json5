@@ -13,7 +13,8 @@
     "semanticCommitType": "build",
   },
   "group": {
-    "all": true
+    "all": true,
+    "groupName": "all dependencies"
   },
   "packageRules": [
     {
