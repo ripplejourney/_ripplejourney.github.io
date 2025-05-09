@@ -1,35 +1,35 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>renovatebot/.github",
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'github>renovatebot/.github',
   ],
-  "semanticCommitScope": "deps",
-  "automergeType": "pr",
-  "baseBranches": [
-    "$default",
-    "master",
+  semanticCommitScope: 'deps',
+  automergeType: 'pr',
+  baseBranches: [
+    '$default',
+    'master',
   ],
-  "dockerfile": {
-    "semanticCommitType": "build",
+  dockerfile: {
+    semanticCommitType: 'build',
   },
-  "packageRules": [
+  packageRules: [
     {
-      "updateTypes": [
-        "minor",
-        "patch"
+      matchUpdateTypes: [
+        'minor',
+        'patch',
       ],
-      "groupName": "dependencies"
+      groupName: 'dependencies',
     },
     {
-      "updateTypes": [
-        "major"
+      matchUpdateTypes: [
+        'major',
       ],
-      "groupName": "major-dependencies"
-    }
+      groupName: 'major-dependencies',
+    },
   ],
-  "automerge": true, // 自动合并已通过的 PR
-  "major": { // 单独处理 major 更新
-    "automerge": false,
-    "groupName": "major"
-  }
+  automerge: true,
+  major: {
+    automerge: false,
+    groupName: 'major',
+  },
 }
