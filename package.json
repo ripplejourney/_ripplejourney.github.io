@@ -44,7 +44,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "4.13.0",
     "@changesets/cli": "2.29.3",
-    "@types/bun": "1.2.12",
+    "@types/bun": "1.2.13",
     "@types/node": "22.15.17",
     "eslint": "9.26.0",
     "eslint-plugin-todo-ddl": "1.1.1",
@@ -54,7 +54,7 @@
     "tsup": "8.4.0",
     "typescript": "5.8.3",
     "wait-on": "8.0.3",
-    "zx": "8.5.3"
+    "zx": "8.5.4"
   },
   "pnpm": {
     "peerDependencyRules": {
