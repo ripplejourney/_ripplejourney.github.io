@@ -29,6 +29,6 @@
   "automerge": true,
   "major": {
     "automerge": false,
-    "groupName": "major",
+    // "groupName": "major",
   },
 }
