@@ -38,7 +38,7 @@
     "pc:version": "pnpm changeset version",
     "pcpe": "changeset pre enter beta",
     "pcpe:exit": "changeset pre enter exit",
-    "postinstall": "npx simple-git-hooks",
+    "postinstall": "pnpm simple-git-hooks",
     "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
