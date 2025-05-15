@@ -20,7 +20,7 @@ async function readFileToJson(filePath) {
 }
 
 async function writeJsonToFile(filePath, jsonObject) {
-  console.log(filePath)
+  console.log('filePath:', filePath)
   const content = JSON.stringify(jsonObject, null, '  ')
   await fs.promises.writeFile(filePath, content, 'utf8')
   console.log(`JSON data has been successfully written to ${filePath}`)
@@ -40,7 +40,7 @@ async function _findInstalledExtensions(data) {
 
 async function createNewSettings(filePath, newSettings) {
   return fs.ensureFile(filePath)
-    .then(async value => await writeJsonToFile(value, newSettings))
+    .then(async value => await writeJsonToFile(filePath, newSettings))
 }
 async function mergeToCurrentSettings(filePath, newSettings) {
   return readFileToJson(extensionWorkspace)
@@ -94,6 +94,7 @@ function main() {
       '.ts': 'cd $dir && npx tsx $fullFileName'
     }
   }
+  console.log('extensionWorkspace:', extensionWorkspace)
   const handle = fs.existsSync(extensionWorkspace)
     ? mergeToCurrentSettings(extensionWorkspace, defaultSettings)
     : createNewSettings(extensionWorkspace, defaultSettings)
@@ -107,6 +108,7 @@ function main() {
       absolute: true
     })
       .then(async (files) => {
+        console.log('files:', files)
         if (files && files.length > 0) {
           const filePath = files[0]
           if (fs.existsSync(filePath)) {
@@ -124,6 +126,9 @@ function main() {
               }
             }
           }
+        }
+        else {
+          console.log('----  no code-workspace file found', 'root:', process.cwd(), 'pattern:', codeWorkspace, '-----------------------------  ')
         }
       }))
 
