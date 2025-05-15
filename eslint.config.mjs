@@ -42,14 +42,8 @@ export default antfu(
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       'import/extensions': 'off',
-      'quotes': [
-        'warn',
-        'single',
-      ],
-      'semi': [
-        'warn',
-        'never',
-      ],
+      'quotes': ['off', 'as-needed',],
+      'semi': ['warn', 'never',],
       'import/no-unresolved': 'off',
       'import/prefer-default-export': 'off',
       'no-param-reassign': 'off',
@@ -83,7 +77,7 @@ export default antfu(
       'no-template-curly-in-string': 'off',
       // ----new test -----
       'no-var': 'warn',
-      'style/quotes': ['off', 'single'],
+      'style/quotes': ['off', 'as-needed'],
       // "quotes": "off",
       'ts/no-unused-vars': 'off',
       'ts/no-shadow': 0,
