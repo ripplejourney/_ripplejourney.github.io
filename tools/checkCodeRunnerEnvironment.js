@@ -3,28 +3,40 @@ import process from 'process'
 import JSON5 from 'json5'
 import { glob } from 'glob'
 import fs from 'fs-extra'
-import _ from 'lodash'
+import { assign } from 'radash'
 
+// import _ from 'lodash'
 function parseJsonWithComments(jsonString) {
   return JSON5.parse(jsonString)
 }
 
 async function readFileToJson(filePath) {
   if (!fs.existsSync(filePath))
-    return {}
-  console.log('配置文件：', path.resolve(process.cwd(), filePath))
+    return null
+  console.log("🚀 ~ readFileToJson:", path.resolve(process.cwd(), filePath))
   const fileContent = fs.readFileSync(path.resolve(filePath), 'utf8')
   // console.log('配置内容：', fileContent)
   const jsonObject = parseJsonWithComments(fileContent)
-  return { filePath, jsonObject }
+  return jsonObject
 }
 
-async function writeJsonToFile(filePath, jsonObject) {
-  console.log('filePath:', filePath)
-  const content = JSON.stringify(jsonObject, null, '  ')
+async function writeJsonToFile(filePath, jsonObject, isJson5 = false) {
+  let content
+  if (isJson5) {
+    // content = JSON5.stringify(jsonObject, {
+    //   space: 2,
+    //   quote: '"',
+    // })
+    content = JSON.stringify(jsonObject, {
+      space: 2,
+      quote: '"'
+    })
+  }
+  else {
+    content = JSON.stringify(jsonObject, null, 2)
+  }
   await fs.promises.writeFile(filePath, content, 'utf8')
-  console.log(`JSON data has been successfully written to ${filePath}`)
-  return { filePath, jsonObject }
+  return jsonObject
 }
 async function _findInstalledExtensions(data) {
   const extensions = parseJsonWithComments(data.extensions)
@@ -38,52 +50,22 @@ async function _findInstalledExtensions(data) {
   return ids
 }
 
-async function createNewSettings(filePath, newSettings) {
-  return fs.ensureFile(filePath)
-    .then(async value => await writeJsonToFile(filePath, newSettings))
-}
-async function mergeToCurrentSettings(filePath, newSettings) {
-  return readFileToJson(extensionWorkspace)
-    .then(async (currSettings) => {
-      console.log('check', currSettings)
-      return tryMerge(currSettings, newSettings)
-    })
-    .then(async ({ needMerge, filePath, jsonObject }) => {
-      if (needMerge === true) {
-        const o = await writeJsonToFile(filePath, jsonObject)
-        console.log('--------------------------  overrided file:', filePath, '-----------------------------  ')
-        return o
-      }
-      console.log('--------------------------  Keep file:', filePath, '-----------------------------  ')
-      return { needMerge, filePath, jsonObject }
+function createNewSettings(settingsFilePath, newSettings) {
+  return fs.ensureFile(settingsFilePath)
+    .then(async (_) => {
+      await writeJsonToFile(settingsFilePath, newSettings, false)
+      return newSettings
     })
 }
-/**
- *
- * @param {{filepath:string,jsonObject:object}} currSettings current settings
- * @param {{filepath:string,jsonObject:object}} newSettings new settings
- * @returns {{needMerge:boolean,jsonObject:object}} merged ojbec
- */
-async function tryMerge(currSettings, newSettings) {
-  const keys = Object.keys(currSettings)
-  let needMerge = false
-  for (const key in Object.keys(newSettings)) {
-    if (!keys.includes(key)) {
-      needMerge = true
-      break
-    }
-  }
-  let obj = { needMerge, ...currSettings }
-  if (needMerge) {
-    const mergedSettings = _.merge({}, newSettings, currSettings)
-    obj = { needMerge, jsonObject: mergedSettings }
-  }
-  return obj
+
+function tryMerge(currSettings, newSettings) {
+  const merged = assign(currSettings, newSettings)
+  return merged
 }
 
 console.log('-----------------------------', 'start', '-----------------------------')
-const codeWorkspace = '**/*.code-workspace'
-const extensionWorkspace = path.resolve(process.cwd(), '.vscode/settings.json')
+const codeWorkspacePath = '**/*.code-workspace'
+const vscodeSettingsPath = path.resolve(process.cwd(), '.vscode/settings.json')
 
 function main() {
   const defaultSettings = {
@@ -94,43 +76,56 @@ function main() {
       '.ts': 'cd $dir && npx tsx $fullFileName'
     }
   }
-  console.log('extensionWorkspace:', extensionWorkspace)
-  const handle = fs.existsSync(extensionWorkspace)
-    ? mergeToCurrentSettings(extensionWorkspace, defaultSettings)
-    : createNewSettings(extensionWorkspace, defaultSettings)
+  let handle
+  if (fs.existsSync(vscodeSettingsPath)) {
+    handle = readFileToJson(vscodeSettingsPath)
+      .then((vscodeSettings) => {
+        return tryMerge(vscodeSettings, defaultSettings)
+      })
+      .then(async (vscodeSettings) => {
+        // console.log("🚀 ~ .then ~ vscodeSettings:", vscodeSettings)
+        await writeJsonToFile(vscodeSettingsPath, vscodeSettings, false)
+        return vscodeSettings
+      })
+  }
+  else {
+    console.log("🚀 ~ main ~ ", vscodeSettingsPath, " not found, created with default")
+    handle = Promise.resolve(createNewSettings(vscodeSettingsPath, defaultSettings))
+  }
 
   handle
-    .then(({ needMerge, filePath, jsonObject }) => {
-      return { needMerge, filePath, jsonObject }
+    .then(async (vscodeSettings) => {
+      return {
+        workspaceFiles: await glob(codeWorkspacePath, { cwd: process.cwd(), absolute: true }),
+        vscodeSettings
+      }
     })
-    .then(result => glob(codeWorkspace, {
-      cwd: process.cwd(),
-      absolute: true
-    })
-      .then(async (files) => {
-        console.log('files:', files)
-        if (files && files.length > 0) {
-          const filePath = files[0]
-          if (fs.existsSync(filePath)) {
-            const codeprofileReadObject = await readFileToJson(filePath)
-            const currSettings = codeprofileReadObject.jsonObject.settings
-            if (currSettings) {
-              const merged = tryMerge(currSettings, result.jsonObject)
-              if (merged.needMerge) {
-                codeprofileReadObject.settings = merged.jsonObject
-                await writeJsonToFile(filePath, codeprofileReadObject)
-                console.log('--------------------------  overrided file:', filePath, '-----------------------------  ')
-              }
-              else {
-                console.log('--------------------------  Keep file:', filePath, '-----------------------------  ')
-              }
+    .then(async ({ workspaceFiles, vscodeSettings }) => {
+      console.log("🚀 ~ .all workspace ~ files:", workspaceFiles)
+      if (workspaceFiles && workspaceFiles.length > 0) {
+        for (const workspaceFilePath of workspaceFiles) {
+          if (fs.existsSync(workspaceFilePath)) {
+            const workspaceObject = await readFileToJson(workspaceFilePath)
+            const workspaceSettings = workspaceObject.settings
+            if (workspaceSettings) {
+              const merged = await tryMerge(workspaceSettings, vscodeSettings)
+
+              workspaceObject.settings = merged
+              // console.log("🚀 ~ .then ~ merged:", merged)
+
+              await writeJsonToFile(workspaceFilePath, workspaceObject, true)
+              console.log('--------------------------  overrided file:', workspaceFilePath, '-----------------------------  ')
             }
           }
+          else {
+            console.log('--------------------------  no file:', workspaceFilePath, '-----------------------------  ')
+          }
         }
-        else {
-          console.log('----  no code-workspace file found', 'root:', process.cwd(), 'pattern:', codeWorkspace, '-----------------------------  ')
-        }
-      }))
+      }
+      else {
+        console.log('----  no code-workspace file found', 'root:', process.cwd(), 'pattern:', codeWorkspacePath, '-----------------------------  ')
+      }
+    })
 
     .catch(err => console.error(err))
 }
