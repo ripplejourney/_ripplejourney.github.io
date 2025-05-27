@@ -1,6 +1,5 @@
 {
   "typescript.tsdk": "node_modules\\typescript\\lib",
-
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -10,5 +9,11 @@
     "**/Thumbs.db": true
   },
   "explorerExclude.backup": {},
-  "code-runner.clearPreviousOutput": true
+  "code-runner.clearPreviousOutput": true,
+  "code-runner.executorMap": {
+    "typescript": "cd $dir && npx tsx $fullFileName"
+  },
+  "code-runner.executorMapByFileExtension": {
+    ".ts": "cd $dir && npx tsx $fullFileName"
+  }
 }
