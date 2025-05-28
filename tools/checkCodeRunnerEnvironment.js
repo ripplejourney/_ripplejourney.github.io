@@ -26,11 +26,9 @@ async function writeJsonToFile(filePath, jsonObject, isJson5 = false) {
     // content = JSON5.stringify(jsonObject, {
     //   space: 2,
     //   quote: '"',
+    //   // enableSingleQuote: false
     // })
-    content = JSON.stringify(jsonObject, {
-      space: 2,
-      quote: '"'
-    })
+    content = JSON.stringify(jsonObject, null, 2)
   }
   else {
     content = JSON.stringify(jsonObject, null, 2)
