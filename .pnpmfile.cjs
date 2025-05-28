@@ -14,6 +14,7 @@ const addLib = {
     'lodash': '^4.17.21',
     "glob": '^11.0.2',
     'fs-extra': '^10.0.1',
+    "tsx": "^4.19.4",
   }
 }
 const pkgName = JSON.parse(fs.readFileSync('./package.json', 'utf-8')).name
