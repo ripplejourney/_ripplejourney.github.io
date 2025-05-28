@@ -70,14 +70,14 @@ const codeWorkspace = './../ripplejourney.github.io.code-workspace'
 const extensionWorkspace = './../.vscode/extensions.json'
 
 readFileToJson(codeProfile)
-  .then((data) => {
-    return findInstalledExtensions(data)
+  .then(async (data) => {
+    return await findInstalledExtensions(data)
   })
   .then(async (ids) => {
     if (fs.existsSync(codeWorkspace)) {
       const target = await readFileToJson(codeWorkspace)
       target.extensions.recommendations = ids
-      writeJsonToFile(codeWorkspace, target)
+      await writeJsonToFile(codeWorkspace, target)
     }
     return ids
   })
@@ -86,8 +86,8 @@ readFileToJson(codeProfile)
       fs.writeFileSync(extensionWorkspace, '{}')
     const target = await readFileToJson(extensionWorkspace)
     target.recommendations = ids
-    writeJsonToFile(extensionWorkspace, target)
+    await writeJsonToFile(extensionWorkspace, target)
     return { ids, target }
   })
-  .catch(err => console.error(err))
+  // .catch(err => console.error(err))
   .then(_ => console.log('-----------------------------', 'end', '-----------------------------  '))

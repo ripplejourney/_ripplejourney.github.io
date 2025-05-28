@@ -6,7 +6,7 @@ import fs from 'fs-extra'
 import { assign } from 'radash'
 
 // import _ from 'lodash'
-function parseJsonWithComments(jsonString) {
+function parseJsonWithComments(jsonString: string) {
   return JSON5.parse(jsonString)
 }
 
