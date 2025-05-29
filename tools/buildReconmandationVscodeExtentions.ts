@@ -39,7 +39,7 @@ function parseJsonWithComments(jsonString: string) {
   return JSON5.parse(jsonString)
 }
 
-async function readFileToJson(filePath: string): Promise<Record<string, string | number | boolean | null | object>> {
+async function readFileToJson(filePath: string): Promise<Record<string, any>> {
   if (!fs.existsSync(filePath))
     return {}
   const fileContent = await fs.promises.readFile(filePath, 'utf8')

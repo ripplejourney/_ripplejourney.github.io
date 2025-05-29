@@ -14,7 +14,8 @@ export default antfu(
       '**/.history/**',
       '**/dist/',
       '**/cache/',
-      '**/obsidian/'
+      '**/obsidian/',
+      '**/checkCodeRunnerEnvironment.js'
     ],
   },
   // {
