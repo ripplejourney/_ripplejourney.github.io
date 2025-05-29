@@ -17,7 +17,7 @@ const addLib = {
     "tsx": "^4.19.4",
   }
 }
-const pkgName = JSON.parse(fs.readFileSync('./package.json', 'utf-8')).name
+const pkgName = fs.existsSync('./package.json') ? JSON.parse(fs.readFileSync('./package.json', 'utf-8')).name : 'no found'
 const pkgNames = ['add your pkg', pkgName]
 module.exports = {
   hooks: {

@@ -104,15 +104,17 @@ function main() {
         for (const workspaceFilePath of workspaceFiles) {
           if (fs.existsSync(workspaceFilePath)) {
             const workspaceObject = await readFileToJson(workspaceFilePath)
-            const workspaceSettings = workspaceObject.settings
+            const workspaceSettings = workspaceObject?.settings
             if (workspaceSettings) {
-              const merged = tryMerge(workspaceSettings, vscodeSettings)
-
+              let merged = tryMerge(workspaceSettings, vscodeSettings)
               workspaceObject.settings = merged
-              // console.log("🚀 ~ .then ~ merged:", merged)
-
               await writeJsonToFile(workspaceFilePath, workspaceObject, true)
               console.log('--------------------------  overrided file:', workspaceFilePath, '-----------------------------  ')
+
+              merged = tryMerge(vscodeSettings, workspaceSettings)
+              workspaceObject.settings = merged
+              await writeJsonToFile(vscodeSettingsPath, workspaceObject, true)
+              console.log('--------------------------  overrided file:', vscodeSettingsPath, '-----------------------------  ')
             }
           }
           else {
