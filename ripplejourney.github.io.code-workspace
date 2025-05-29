@@ -147,37 +147,20 @@
     }
   ],
   "settings": {
-    "[javascript]": {
-      "editor.defaultFormatter": "vscode.typescript-language-features"
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/.DS_Store": true,
+      "**/Thumbs.db": true,
+      "**/node_modules": false
     },
-    "[jsonc]": {
-      "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "[markdown]": {
-      "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    },
-    "[typescript]": {
-      "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    },
-    "[vue]": {
-      "editor.defaultFormatter": "Vue.volar"
-    },
-    "editor.formatOnPaste": false,
-    "editor.formatOnSave": false,
-    "editor.formatOnSaveMode": "file",
-    "editor.formatOnType": false,
-    "editor.minimap.enabled": false,
-    "editor.trimAutoWhitespace": false,
-    "autoRestart.fileGlobForESLint": [
-      "**/{.eslintrc,eslint.config}.{js,cjs,yaml,yml,json,mjs,ts,mts}"
-    ],
-    "autoRestart.fileGlobForTypescript": [
-      "**/{tsconfig,tsconfig.base,base.tsconfig}.{json,app.json,app.js,js,ts}"
-    ],
-    "autoRestart.monitorFilesForESLint": true,
-    "autoRestart.showRestartNotificationForESLint": true,
+    "explorerExclude.backup": {},
     "code-runner.clearPreviousOutput": true,
     "code-runner.executorMap": {
+      "typescript": "cd $dir && npx tsx $fullFileName",
       "ahk": "autohotkey",
       "applescript": "osascript",
       "autoit": "autoit3",
@@ -231,7 +214,6 @@
       "sml": "cd $dir && sml $fileName",
       "spwn": "spwn build",
       "swift": "swift",
-      "typescript": "cd $dir && npx tsx $fullFileName",
       "v": "v run",
       "vbscript": "cscript //Nologo",
       "zig": "zig run"
@@ -239,6 +221,35 @@
     "code-runner.executorMapByFileExtension": {
       ".ts": "cd $dir && npx tsx $fullFileName"
     },
+    "[javascript]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[jsonc]": {
+      "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[markdown]": {
+      "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[vue]": {
+      "editor.defaultFormatter": "Vue.volar"
+    },
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false,
+    "editor.formatOnSaveMode": "file",
+    "editor.formatOnType": false,
+    "editor.minimap.enabled": false,
+    "editor.trimAutoWhitespace": false,
+    "autoRestart.fileGlobForESLint": [
+      "**/{.eslintrc,eslint.config}.{js,cjs,yaml,yml,json,mjs,ts,mts}"
+    ],
+    "autoRestart.fileGlobForTypescript": [
+      "**/{tsconfig,tsconfig.base,base.tsconfig}.{json,app.json,app.js,js,ts}"
+    ],
+    "autoRestart.monitorFilesForESLint": true,
+    "autoRestart.showRestartNotificationForESLint": true,
     "ColorfulMonorepo.workspaces.collection": [],
     "commit-message-editor.dynamicTemplate": [
       "{type}{scope}: {description}",
@@ -357,17 +368,7 @@
       "theme",
       "workspace"
     ],
-    "explorerExclude.backup": {},
     "files.autoSave": "onFocusChange",
-    "files.exclude": {
-      "**/.git": true,
-      "**/.svn": true,
-      "**/.hg": true,
-      "**/CVS": true,
-      "**/.DS_Store": true,
-      "**/Thumbs.db": true,
-      "**/node_modules": false
-    },
     "files.trimTrailingWhitespaceInRegexAndStrings": false,
     "git.autofetch": true,
     "git.confirmSync": false,
@@ -394,7 +395,6 @@
     "markdown.extension.completion.enabled": true,
     "prettier.enable": false,
     "redhat.telemetry.enabled": true,
-    "typescript.tsdk": "node_modules\\typescript\\lib",
     "vs-code-prettier-eslint.prettierLast": false,
     "workbench.colorCustomizations": {
       "sideBarTitle.foreground": "#9c643b"

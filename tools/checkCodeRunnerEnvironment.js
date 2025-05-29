@@ -62,9 +62,9 @@ function tryMerge(currSettings, newSettings) {
 }
 
 console.log('-----------------------------', 'start', '-----------------------------')
-const codeWorkspacePath = '**/*.code-workspace'
-const vscodeSettingsPath = path.resolve(process.cwd(), '.vscode/settings.json')
-
+const codeWorkspacePath = '../**/*.code-workspace'
+const vscodeSettingsPath = path.resolve(process.cwd(), '../.vscode/settings.json')
+const vscodeExtensionsPath = path.resolve(process.cwd(), '../.vscode/extensions.json')
 function main() {
   const defaultSettings = {
     'code-runner.executorMap': {
@@ -95,26 +95,31 @@ function main() {
     .then(async (vscodeSettings) => {
       return {
         workspaceFiles: await glob(codeWorkspacePath, { cwd: process.cwd(), absolute: true }),
-        vscodeSettings
+        vscodeSettings,
+        vscodeExtensions: await readFileToJson(vscodeExtensionsPath)
       }
     })
-    .then(async ({ workspaceFiles, vscodeSettings }) => {
+    .then(async ({ workspaceFiles, vscodeSettings, vscodeExtensions }) => {
       console.log("🚀 ~ .all workspace ~ files:", workspaceFiles)
       if (workspaceFiles && workspaceFiles.length > 0) {
         for (const workspaceFilePath of workspaceFiles) {
           if (fs.existsSync(workspaceFilePath)) {
             const workspaceObject = await readFileToJson(workspaceFilePath)
             const workspaceSettings = workspaceObject?.settings
+            const workspaceExtensions = workspaceObject?.extensions
             if (workspaceSettings) {
-              let merged = tryMerge(workspaceSettings, vscodeSettings)
-              workspaceObject.settings = merged
+              let mergedSettings = tryMerge(vscodeSettings, workspaceSettings)
+              workspaceObject.settings = mergedSettings
+              let mergedExtensions = tryMerge(vscodeExtensions, workspaceExtensions)
+              workspaceObject.extensions = mergedExtensions
               await writeJsonToFile(workspaceFilePath, workspaceObject, true)
               console.log('--------------------------  overrided file:', workspaceFilePath, '-----------------------------  ')
 
-              merged = tryMerge(vscodeSettings, workspaceSettings)
-              workspaceObject.settings = merged
-              await writeJsonToFile(vscodeSettingsPath, workspaceObject, true)
+              await writeJsonToFile(vscodeSettingsPath, mergedSettings, true)
               console.log('--------------------------  overrided file:', vscodeSettingsPath, '-----------------------------  ')
+              await writeJsonToFile(vscodeExtensionsPath, mergedExtensions, true)
+              console.log('--------------------------  overrided file:', vscodeExtensionsPath, '-----------------------------  ')
+
             }
           }
           else {
@@ -123,10 +128,11 @@ function main() {
         }
       }
       else {
+
         console.log('----  no code-workspace file found', 'root:', process.cwd(), 'pattern:', codeWorkspacePath, '-----------------------------  ')
       }
     })
-
+    .then(() => console.log('-----------------------------  over  -----------------------------'))
     .catch(err => console.error(err))
 }
 
