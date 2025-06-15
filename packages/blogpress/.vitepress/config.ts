@@ -231,15 +231,7 @@ export default defineConfig(_.assign(config, {
         text: '关于我',
         link: '/aboutme',
       },
-      {
-        text: '六位代码',
-        items: [
-          { text: '精准爆头', link: '/stocks/PrecisionHeadshot/' },
-          { text: '情绪核心', link: '/stocks/SentimentCore/' },
-          // { text: '面经汇总', link: '/offer/sum-interview/' },
-          // { text: '复习自查', link: '/offer/review/' },
-        ],
-      },
+
       {
         text: '笔记',
         items: [
@@ -252,7 +244,7 @@ export default defineConfig(_.assign(config, {
         ],
       },
       {
-        text: '计算机基础',
+        text: '计算机',
         items: [
           { text: '算法与数据结构', link: '/computerBase/algorithm/' },
           { text: '操作系统', link: '/computerBase/os/' },
@@ -263,7 +255,7 @@ export default defineConfig(_.assign(config, {
         ],
       },
       {
-        text: '大前端',
+        text: '前端',
         items: [
           { text: 'javascript', link: '/bigWeb/js/' },
           { text: 'vue', link: '/bigWeb/vue/' },
@@ -276,7 +268,7 @@ export default defineConfig(_.assign(config, {
         ],
       },
       {
-        text: '不专业代码',
+        text: '代码',
         items: [
           { text: 'github', link: '/coding/github/' },
         ],
@@ -285,51 +277,16 @@ export default defineConfig(_.assign(config, {
         text: '面试',
         items: [
 
-          // { text: 'javascript', link: '/coding/js/' },
-          // { text: 'css', link: '/coding/css/' },
-          // { text: '问解', link: '/interview/problem/' },
-          // { text: 'javascript', link: '/interview/js/' },
-
           { text: '手撕代码', link: '/interview/code/' },
           { text: '性能优化', link: '/interview/performance/' },
-          // { text: "网络", link: "/interview/internet/" },
-          // { text: '操作系统', link: '/interview/os/' },
-          // { text: '设计模式', link: '/interview/design/' },
           { text: '综合问题', link: '/interview/other/' },
           { text: '剑指offer', link: '/interview/offer/' },
-          // { text: '面经汇总', link: '/offer/sum-interview/' },
           { text: '小程序', link: '/interview/mini/' },
         ],
       },
-      // {
-      //   text: '个人站点',
-      //   items: [
-      //     {
-      //       text: 'GitHub',
-      //       link: 'https://github.com/ripplejourney/ripplejourney.github.io'
-      //     },
-      //     {
-      //       text: '博客园',
-      //       link: 'https://www.cnblogs.com/roseAT/'
-      //     },
-      //     {
-      //       text: '掘金',
-      //       link: 'https://juejin.im/user/1028798615918983'
-      //     }
-      //     // {
-      //     //   text: "GitBook-blog",
-      //     //   link: "https://sugar-at.gitbook.io/blog-article/",
-      //     //   icon: "reco-blog",
-      //     // },
-      //     // {
-      //     //   text: "GitBook-ES6",
-      //     //   link: "https://sugar-js.gitbook.io/-1/",
-      //     //   icon: "reco-document",
-      //     // },
-      //   ]
-      // },
+
       {
-        text: '线上作品',
+        text: '作品',
         items: [
           {
             text: 'POCO Mapper(dotnet)',
