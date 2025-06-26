@@ -4,7 +4,18 @@ import JSON5 from 'json5'
 import { glob } from 'glob'
 import fs from 'fs-extra'
 import { assign } from 'radash'
+import crypto from 'crypto'
 
+function calculatesha256(str) {
+  // 创建 MD5 哈希对象
+  const hash = crypto.createHash('sha256');
+
+  // 更新哈希内容为输入字符串
+  hash.update(str);
+
+  // 计算哈希值并转换为十六进制字符串
+  return hash.digest('hex');
+}
 // import _ from 'lodash'
 function parseJsonWithComments(jsonString) {
   return JSON5.parse(jsonString)
@@ -33,7 +44,15 @@ async function writeJsonToFile(filePath, jsonObject, isJson5 = false) {
   else {
     content = JSON.stringify(jsonObject, null, 2)
   }
-  await fs.promises.writeFile(filePath, content, 'utf8')
+  const content2 = await fs.promises.readFile(filePath, 'utf8')
+  if (content != content2) {
+    let d1 = content.replaceAll(content2, '')
+
+    let d2 = content2.replaceAll(content, '')
+    console.log("🚀 ~ writeJsonToFile ~ d1:", d1, 'd2', d2)
+    await fs.promises.writeFile(filePath, content, 'utf8')
+  }
+
   return jsonObject
 }
 async function _findInstalledExtensions(data) {
