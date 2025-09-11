@@ -164,9 +164,9 @@ const blogTheme = getThemeConfig({
     pageSize: 12,
   },
   buttonAfterArticle: {
-    openTitle: '投"币"支持',
+    openTitle: '微信打赏支持',
     closeTitle: '下次一定',
-    content: '<img src="/donate.png">',
+    content: '<img src="/donate3.png">',
     icon: 'wechatPay',
   },
 })
