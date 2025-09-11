@@ -1,6 +1,10 @@
-
-
 ---
+outline: [2,3]
+description: PostgreSQL 容器启动失败：WSL 配置终极解决方案
+date: 2025-09-011 16:00:00
+tag: AI
+---
+
 
 # **PostgreSQL 容器启动失败：WSL 配置终极解决方案**
 
