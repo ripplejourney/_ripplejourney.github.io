@@ -5,7 +5,8 @@
 # **PostgreSQL 容器启动失败：WSL 配置终极解决方案**
 
 ## **问题现象**
-在 Windows + WSL 环境下运行 PostgreSQL 容器时，出现以下错误：
+
+在 Windows + WSL 环境下运行 dify\docker> podman compose down && podman compose up -d, 创建 PostgreSQL 容器时，出现以下错误：
 ```plaintext
 initdb: error: could not change permissions of directory "/var/lib/postgresql/data/pgdata": Operation not permitted
 chmod: /var/lib/postgresql/data/pgdata: Operation not permitted
@@ -105,5 +106,3 @@ podman-compose down && podman-compose up -d
 通过调整 WSL 的 `automount` 配置，从根本上解决了容器挂载目录的权限问题。此方法简单、通用，是 Windows + WSL 环境下运行数据库容器的推荐方案。
 
 ---
-
-将此内容保存为 `.md` 文件即可发布！如需进一步优化，请随时告知。
