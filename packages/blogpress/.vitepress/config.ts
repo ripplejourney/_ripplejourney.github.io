@@ -96,10 +96,10 @@ const blogTheme = getThemeConfig({
   popover: {
     title: '公告',
     body: [
-      { type: 'text', content: '👇公众号👇---👇 微信 👇' },
+      { type: 'text', content: '👇微信👇---👇打赏👇' },
       {
         type: 'image',
-        src: '/mp-code2.png',
+        src: '/donate3.png',
       },
       {
         type: 'text',

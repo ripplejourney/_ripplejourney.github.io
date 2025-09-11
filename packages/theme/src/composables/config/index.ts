@@ -186,6 +186,11 @@ export namespace Theme {
      * 首页数据分析卡片
      */
     analysis?: HomeAnalysis
+    /**
+     * 首页博客信息卡片是否在移动端折叠展示
+     * @default false
+     */
+    blogInfoCollapsible?: boolean
   }
 
   export interface ArticleConfig {
@@ -467,7 +472,7 @@ export namespace Theme {
     imageStyle?: ImageStyleConfig
     groupIcon?: {
       customIcon: Record<string, string>
-    }
+    } | false
   }
 
   export type FormatShowDate = {

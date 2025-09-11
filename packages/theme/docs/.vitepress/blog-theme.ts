@@ -12,9 +12,13 @@ const RSS: Theme.RSSOptions = {
 }
 
 export const blogTheme = getThemeConfig({
+  home: {
+    blogInfoCollapsible: true
+  },
   locales: {
     en: themeEN
   },
+  // groupIcon: false,
   // formatShowDate: {
   //   justNow: '不久前',
   //   minutesAgo: ' minutes ago',

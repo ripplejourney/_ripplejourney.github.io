@@ -58,6 +58,7 @@ const blogTheme = getThemeConfig({
       }
     ]
   },
+  mermaid: false,
   themeColor: 'el-blue',
   RSS: [RSS, RSSWeekly],
   author: '粥里有勺糖',
@@ -110,6 +111,12 @@ const blogTheme = getThemeConfig({
   },
   friend: {
     list: [
+      {
+        url: 'https://relaxing.top/',
+        nickname: '放',
+        avatar: 'https://relaxing.top/logo.png',
+        des: '放的博客'
+      },
       {
         nickname: '七仔的博客',
         des: '记录自己在写程序过程中的发现、问题、成果',
@@ -215,6 +222,18 @@ const blogTheme = getThemeConfig({
         avatar: 'https://hacxy.cn/logo.png',
         url: 'https://hacxy.cn'
       },
+      {
+        avatar: 'https://onedayxyy.cn/favicon.ico',
+        des: '明心静性，爱自己',
+        nickname: 'One',
+        url: 'https://onedayxyy.cn/',
+      },
+      {
+        url: 'https://teek.seasir.top/',
+        avatar: 'https://teek.seasir.top/favicon.ico',
+        des: '人心中的成见是一座大山',
+        nickname: 'Hyde'
+      }
     ].map((v) => {
       if (v.avatar.includes('//cdn.upyun.sugarat.top')) {
         v.avatar = `${v.avatar}-wh50`
