@@ -231,7 +231,12 @@ export default defineConfig(_.assign(config, {
         text: '关于我',
         link: '/aboutme',
       },
-
+      {
+        text: '云',
+        items: [
+          { text: 'wsl.exe', link: '/cloud/wsl/' },
+        ],
+      },
       {
         text: '笔记',
         items: [
