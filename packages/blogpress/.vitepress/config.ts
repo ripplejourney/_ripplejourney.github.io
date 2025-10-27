@@ -1,8 +1,8 @@
+import type { Theme } from '@sugarat/theme'
 import process from 'node:process'
 import { getThemeConfig } from '@sugarat/theme/node'
-import type { Theme } from '@sugarat/theme'
-import { defineConfig } from 'vitepress'
 import * as _ from 'radash'
+import { defineConfig } from 'vitepress'
 import config from './config.base'
 
 const baseUrl = process.env.BASE_URL ?? 'https://www.dmsrs.org'
@@ -48,7 +48,7 @@ const RSS: Theme.RSSOptions = {
   /**
    * 最近100篇，避免太大影响解析
    */
-  limit: 100
+  limit: 100,
 }
 
 const blogTheme = getThemeConfig({
@@ -87,7 +87,7 @@ const blogTheme = getThemeConfig({
       },
       {
         path: 'https://cdn.jsdelivr.net/gh/open-dmsrs/live2d-models@master/models/bilibili-33/index.json',
-      }
+      },
     ],
     libraryUrls: {
       complete: 'https://unpkg.com/oh-my-live2d@latest',
@@ -150,7 +150,7 @@ const blogTheme = getThemeConfig({
       nickname: titleText,
       url: `${baseUrl}/aboutme.html`,
       des: '天道酬勤，恒以致遠',
-    }
+    },
   ],
   footer: {
     copyright: copyrightText,
@@ -192,7 +192,7 @@ const extraHead: any
       'script',
       {},
       '!(function(c,i,e,b){var h=i.createElement("script");var f=i.getElementsByTagName("script")[0];h.type="text/javascript";h.crossorigin=true;h.onload=function(){new c[b]["Monitor"]().init({id:"3IeDjeHzDHEi0y90",sendSuspicious:true});};f.parentNode.insertBefore(h,f);h.src=e;})(window,document,"https://sdk.51.la/perf/js-sdk-perf.min.js","LingQue");',
-    ]
+    ],
   ] : []
 
 config.head = undefined
@@ -251,7 +251,7 @@ export default defineConfig(_.assign(config, {
           { text: '计算机网络', link: '/computerBase/Internet/' },
           { text: '设计模式', link: '/computerBase/design/' },
 
-          { text: '力扣', link: '/computerBase/leetcode/' }
+          { text: '力扣', link: '/computerBase/leetcode/' },
         ],
       },
       {
