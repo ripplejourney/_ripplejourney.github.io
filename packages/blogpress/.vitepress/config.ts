@@ -255,8 +255,6 @@ export default defineConfig(_.assign(config, {
           { text: '操作系统', link: '/computerBase/os/' },
           { text: '计算机网络', link: '/computerBase/Internet/' },
           { text: '设计模式', link: '/computerBase/design/' },
-
-          { text: '力扣', link: '/computerBase/leetcode/' },
         ],
       },
       {
