@@ -1,6 +1,14 @@
 {
   "compilerOptions": {
+    "target": "esnext",
+    "jsx": "preserve",
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "baseUrl": "./",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "paths": {
       "@sugarat/theme/node": [
         "./packages/theme/src/node.ts"
@@ -9,24 +17,16 @@
         "./packages/theme/src/index.ts"
       ]
     },
-    "target": "esnext",
-    "types": [],
-    "jsx": "preserve",
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
+    "types": [],
     "allowJs": true,
     "strict": false,
     "noUnusedLocals": false,
+    "importHelpers": true, /* 从 'tslib' 导入发射助手。 */
     "removeComments": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "importHelpers": true, /* 从 'tslib' 导入发射助手。 */
-    "forceConsistentCasingInFileNames": true /* 禁止对同一文件的大小写不一致的引用。 */
+    "forceConsistentCasingInFileNames": true, /* 禁止对同一文件的大小写不一致的引用。 */
+    "skipLibCheck": true
     /// -----------
     /* 访问 https://aka.ms/tsconfig.json 以阅读有关此文件的更多信息 */
     /* 基本选项 */
