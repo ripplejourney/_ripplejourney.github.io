@@ -234,7 +234,7 @@ export default defineConfig(_.assign(config, {
       {
         text: '云',
         items: [
-          { text: 'wsl.exe', link: '/cloud/wsl/' },
+          { text: 'devops', link: '/cloud/devops/' },
         ],
       },
       {
