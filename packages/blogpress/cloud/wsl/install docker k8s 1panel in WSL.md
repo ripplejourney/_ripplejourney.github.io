@@ -73,12 +73,9 @@ apt update && apt upgrade -y
 # 确认systemd是否启用,当前wsl 已经支持systemd，不需要安装
 # systemctl status systemd-resolved
 ```
-## 安装zsh
-```bash
-sudo apt install zsh
+## 安装zsh和oh-my-zsh美化
 
-chsh -s /bin/zsh
-```
+[安装zsh和oh-my-zsh美化](./zsh和oh-my-zsh美化.md)
 
 ## 安装docker/docker-compose
 
