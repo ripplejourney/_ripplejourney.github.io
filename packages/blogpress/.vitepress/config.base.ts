@@ -58,7 +58,6 @@ const blogTheme = getThemeConfig({
       }
     ]
   },
-  mermaid: false,
   themeColor: 'el-blue',
   RSS: [RSS, RSSWeekly],
   author: '粥里有勺糖',
@@ -281,7 +280,7 @@ const blogTheme = getThemeConfig({
 export default defineConfig({
   extends: blogTheme,
   metaChunk: true,
-  srcExclude: ['CHANGELOG.md'],
+  srcExclude: ['CHANGELOG.md', 'redirect-tag.md'],
   markdown: {
     image: {
       lazyLoading: true
@@ -352,11 +351,11 @@ export default defineConfig({
     // },
     lastUpdatedText: '上次更新于',
     logo: 'https://cdn.upyun.sugarat.top/avatar/blog/zlyst-avatar.jpeg-wh100',
-    editLink: {
-      pattern:
-        'https://github.com/ATQQ/sugar-blog/tree/master/packages/blogpress/:path',
-      text: '去 GitHub 上编辑内容'
-    },
+    // editLink: {
+    //   pattern:
+    //     'https://github.com/ATQQ/sugar-blog/tree/master/packages/blogpress/:path',
+    //   text: '去 GitHub 上编辑内容'
+    // },
     nav: [
       {
         text: '关于我',

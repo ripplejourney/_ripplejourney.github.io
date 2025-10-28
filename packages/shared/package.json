@@ -1,6 +1,6 @@
 {
   "name": "@sugarat/theme-shared",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "@sugarat/theme-shared",
   "author": "sugar",
   "license": "MIT",
@@ -39,7 +39,6 @@
   },
   "devDependencies": {
     "@types/cross-spawn": "^6.0.6",
-    "p-limit": "^7.1.1",
-    "vitepress": "1.6.4"
+    "vitepress": "^1.6.4"
   }
 }

@@ -1,6 +1,7 @@
 ---
-sidebar: false
+sidebar: true
 date: 2025-10-27 18:00:00
+title: wsl中安装docker 1panel k8s
 tag: cloud
 ---
 # wsl中安装docker 1panel k8s

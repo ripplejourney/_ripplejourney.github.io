@@ -1,5 +1,5 @@
 ---
-sidebar: false
+sidebar: true
 date: 2025-10-28 20:00:00
 title: zsh和oh-my-zsh美化
 tag: cloud
