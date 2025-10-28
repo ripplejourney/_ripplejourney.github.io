@@ -1,5 +1,5 @@
-import { getThemeConfig } from '@sugarat/theme/node'
 import type { Theme } from '@sugarat/theme'
+import { getThemeConfig } from '@sugarat/theme/node'
 import { defineConfig } from 'vitepress'
 import { La51Plugin } from 'vitepress-plugin-51la'
 
@@ -40,7 +40,7 @@ const RSS: Theme.RSSOptions = {
   /**
    * 最近100篇，避免太大影响解析
    */
-  limit: 100
+  limit: 100,
 }
 
 const blogTheme = getThemeConfig({
@@ -49,14 +49,14 @@ const blogTheme = getThemeConfig({
       // 七牛云
       {
         rule: '//img.cdn.sugarat.top',
-        suffix: '~cover.webp'
+        suffix: '~cover.webp',
       },
       // 又拍云CDN
       {
         rule: '//cdn.upyun.sugarat.top',
-        suffix: '-cover'
-      }
-    ]
+        suffix: '-cover',
+      },
+    ],
   },
   themeColor: 'el-blue',
   RSS: [RSS, RSSWeekly],
@@ -66,7 +66,7 @@ const blogTheme = getThemeConfig({
     repoId: 'MDEwOlJlcG9zaXRvcnkyNDEyNDUyOTk',
     category: 'Announcements',
     categoryId: 'DIC_kwDODmEcc84COVc6',
-    inputPosition: 'top'
+    inputPosition: 'top',
   },
   oml2d: {
     mobileDisplay: true,
@@ -76,7 +76,7 @@ const blogTheme = getThemeConfig({
       },
       {
         path: 'https://oml2d-models.sugarat.top/mai/model.json',
-      }
+      },
     ],
   },
   popover: {
@@ -85,28 +85,28 @@ const blogTheme = getThemeConfig({
       { type: 'text', content: '👇公众号👇---👇 微信 👇' },
       {
         type: 'image',
-        src: 'https://img.cdn.sugarat.top/mdImg/MTYxNTAxODc2NTIxMA==615018765210~fmt.webp'
+        src: 'https://img.cdn.sugarat.top/mdImg/MTYxNTAxODc2NTIxMA==615018765210~fmt.webp',
       },
       {
         type: 'text',
-        content: '欢迎大家私信&加群交流'
+        content: '欢迎大家私信&加群交流',
       },
       {
         type: 'button',
         content: '关于作者',
-        link: '/aboutme'
+        link: '/aboutme',
       },
       {
         type: 'button',
         content: '加群交流',
         props: {
-          type: 'success'
+          type: 'success',
         },
         link: '/group',
-      }
+      },
     ],
     duration: -1,
-    twinkle: true
+    twinkle: true,
   },
   friend: {
     list: [
@@ -114,112 +114,112 @@ const blogTheme = getThemeConfig({
         url: 'https://relaxing.top/',
         nickname: '放',
         avatar: 'https://relaxing.top/logo.png',
-        des: '放的博客'
+        des: '放的博客',
       },
       {
         nickname: '七仔的博客',
         des: '记录自己在写程序过程中的发现、问题、成果',
         url: 'https://www.baby7blog.com',
-        avatar: 'https://www.baby7blog.com/favicon.ico'
+        avatar: 'https://www.baby7blog.com/favicon.ico',
       },
       {
         nickname: '茂茂物语',
         des: '茂茂的成长之路，包含前端常用知识、源码阅读笔记、各种奇淫技巧、日常提效工具等',
         url: 'https://notes.fe-mm.com',
-        avatar: 'https://notes.fe-mm.com/logo.png'
+        avatar: 'https://notes.fe-mm.com/logo.png',
       },
       {
         nickname: '李年糕',
         des: '佛系的打工人',
         avatar: 'https://cdn.upyun.sugarat.top/mdImg/sugar/617be739258b761b7dfed4fa0869326c',
-        url: 'https://rimochiko.github.io/'
+        url: 'https://rimochiko.github.io/',
       },
       {
         nickname: '冴羽',
         des: '冴羽的博客',
         avatar:
           'https://cdn.upyun.sugarat.top/avatar/blog/mqyqingfeng.png',
-        url: 'https://yayujs.com/'
+        url: 'https://yayujs.com/',
       },
       {
         nickname: 'Linbudu',
         des: '未来的不可知，是前进的原动力',
         avatar:
           'https://cdn.upyun.sugarat.top/avatar/blog/linbudu.jfif',
-        url: 'https://linbudu.top/'
+        url: 'https://linbudu.top/',
       },
       {
         nickname: '小九',
         des: '日益努力，而后风生水起',
         avatar: 'https://cdn.upyun.sugarat.top/avatar/blog/jiangly.png',
-        url: 'https://jiangly.com/'
+        url: 'https://jiangly.com/',
       },
       {
         nickname: '花喵电台      ',
         des: '曹豪侠和余湾湾还有两只猫的生活记录~',
         avatar:
           'https://cdn.upyun.sugarat.top/avatar/blog/fmcat.jpeg',
-        url: 'https://www.fmcat.top'
+        url: 'https://www.fmcat.top',
       },
       {
         nickname: '张成威的网络日志',
         des: '知不足而奋进，望远山而前行',
         avatar: 'https://cdn.upyun.sugarat.top/avatar/blog/zhangchengwei.png',
-        url: 'https://www.zhangchengwei.work'
+        url: 'https://www.zhangchengwei.work',
       },
       {
         url: 'https://leelaa.cn',
         avatar: 'https://cdn.upyun.sugarat.top/avatar/blog/leelaa.png',
         des: '肯了个德的博客',
-        nickname: 'LEEDAISEN'
+        nickname: 'LEEDAISEN',
       },
       {
         url: 'https://next.blackcell.fun/',
         avatar: 'https://cdn.upyun.sugarat.top/avatar/blog/blackcell.jpeg',
         des: '物以类聚 人以群分',
-        nickname: 'BlackCell'
+        nickname: 'BlackCell',
       },
       {
         url: 'https://tenyon.cn',
         avatar: 'https://cdn.upyun.sugarat.top/avatar/blog/tenyon.webp',
         des: '工夫为艺，笃志成技',
-        nickname: 'Yovvis\'s Blog'
+        nickname: 'Yovvis\'s Blog',
       },
       {
         nickname: '强少来了',
         des: '互联网产品经理',
         avatar: 'https://cdn.upyun.sugarat.top/avatar/blog/fengxiaoqiang.png',
-        url: 'https://fengxiaoqiang.com/'
+        url: 'https://fengxiaoqiang.com/',
       },
       {
         nickname: '博友圈',
         des: '独立博客人的专属朋友圈！',
         avatar: 'https://cdn.upyun.sugarat.top/mdImg/sugar/bdee5d11a1e036ca3634943d34469f59',
-        url: 'https://www.boyouquan.com/home'
+        url: 'https://www.boyouquan.com/home',
       },
       {
         nickname: 'Simon He',
         des: '除了coding，我什么都不会',
         avatar: 'https://cdn.upyun.sugarat.top/avatar/blog/simonme.png',
-        url: 'https://simonme.netlify.app/'
+        url: 'https://simonme.netlify.app/',
       },
       {
         nickname: 'laiky',
         des: '一名全栈开发工程师，.NET全栈经验',
         avatar: 'https://cdn.upyun.sugarat.top/avatar/blog/llxz.png',
-        url: 'http://llxz.top/'
+        url: 'http://llxz.top/',
       },
       {
         nickname: '菜园前端',
         des: '小白都能看懂的笔记',
         avatar: 'https://note.noxussj.top/logo.png',
-        url: 'https://note.noxussj.top/?s=y8'
+        url: 'https://note.noxussj.top/?s=y8',
       },
       {
         nickname: 'Hacxy Blog',
         des: '指尖改变命运😋',
         avatar: 'https://hacxy.cn/logo.png',
-        url: 'https://hacxy.cn'
+        url: 'https://hacxy.cn',
       },
       {
         avatar: 'https://onedayxyy.cn/favicon.ico',
@@ -231,8 +231,8 @@ const blogTheme = getThemeConfig({
         url: 'https://teek.seasir.top/',
         avatar: 'https://teek.seasir.top/favicon.ico',
         des: '人心中的成见是一座大山',
-        nickname: 'Hyde'
-      }
+        nickname: 'Hyde',
+      },
     ].map((v) => {
       if (v.avatar.includes('//cdn.upyun.sugarat.top')) {
         v.avatar = `${v.avatar}-wh50`
@@ -249,25 +249,25 @@ const blogTheme = getThemeConfig({
   recommend: {
     showSelf: true,
     nextText: '下一页',
-    style: 'sidebar'
+    style: 'sidebar',
   },
   authorList: [
     {
       nickname: '粥里有勺糖',
       url: 'https://sugarat.top/aboutme.html',
-      des: '你的指尖,拥有改变世界的力量'
-    }
+      des: '你的指尖,拥有改变世界的力量',
+    },
   ],
   footer: {
     copyright: `粥里有勺糖 2018 - ${new Date().getFullYear()}`,
     icpRecord: {
       name: '蜀ICP备19011724号',
-      link: 'https://beian.miit.gov.cn/'
+      link: 'https://beian.miit.gov.cn/',
     },
-    message: '<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral" target="_blank" style="display:flex;align-items:center;justify-content:center;">本网站由 <img src="https://cdn.upyun.sugarat.top/logo/upyun.png-upyun" style="width:56px;height:24px;" alt="又拍云"> 提供CDN加速/云存储服务</a>'
+    message: '<a href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral" target="_blank" style="display:flex;align-items:center;justify-content:center;">本网站由 <img src="https://cdn.upyun.sugarat.top/logo/upyun.png-upyun" style="width:56px;height:24px;" alt="又拍云"> 提供CDN加速/云存储服务</a>',
   },
   hotArticle: {
-    pageSize: 12
+    pageSize: 12,
   },
   buttonAfterArticle: {
     openTitle: '投"币"支持',
@@ -283,8 +283,8 @@ export default defineConfig({
   srcExclude: ['CHANGELOG.md', 'redirect-tag.md'],
   markdown: {
     image: {
-      lazyLoading: true
-    }
+      lazyLoading: true,
+    },
   },
   ignoreDeadLinks: true,
   sitemap: {
@@ -305,14 +305,14 @@ export default defineConfig({
         rel: 'alternate icon',
         href: '/favicon.ico',
         type: 'image/png',
-        sizes: '16x16'
-      }
+        sizes: '16x16',
+      },
     ],
     ['meta', { name: 'author', content: '粥里有勺糖' }],
     ['link', { rel: 'mask-icon', href: '/favicon.ico', color: '#ffffff' }],
     [
       'link',
-      { rel: 'apple-touch-icon', href: '/favicon.ico', sizes: '180x180' }
+      { rel: 'apple-touch-icon', href: '/favicon.ico', sizes: '180x180' },
     ],
   ],
   vite: {
@@ -320,9 +320,9 @@ export default defineConfig({
       La51Plugin({
         id: 'Jgmg5avjAUvoyePS',
         ck: 'Jgmg5avjAUvoyePS',
-        importMode: 'async'
-      })
-    ]
+        importMode: 'async',
+      }),
+    ],
   },
   vue: {
     template: {
@@ -330,15 +330,15 @@ export default defineConfig({
         // https://github.com/vuejs/vitepress/discussions/468
         isCustomElement: (tag) => {
           return ['center'].includes(tag.toLocaleLowerCase())
-        }
-      }
-    }
+        },
+      },
+    },
   },
   lastUpdated: true,
   themeConfig: {
     outline: {
       level: [2, 3],
-      label: '目录'
+      label: '目录',
     },
     // search: {
     //   provider: 'algolia',
@@ -351,15 +351,16 @@ export default defineConfig({
     // },
     lastUpdatedText: '上次更新于',
     logo: 'https://cdn.upyun.sugarat.top/avatar/blog/zlyst-avatar.jpeg-wh100',
-    // editLink: {
-    //   pattern:
-    //     'https://github.com/ATQQ/sugar-blog/tree/master/packages/blogpress/:path',
-    //   text: '去 GitHub 上编辑内容'
-    // },
+
+    editLink: {
+      pattern:
+        'https://github.com/ripplejourney/ripplejourney.github.io/tree/master/packages/blogpress/:path',
+      text: '去 GitHub 上编辑内容',
+    },
     nav: [
       {
         text: '关于我',
-        link: '/aboutme'
+        link: '/aboutme',
       },
       {
         text: '备战春秋',
@@ -367,8 +368,8 @@ export default defineConfig({
           { text: '心得总结', link: '/offer/experience/' },
           { text: '校招考点汇总', link: '/offer/campus/' },
           { text: '面经汇总', link: '/offer/sum-interview/' },
-          { text: '复习自查', link: '/offer/review/' }
-        ]
+          { text: '复习自查', link: '/offer/review/' },
+        ],
       },
       {
         text: '技术笔记',
@@ -378,8 +379,8 @@ export default defineConfig({
           { text: '源码学习', link: '/technology/source/' },
           { text: '技术概念', link: '/technology/theory/' },
           { text: '个人作品', link: '/technology/works/' },
-          { text: '学习笔记', link: '/technology/study/' }
-        ]
+          { text: '学习笔记', link: '/technology/study/' },
+        ],
       },
       {
         text: '计算机基础',
@@ -388,9 +389,9 @@ export default defineConfig({
           { text: '操作系统', link: '/computerBase/os/' },
           { text: '计算机网络', link: '/computerBase/Internet/' },
           { text: '设计模式', link: '/computerBase/design/' },
-          { text: '剑指offer', link: '/computerBase/offer/' }
+          { text: '剑指offer', link: '/computerBase/offer/' },
           // { text: '力扣', link: '/computerBase/leetcode/' }
-        ]
+        ],
       },
       {
         text: '大前端',
@@ -402,8 +403,8 @@ export default defineConfig({
           { text: '🌏浏览器专题', link: '/bigWeb/browser/' },
           { text: 'Web性能优化', link: '/bigWeb/performance/' },
           { text: 'regexp', link: '/bigWeb/regexp/' },
-          { text: 'node', link: '/bigWeb/node/' }
-        ]
+          { text: 'node', link: '/bigWeb/node/' },
+        ],
       },
       {
         text: '面试',
@@ -422,17 +423,17 @@ export default defineConfig({
           // { text: '设计模式', link: '/interview/design/' },
           { text: '综合问题', link: '/interview/other/' },
           { text: '面经汇总', link: '/offer/sum-interview/' },
-          { text: '小程序', link: '/interview/mini/' }
+          { text: '小程序', link: '/interview/mini/' },
           // { text: '面经', link: '/interview/experience/' }
-        ]
+        ],
       },
       {
         text: '手撕代码',
         items: [
           { text: '数据结构与算法', link: '/coding/algorithm/' },
           { text: 'javascript', link: '/coding/js/' },
-          { text: 'css', link: '/coding/css/' }
-        ]
+          { text: 'css', link: '/coding/css/' },
+        ],
       },
       // {
       //   text: '个人站点',
@@ -466,33 +467,33 @@ export default defineConfig({
         items: [
           {
             text: '轻取(文件收集)',
-            link: 'https://ep2.sugarat.top'
+            link: 'https://ep2.sugarat.top',
           },
           {
             text: '个人图床',
-            link: 'https://imgbed.sugarat.top'
+            link: 'https://imgbed.sugarat.top',
           },
           {
             text: '考勤小程序',
-            link: 'https://hdkq.sugarat.top/'
+            link: 'https://hdkq.sugarat.top/',
           },
           {
             text: '时光恋人',
-            link: 'https://lover.sugarat.top'
+            link: 'https://lover.sugarat.top',
           },
           {
             text: '在线简历生成',
-            link: 'https://resume.sugarat.top/'
-          }
-        ]
-      }
+            link: 'https://resume.sugarat.top/',
+          },
+        ],
+      },
     ],
     socialLinks: [
       { icon: 'github', link: 'https://github.com/ATQQ/sugar-blog' },
       {
         icon: 'x',
-        link: 'https://x.com/Mr_XiaoZou'
-      }
-    ]
-  }
+        link: 'https://x.com/Mr_XiaoZou',
+      },
+    ],
+  },
 })
