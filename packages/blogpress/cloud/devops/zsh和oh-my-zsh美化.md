@@ -5,10 +5,7 @@ title: zsh和oh-my-zsh美化
 tag: cloud
 ---
 ## 准备
-- window 11
-- 开启`适用与 Linx 的 Windows 子系统`
-- 到微软商店下载 `Ubuntu` 系统
-- 这里我使用的是 `WSL1`, `wsl --set-default-version <Version>`
+> 安装wsl以及Ubuntu请参考 [wsl中安装docker 1panel k8s](./install_docker_k8s_1panel_in_WSL)
 
 ### 查看当前环境的 shell
 
