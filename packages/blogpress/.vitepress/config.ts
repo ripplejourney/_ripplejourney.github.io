@@ -292,7 +292,7 @@ export default defineConfig(_.assign(config, {
         text: '作品',
         items: [
           {
-            text: 'POCO Mapper(dotnet)',
+            text: 'Mapper',
             link: 'https://github.com/netniubility/EmitMapper',
           },
 
