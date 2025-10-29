@@ -43,7 +43,7 @@
     }
   ],
   "settings": {
-    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "typescript.tsdk": "sugar-wiki-monorepo\\node_modules\\typescript\\lib",
     "files.exclude": {
       "**/.git": true,
       "**/.svn": true,
