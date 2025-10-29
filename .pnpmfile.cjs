@@ -9,12 +9,12 @@ const replaceLibWithPaths = {
 }
 const addLib = {
   devDependencies: {
-    "json5": '^2.2.3',
+    // "json5": '^2.2.3',
     "radash": '^12.1.0',
-    'lodash': '^4.17.21',
-    "glob": '^11.0.2',
-    'fs-extra': '^10.0.1',
-    "tsx": "^4.19.4",
+    // 'lodash': '^4.17.21',
+    // "glob": '^11.0.2',
+    // 'fs-extra': '^10.0.1',
+    // "tsx": "^4.19.4",
   }
 }
 const pkgName = fs.existsSync('./package.json') ? JSON.parse(fs.readFileSync('./package.json', 'utf-8')).name : 'no found'

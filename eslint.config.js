@@ -3,6 +3,9 @@ import antfu from '@antfu/eslint-config'
 
 // TODO DDL 迭代
 export default antfu({
+  rules:{
+    "antfu/consistent-list-newline":"off"
+  }
 },
 {
   ignores: [
@@ -58,7 +61,8 @@ export default antfu({
     'use-isnan': 'warn',
     'unicorn/prefer-number-properties': 'off',
     'no-unneeded-ternary': 'off',
-    'vue/require-component-is': 'off'
+    'vue/require-component-is': 'off',
+    'node/prefer-global/buffer': 'off'
   },
 }
 )
