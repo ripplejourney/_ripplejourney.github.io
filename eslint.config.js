@@ -11,6 +11,21 @@ export default antfu(
       'packages/blogpress/case/bad/*.md',
     ],
   },
+  stylistic.configs.customize({
+    // the following options are the default values
+    indent: 3,
+    quotes: 'single',
+    semi: false,
+    jsx: true,
+    trailingComma: 'none',
+    bracketSpacing: true,
+    arrowParens: 'always',
+    printWidth: 120,
+    endOfLine: 'lf',
+    vueIndentScriptAndStyle: true,
+
+    // ...
+  }),
   {
     rules: {
       '@typescript-eslint/ban-types': 'off',
@@ -84,3 +99,5 @@ export default antfu(
     },
   },
 )
+
+

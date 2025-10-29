@@ -1,6 +1,6 @@
 ---
 cover: ./nodejs-getting-started/MTY4NTIwMTQwMTAzNg==685201401036.png
-top: 1
+# top: 1
 sticky: 1000
 ---
 # 【免费】Node.js 入门教程
